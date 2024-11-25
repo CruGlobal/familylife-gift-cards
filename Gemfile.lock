@@ -197,8 +197,6 @@ GEM
       ast (~> 2.4.1)
       racc
     pg (1.5.9)
-    postgresql (1.0.0)
-      pg
     propshaft (1.1.0)
       actionpack (>= 7.0.0)
       activesupport (>= 7.0.0)
@@ -382,7 +380,7 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   kamal
-  postgresql
+  pg
   propshaft
   pry-byebug
   pry-remote
