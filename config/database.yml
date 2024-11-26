@@ -1,0 +1,22 @@
+default: &default
+  adapter: postgresql
+  database: <%= ENV['DB_ENV_POSTGRESQL_DB'] %>
+  encoding: "utf8"
+  host: <%= ENV['DB_PORT_5432_TCP_ADDR'] %>
+  username: <%= ENV['DB_ENV_POSTGRESQL_USER'] %>
+  password: <%= ENV['DB_ENV_POSTGRESQL_PASS'] %>
+  reconnect: true
+  pool: <%= ENV['DB_ENV_POSTGRESQL_POOL'] || 25 %>
+
+staging:
+  <<: *default
+
+development:
+  <<: *default
+
+production:
+  <<: *default
+
+test:
+  <<: *default
+  database: <%= ENV['DB_ENV_POSTGRESQL_DB_TEST'] || 'cap_test' %>
