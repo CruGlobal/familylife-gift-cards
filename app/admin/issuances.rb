@@ -18,6 +18,7 @@ ActiveAdmin.register Issuance do
   
   index do
     id_column
+    tag_column :status
     column :created_at
     column :gift_card_type
     column :creator
