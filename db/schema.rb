@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_02_065714) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_26_111253) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -58,7 +58,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_02_065714) do
   end
 
   create_table "gift_cards", force: :cascade do |t|
-    t.bigint "certificate"
+    t.integer "issuance_id"
+    t.string "certificate"
     t.datetime "expiration_date"
     t.integer "registrations_available"
     t.string "associated_product"
@@ -66,7 +67,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_02_065714) do
     t.string "gl_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "issuance_id"
   end
 
   create_table "issuances", force: :cascade do |t|

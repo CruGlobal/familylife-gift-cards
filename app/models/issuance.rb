@@ -69,12 +69,11 @@ class Issuance < ApplicationRecord
     if preview?
       "Gift Card Issuance (Preview)"
     elsif issued?
-      "Gift Card Issuance by #{issuer.full_name} at #{created_at}"
+      "Issuance by #{issuer.full_name} #{created_at}"
     end
   end
 
   def create_gift_cards
-    byebug
     allocated_certificates.split(", ").each do |certificate|
       gift_card = gift_cards.where(certificate: certificate).first_or_initialize 
       gift_card.expiration_date = expiration_date
@@ -91,8 +90,7 @@ class Issuance < ApplicationRecord
   end
 
   def set_allocated_certificates
-    largest_existing_certificate.to_s =~ numbering_regex
-    next_number = $1.to_i
+    next_number = largest_existing_number_in_certificate + 1
 
     allocated_certificates = []
     quantity.times do
@@ -104,10 +102,10 @@ class Issuance < ApplicationRecord
     self.allocated_certificates = allocated_certificates.join(", ")
   end
 
-  def largest_existing_certificate
-
+  # largest number in certificates represented in x's in format, for all certificates matching format
+  def largest_existing_number_in_certificate
     # look for all numbers that match numbering
-    existing_matching_certificates = GiftCard.all.where("certificate::text LIKE ?", numbering_regex_str).pluck(:certificate)
+    existing_matching_certificates = GiftCard.all.where("certificate ~* ?", numbering_regex_str).pluck(:certificate)
 
     # pulling all allocated certificate ids instead of a rergex isn't ideal, but there shouldn't be many, if any, times there
     # are previewed gift cards issuances while another one is being previewed
@@ -115,7 +113,10 @@ class Issuance < ApplicationRecord
       allocated_certificates.split(", ").find_all { |certificate| certificate =~ numbering_regex }
     end.flatten
 
-    existing_matching_certificates.collect(&:to_i).max
+    existing_matching_certificates.collect{ |certificate|
+      certificate =~ numbering_regex
+      $1.to_i
+    }.max || 1
   end
 
   def self.ransackable_attributes(auth_object = nil)
