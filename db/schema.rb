@@ -71,17 +71,19 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_02_065714) do
 
   create_table "issuances", force: :cascade do |t|
     t.string "status"
-    t.integer "initiator_id"
+    t.integer "creator_id"
+    t.integer "issuer_id"
     t.decimal "card_amount"
     t.integer "quantity"
     t.datetime "begin_use_date"
     t.datetime "end_use_date"
     t.datetime "expiration_date"
     t.integer "gift_card_type_id"
+    t.text "allocated_certificates"
+    t.string "numbering"
+    t.datetime "issued_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "numbering"
-    t.text "allocated_certificates"
   end
 
   create_table "people", force: :cascade do |t|
