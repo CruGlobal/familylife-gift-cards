@@ -59,3 +59,5 @@ bin/deploy/erd-service-account.json
 /node_modules
 
 .byebug_history
+*.zip
+*.csv

@@ -30,9 +30,10 @@
 class Issuance < ApplicationRecord
   include AASM
 
-  belongs_to :initiator, class_name: "Person"
+  belongs_to :creator, class_name: "Person"
+  belongs_to :issuer, class_name: "Person", optional: true
   belongs_to :gift_card_type
-	has_many :gift_cards
+  has_many :gift_cards
 
   validates :card_amount, numericality: true 
   validates :quantity, numericality: { only_integer: true }
@@ -43,7 +44,7 @@ class Issuance < ApplicationRecord
     state :issued
 
     event :preview do
-      transitions from: :configure, to: :preview, after: :allocate_certificates
+      transitions from: :configure, to: :preview
     end
 
     event :issue do
@@ -53,9 +54,10 @@ class Issuance < ApplicationRecord
   end
 
   before_save do
-		unless issued?
+    unless issued?
       # keep a copy of numbering for posterity if still previewing
       self.numbering = gift_card_type.numbering
+      set_allocated_certificates
     end
   end
 
@@ -67,25 +69,29 @@ class Issuance < ApplicationRecord
     if preview?
       "Gift Card Issuance (Preview)"
     elsif issued?
-      "Gift Card Issuance by #{initiator.full_name} at #{created_at}"
+      "Gift Card Issuance by #{issuer.full_name} at #{created_at}"
     end
   end
 
   def create_gift_cards
     byebug
     allocated_certificates.split(", ").each do |certificate|
-    	gift_card = gift_cards.where(certificate: certificate).first_or_initialize 
+      gift_card = gift_cards.where(certificate: certificate).first_or_initialize 
       gift_card.expiration_date = expiration_date
     end
   end
 
-  def numbering_regex
-    # add brackets around the x's so that it can be extracted, and use \d instead of x
-    @numbering_regex ||= numbering.gsub(/x+/) { |xs| "(#{xs.gsub("x", "\\d")})" }
+  def numbering_regex_str
+    numbering.gsub(/x+/) { |xs| "(#{xs.gsub("x", "\\d")})" }
   end
 
-  def allocate_certificates
-    largest_existing_certificate =~ numbering_regex
+  def numbering_regex
+    # add brackets around the x's so that it can be extracted, and use \d instead of x
+    @numbering_regex ||= /#{numbering_regex_str}/
+  end
+
+  def set_allocated_certificates
+    largest_existing_certificate.to_s =~ numbering_regex
     next_number = $1.to_i
 
     allocated_certificates = []
@@ -95,28 +101,28 @@ class Issuance < ApplicationRecord
       next_number += 1
     end
 
-    self.update(allocated_certificates: allocated_certificates.join(", "))
+    self.allocated_certificates = allocated_certificates.join(", ")
   end
 
   def largest_existing_certificate
 
     # look for all numbers that match numbering
-    existing_matching_certificates = GiftCard.all.where("certificate::text LIKE ?", numbering_regex).pluck(:certificate)
+    existing_matching_certificates = GiftCard.all.where("certificate::text LIKE ?", numbering_regex_str).pluck(:certificate)
 
     # pulling all allocated certificate ids instead of a rergex isn't ideal, but there shouldn't be many, if any, times there
     # are previewed gift cards issuances while another one is being previewed
-    existing_matching_certificates += Issuance.preview.pluck(:allocated_certificates).find_all do |certificate|
-      certificate =~ numbering_regex
-    end
+    existing_matching_certificates += Issuance.preview.pluck(:allocated_certificates).collect do |allocated_certificates|
+      allocated_certificates.split(", ").find_all { |certificate| certificate =~ numbering_regex }
+    end.flatten
 
     existing_matching_certificates.collect(&:to_i).max
   end
 
   def self.ransackable_attributes(auth_object = nil)
-    %w(status created_at updated_at initiator_id gift_card_type_id card_amount quantity allocated_certificates numbering gift_cards_id)
+    %w(status created_at updated_at creator_id issuer_id gift_card_type_id card_amount quantity allocated_certificates numbering gift_cards_id)
   end
 
   def self.ransackable_associations(auth_object = nil)
-    %w(initiator gift_card_type gift_cards)
+    %w(creator issuer gift_card_type gift_cards)
   end
 end
