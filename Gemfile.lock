@@ -1,6 +1,8 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    aasm (5.5.0)
+      concurrent-ruby (~> 1.0)
     actioncable (7.2.2)
       actionpack (= 7.2.2)
       activesupport (= 7.2.2)
@@ -45,6 +47,7 @@ GEM
       erubi (~> 1.11)
       rails-dom-testing (~> 2.2)
       rails-html-sanitizer (~> 1.6)
+    active_material (2.1.2)
     activeadmin (3.2.5)
       arbre (~> 1.2, >= 1.2.1)
       csv
@@ -55,6 +58,14 @@ GEM
       kaminari (>= 1.2.1)
       railties (>= 6.1)
       ransack (>= 4.0)
+    activeadmin_addons (1.10.1)
+      active_material
+      railties
+      redcarpet
+      require_all
+      sassc
+      sassc-rails
+      xdan-datetimepicker-rails (~> 2.5.1)
     activejob (7.2.2)
       activesupport (= 7.2.2)
       globalid (>= 0.3.6)
@@ -284,9 +295,11 @@ GEM
       i18n
     rdoc (6.8.1)
       psych (>= 4.0.0)
+    redcarpet (3.6.0)
     regexp_parser (2.9.2)
     reline (0.5.11)
       io-console (~> 0.5)
+    require_all (3.0.0)
     responders (3.1.1)
       actionpack (>= 5.2)
       railties (>= 5.2)
@@ -376,6 +389,9 @@ GEM
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
+    xdan-datetimepicker-rails (2.5.4)
+      jquery-rails
+      rails (>= 3.2.16)
     xpath (3.2.0)
       nokogiri (~> 1.8)
     zeitwerk (2.7.1)
@@ -397,7 +413,9 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
+  aasm
   activeadmin (~> 3.2)
+  activeadmin_addons
   bootsnap
   brakeman
   capybara
