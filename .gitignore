@@ -57,3 +57,5 @@ bin/deploy/erd-service-account.json
 !/app/assets/builds/.keep
 
 /node_modules
+
+.byebug_history

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_26_094659) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_02_065714) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -45,7 +45,20 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_26_094659) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "gift_card_types", force: :cascade do |t|
+    t.string "label"
+    t.string "numbering"
+    t.string "contact"
+    t.string "prod_id"
+    t.string "isbn"
+    t.string "gl_acct"
+    t.string "department_number"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "gift_cards", force: :cascade do |t|
+    t.bigint "certificate"
     t.datetime "expiration_date"
     t.integer "registrations_available"
     t.string "associated_product"
@@ -53,7 +66,22 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_26_094659) do
     t.string "gl_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "certificate_id"
+    t.integer "issuance_id"
+  end
+
+  create_table "issuances", force: :cascade do |t|
+    t.string "status"
+    t.integer "initiator_id"
+    t.decimal "card_amount"
+    t.integer "quantity"
+    t.datetime "begin_use_date"
+    t.datetime "end_use_date"
+    t.datetime "expiration_date"
+    t.integer "gift_card_type_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "numbering"
+    t.text "allocated_certificates"
   end
 
   create_table "people", force: :cascade do |t|

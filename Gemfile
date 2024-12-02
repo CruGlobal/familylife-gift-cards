@@ -66,3 +66,6 @@ group :test do
 end
 
 gem "activeadmin", "~> 3.2"
+gem "activeadmin_addons"
+
+gem "aasm"
