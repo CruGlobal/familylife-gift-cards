@@ -29,6 +29,7 @@
 
 class Issuance < ApplicationRecord
   include AASM
+  include HasNumbering
 
   belongs_to :creator, class_name: "Person"
   belongs_to :issuer, class_name: "Person", optional: true
@@ -77,16 +78,10 @@ class Issuance < ApplicationRecord
     allocated_certificates.split(", ").each do |certificate|
       gift_card = gift_cards.where(certificate: certificate).first_or_initialize 
       gift_card.expiration_date = expiration_date
+      gift_card.gift_card_type = gift_card_type
+      gift_card.issuance = self
+      gift_card.save!
     end
-  end
-
-  def numbering_regex_str
-    numbering.gsub(/x+/) { |xs| "(#{xs.gsub("x", "\\d")})" }
-  end
-
-  def numbering_regex
-    # add brackets around the x's so that it can be extracted, and use \d instead of x
-    @numbering_regex ||= /#{numbering_regex_str}/
   end
 
   def set_allocated_certificates

@@ -69,3 +69,5 @@ gem "activeadmin", "~> 3.2"
 gem "activeadmin_addons"
 
 gem "aasm"
+
+gem "activerecord-import"
