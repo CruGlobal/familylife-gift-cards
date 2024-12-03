@@ -59,6 +59,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_26_111253) do
 
   create_table "gift_cards", force: :cascade do |t|
     t.integer "issuance_id"
+    t.integer "gift_card_type_id"
     t.string "certificate"
     t.datetime "expiration_date"
     t.integer "registrations_available"
