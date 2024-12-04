@@ -21,9 +21,7 @@ RUN apk --no-cache add libc6-compat git postgresql-libs tzdata
 COPY Gemfile Gemfile.lock ./
 
 # Install bundler version which created the lock file and configure it
-ARG SIDEKIQ_CREDS
-RUN gem install bundler -v $(awk '/^BUNDLED WITH/ { getline; print $1; exit }' Gemfile.lock) \
-    && bundle config --global gems.contribsys.com $SIDEKIQ_CREDS
+RUN gem install bundler -v $(awk '/^BUNDLED WITH/ { getline; print $1; exit }' Gemfile.lock)
 
 # Install build-dependencies, then install gems, subsequently removing build-dependencies
 RUN apk --no-cache add --virtual build-deps build-base postgresql-dev \
@@ -35,16 +33,11 @@ COPY . .
 
 # Environment required to build the application
 ARG RAILS_ENV=production
-ARG TEST_DB_USER=postgres
-ARG TEST_DB_PASSWORD
-ARG TEST_DB_HOST=localhost
-ARG TEST_DB_PORT=5432
+ARG STORAGE_REDIS_HOST=localhost
+ARG SECRET_KEY_BASE=abc123
 
-# Compile assets and fix permissions
-# just like in Actions, we need to copy the fake cred json so that our tests can function
-RUN cp spec/fixtures/service_account_cred.json.actions config/secure/service_account_cred.json \
-    && RAILS_ENV=test bundle exec rails db:create db:schema:load docs:generate \
-    && rm config/secure/service_account_cred.json \
+# Compile assets
+RUN RAILS_ENV=production bundle exec rake assets:clobber assets:precompile \
     && chown -R webapp:webapp /home/webapp/
 
 # Define volumes used by ECS to share public html and extra nginx config with nginx container
