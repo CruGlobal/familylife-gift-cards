@@ -64,7 +64,7 @@ t.contact = "Jennifer Abbott"
 t.save!
 
 t = GiftCardType.where(label: "Corporate Department Card").first_or_initialize
-t.numbering = "4241xxxx0"
+t.numbering = "4241xxxxx0"
 t.gl_acct = "63301"
 t.department_number = "4241-45100"
 t.contact = "Glen Flagerstrom"
