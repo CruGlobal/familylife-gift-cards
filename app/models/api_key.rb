@@ -1,2 +1,2 @@
-class APiKey < ApplicationRecord
+class ApiKey < ApplicationRecord
 end
