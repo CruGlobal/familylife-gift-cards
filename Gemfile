@@ -9,6 +9,14 @@ gem "sassc-rails"
 gem "pg"
 gem "dotenv"
 
+gem "sidekiq", "~> 6.5"
+source "https://gems.contribsys.com/" do
+  gem "sidekiq-pro"
+end
+gem "sidekiq-cron"
+gem "sidekiq-failures"
+gem "sidekiq-unique-jobs"
+
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
@@ -18,7 +26,8 @@ gem "stimulus-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 # Use Redis adapter to run Action Cable in production
-# gem "redis", ">= 4.0.1"
+gem "redis", "~> 4.0"
+gem "redis-actionpack"
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
@@ -66,3 +75,10 @@ group :test do
 end
 
 gem "activeadmin", "~> 3.2"
+gem "activeadmin_addons"
+
+gem "aasm"
+
+gem "activerecord-import"
+
+gem "dogstatsd-ruby", "~> 5.3"
