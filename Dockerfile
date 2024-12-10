@@ -34,6 +34,7 @@ COPY . .
 # Environment required to build the application
 ARG RAILS_ENV=production
 ARG STORAGE_REDIS_HOST=localhost
+ARG STORAGE_REDIS_DB_INDEX=1
 ARG SECRET_KEY_BASE=abc123
 
 # Compile assets
