@@ -75,7 +75,7 @@ GEM
       activemodel (= 7.2.2)
       activesupport (= 7.2.2)
       timeout (>= 0.4.0)
-    activerecord-import (1.8.1)
+    activerecord-import (2.0.0)
       activerecord (>= 4.2)
     activestorage (7.2.2)
       actionpack (= 7.2.2)
@@ -193,7 +193,7 @@ GEM
     kaminari-core (1.2.2)
     language_server-protocol (3.17.0.3)
     lint_roller (1.1.0)
-    logger (1.6.1)
+    logger (1.6.2)
     loofah (2.23.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -206,7 +206,7 @@ GEM
     matrix (0.4.2)
     method_source (1.1.0)
     mini_mime (1.1.5)
-    minitest (5.25.2)
+    minitest (5.25.4)
     msgpack (1.7.5)
     net-imap (0.5.1)
       date
@@ -345,7 +345,7 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
-    securerandom (0.3.2)
+    securerandom (0.4.0)
     selenium-webdriver (4.27.0)
       base64 (~> 0.2)
       logger (~> 1.4)
