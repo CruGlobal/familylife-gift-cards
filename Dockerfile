@@ -33,9 +33,14 @@ COPY . .
 
 # Environment required to build the application
 ARG RAILS_ENV=production
-ARG STORAGE_REDIS_HOST=localhost
+ARG RAILS_ENV=production
+ARG SESSION_REDIS_DB_INDEX=1
+ARG SESSION_REDIS_HOST=localhost
+ARG SESSION_REDIS_PORT=6379
 ARG STORAGE_REDIS_DB_INDEX=1
-ARG SECRET_KEY_BASE=abc123
+ARG STORAGE_REDIS_HOST=localhost
+ARG STORAGE_REDIS_PORT=6379
+ARG SECRET_KEY_BASE=asdf
 
 # Compile assets
 RUN RAILS_ENV=production bundle exec rake assets:clobber assets:precompile \
