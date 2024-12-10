@@ -135,6 +135,7 @@ GEM
       irb (~> 1.10)
       reline (>= 0.3.8)
     debug_inspector (1.2.0)
+    dogstatsd-ruby (5.6.3)
     dotenv (3.1.4)
     dotenv-rails (3.1.4)
       dotenv (= 3.1.4)
@@ -307,8 +308,18 @@ GEM
     rdoc (6.8.1)
       psych (>= 4.0.0)
     redcarpet (3.6.0)
+    redis (4.8.1)
+    redis-actionpack (5.5.0)
+      actionpack (>= 5)
+      redis-rack (>= 2.1.0, < 4)
+      redis-store (>= 1.1.0, < 2)
     redis-client (0.22.2)
       connection_pool
+    redis-rack (3.0.0)
+      rack-session (>= 0.2.0)
+      redis-store (>= 1.2, < 2)
+    redis-store (1.11.0)
+      redis (>= 4, < 6)
     regexp_parser (2.9.2)
     reline (0.5.11)
       io-console (~> 0.5)
@@ -451,6 +462,7 @@ DEPENDENCIES
   brakeman
   capybara
   debug
+  dogstatsd-ruby (~> 5.3)
   dotenv
   dotenv-rails
   importmap-rails
@@ -461,6 +473,8 @@ DEPENDENCIES
   pry-stack_explorer
   puma (>= 5.0)
   rails (~> 7.2.2)
+  redis (< 5.0)
+  redis-actionpack
   rubocop-rails-omakase
   sassc-rails
   selenium-webdriver
