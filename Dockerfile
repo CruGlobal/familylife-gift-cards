@@ -44,6 +44,7 @@ ARG STORAGE_REDIS_DB_INDEX=1
 ARG STORAGE_REDIS_HOST=localhost
 ARG STORAGE_REDIS_PORT=6379
 ARG SECRET_KEY_BASE=asdf
+ARG SITE_URL=asdf
 
 # Compile assets
 RUN RAILS_ENV=production bundle exec rake assets:clobber assets:precompile \
