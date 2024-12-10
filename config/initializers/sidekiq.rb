@@ -49,6 +49,6 @@ Sidekiq.default_job_options = {
   lock: :until_executed
 }
 
-if ENV["AWS_EXECUTION_ENV"].present?
-  Sidekiq::Pro.dogstatsd = -> { Datadog::Statsd.new socket_path: "/var/run/datadog/dsd.socket" }
-end
+#if ENV["AWS_EXECUTION_ENV"].present?
+#  Sidekiq::Pro.dogstatsd = -> { Datadog::Statsd.new socket_path: "/var/run/datadog/dsd.socket" }
+#end
