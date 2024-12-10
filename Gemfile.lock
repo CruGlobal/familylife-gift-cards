@@ -1,4 +1,10 @@
 GEM
+  remote: https://gems.contribsys.com/
+  specs:
+    sidekiq-pro (5.5.8)
+      sidekiq (~> 6.0, >= 6.5.6)
+
+GEM
   remote: https://rubygems.org/
   specs:
     aasm (5.5.0)
@@ -111,6 +117,9 @@ GEM
       msgpack (~> 1.2)
     brakeman (6.2.2)
       racc
+    brpoplpush-redis_script (0.1.3)
+      concurrent-ruby (~> 1.0, >= 1.0.5)
+      redis (>= 1.0, < 6)
     builder (3.3.0)
     byebug (11.1.3)
     capybara (3.40.0)
@@ -202,7 +211,7 @@ GEM
     kaminari-core (1.2.2)
     language_server-protocol (3.17.0.3)
     lint_roller (1.1.0)
-    logger (1.6.1)
+    logger (1.6.2)
     loofah (2.23.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -215,7 +224,7 @@ GEM
     matrix (0.4.2)
     method_source (1.1.0)
     mini_mime (1.1.5)
-    minitest (5.25.2)
+    minitest (5.25.4)
     msgpack (1.7.5)
     net-imap (0.5.1)
       date
@@ -263,13 +272,14 @@ GEM
       nio4r (~> 2.0)
     raabro (1.4.0)
     racc (1.8.1)
-    rack (3.1.8)
-    rack-session (2.0.0)
-      rack (>= 3.0.0)
+    rack (2.2.10)
+    rack-session (1.0.2)
+      rack (< 3)
     rack-test (2.1.0)
       rack (>= 1.3)
-    rackup (2.2.1)
-      rack (>= 3)
+    rackup (1.0.1)
+      rack (< 3)
+      webrick
     rails (7.2.2)
       actioncable (= 7.2.2)
       actionmailbox (= 7.2.2)
@@ -313,8 +323,6 @@ GEM
       actionpack (>= 5)
       redis-rack (>= 2.1.0, < 4)
       redis-store (>= 1.1.0, < 2)
-    redis-client (0.22.2)
-      connection_pool
     redis-rack (3.0.0)
       rack-session (>= 0.2.0)
       redis-store (>= 1.2, < 2)
@@ -367,18 +375,17 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
-    securerandom (0.3.2)
+    securerandom (0.4.0)
     selenium-webdriver (4.27.0)
       base64 (~> 0.2)
       logger (~> 1.4)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
-    sidekiq (7.3.6)
-      connection_pool (>= 2.3.0)
-      logger
-      rack (>= 2.2.4)
-      redis-client (>= 0.22.2)
+    sidekiq (6.5.12)
+      connection_pool (>= 2.2.5, < 3)
+      rack (~> 2.0)
+      redis (>= 4.5.0, < 5)
     sidekiq-cron (2.0.1)
       cronex (>= 0.13.0)
       fugit (~> 1.8, >= 1.11.1)
@@ -386,10 +393,12 @@ GEM
       sidekiq (>= 6.5.0)
     sidekiq-failures (1.0.4)
       sidekiq (>= 4.0.0)
-    sidekiq-unique-jobs (8.0.10)
+    sidekiq-unique-jobs (7.1.33)
+      brpoplpush-redis_script (> 0.1.1, <= 2.0.0)
       concurrent-ruby (~> 1.0, >= 1.0.5)
-      sidekiq (>= 7.0.0, < 8.0.0)
-      thor (>= 1.0, < 3.0)
+      redis (< 5.0)
+      sidekiq (>= 5.0, < 7.0)
+      thor (>= 0.20, < 3.0)
     slop (3.6.0)
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
@@ -426,6 +435,7 @@ GEM
       activemodel (>= 6.0.0)
       bindex (>= 0.4.0)
       railties (>= 6.0.0)
+    webrick (1.9.1)
     websocket (1.2.11)
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
@@ -473,14 +483,15 @@ DEPENDENCIES
   pry-stack_explorer
   puma (>= 5.0)
   rails (~> 7.2.2)
-  redis (< 5.0)
+  redis (~> 4.0)
   redis-actionpack
   rubocop-rails-omakase
   sassc-rails
   selenium-webdriver
-  sidekiq
+  sidekiq (~> 6.5)
   sidekiq-cron
   sidekiq-failures
+  sidekiq-pro!
   sidekiq-unique-jobs
   sprockets-rails
   standard

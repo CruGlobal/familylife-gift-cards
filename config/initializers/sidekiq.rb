@@ -1,9 +1,5 @@
-# frozen_string_literal: true
-
-=begin
-require "redis"
-require "sidekiq-unique-jobs"
 require "datadog/statsd"
+require "redis"
 
 redis_conf = YAML.safe_load(ERB.new(File.read(Rails.root.join("config", "redis.yml"))).result, permitted_classes: [Symbol], aliases: true)["sidekiq"]
 
@@ -24,9 +20,7 @@ Sidekiq.configure_client do |config|
   end
 end
 
-if Sidekiq::Client.method_defined? :reliable_push!
-  Sidekiq::Client.reliable_push! unless Rails.env.test?
-end
+Sidekiq::Client.reliable_push!
 
 Sidekiq.configure_server do |config|
   config.super_fetch!
@@ -45,12 +39,8 @@ Sidekiq.configure_server do |config|
   SidekiqUniqueJobs::Server.configure(config)
 end
 
-Sidekiq.default_job_options = {
-  backtrace: true,
-  lock: :until_executed
-}
-
 if ENV["AWS_EXECUTION_ENV"].present?
   Sidekiq::Pro.dogstatsd = -> { Datadog::Statsd.new socket_path: "/var/run/datadog/dsd.socket" }
 end
-=end
+
+Sidekiq.default_worker_options = {"backtrace" => true}

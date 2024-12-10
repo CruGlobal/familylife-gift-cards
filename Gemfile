@@ -9,7 +9,10 @@ gem "sassc-rails"
 gem "pg"
 gem "dotenv"
 
-gem "sidekiq"
+gem "sidekiq", "~> 6.5"
+source "https://gems.contribsys.com/" do
+  gem "sidekiq-pro"
+end
 gem "sidekiq-cron"
 gem "sidekiq-failures"
 gem "sidekiq-unique-jobs"
@@ -23,7 +26,7 @@ gem "stimulus-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 # Use Redis adapter to run Action Cable in production
-gem "redis", "< 5.0"
+gem "redis", "~> 4.0"
 gem "redis-actionpack"
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
