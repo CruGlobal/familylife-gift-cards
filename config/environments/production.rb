@@ -83,5 +83,5 @@ Rails.application.configure do
   # ]
   # Skip DNS rebinding protection for the default health check endpoint.
   config.host_authorization = {exclude: ->(request) { request.path == "/monitors/lb" }}
-  config.hosts << "familylife-gift-cards-stage.cru.org"
+  config.hosts << ENV.fetch("SITE_URL")
 end
