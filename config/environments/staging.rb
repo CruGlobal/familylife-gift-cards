@@ -100,6 +100,7 @@ Rails.application.configure do
     "familylife-gift-cards-stage.cru.org",
     IPAddr.new("10.0.0.0/8"),
   ]
+
   # Skip DNS rebinding protection for the default health check endpoint.
-  # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+  config.host_authorization = { exclude: ->(request) { request.path == "/monitors/lb" } }
 end
