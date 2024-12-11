@@ -1,5 +1,7 @@
 source "https://rubygems.org"
 
+ruby file: ".ruby-version"
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.2.2"
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
@@ -7,7 +9,14 @@ gem "sprockets-rails"
 gem "sassc-rails"
 
 gem "pg"
-gem "dotenv"
+
+gem "sidekiq", "~> 6.5"
+source "https://gems.contribsys.com/" do
+  gem "sidekiq-pro"
+end
+gem "sidekiq-cron"
+gem "sidekiq-failures"
+gem "sidekiq-unique-jobs"
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
@@ -18,7 +27,8 @@ gem "stimulus-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 # Use Redis adapter to run Action Cable in production
-# gem "redis", ">= 4.0.1"
+gem "redis", "~> 4.0"
+gem "redis-actionpack"
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
@@ -66,3 +76,13 @@ group :test do
 end
 
 gem "activeadmin", "~> 3.2"
+gem "activeadmin_addons"
+
+gem "aasm"
+
+gem "activerecord-import"
+
+gem "dogstatsd-ruby", "~> 5.3"
+
+gem "ougai", "~> 1.7"
+gem "amazing_print"
