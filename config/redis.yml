@@ -11,7 +11,7 @@ session: &SESSION
   :host: <%= ENV.fetch('SESSION_REDIS_HOST') %>
   :port: <%= ENV.fetch('SESSION_REDIS_PORT', 6379) %>
   :db: <%= ENV.fetch('SESSION_REDIS_DB_INDEX') %>
-  :expires_in: <%= 2.hours %>
+  :expires_in: <%= 30.days %>
 
 cache:
   <<: *SESSION
