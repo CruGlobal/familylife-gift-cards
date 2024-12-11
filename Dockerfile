@@ -47,7 +47,7 @@ ARG SECRET_KEY_BASE=asdf
 ARG SITE_URL=asdf
 
 # Compile assets
-RUN RAILS_ENV=production bundle exec rake assets:clobber assets:precompile \
+RUN RAILS_ENV=$RAILS_ENV bundle exec rails assets:clobber assets:precompile \
     && chown -R webapp:webapp /home/webapp/
 
 # Define volumes used by ECS to share public html and extra nginx config with nginx container
