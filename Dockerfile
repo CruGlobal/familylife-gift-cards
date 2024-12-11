@@ -22,7 +22,6 @@ COPY Gemfile Gemfile.lock ./
 
 # Install bundler version which created the lock file and configure it
 ARG SIDEKIQ_CREDS
-ENV LD_LIBRARY_PATH /usr/lib/instantclient
 RUN gem install bundler -v $(awk '/^BUNDLED WITH/ { getline; print $1; exit }' Gemfile.lock) \
     && bundle config --global gems.contribsys.com $SIDEKIQ_CREDS
 
@@ -35,7 +34,6 @@ RUN apk --no-cache add --virtual build-deps build-base postgresql-dev \
 COPY . .
 
 # Environment required to build the application
-ARG RAILS_ENV=production
 ARG RAILS_ENV=production
 ARG SESSION_REDIS_DB_INDEX=1
 ARG SESSION_REDIS_HOST=localhost

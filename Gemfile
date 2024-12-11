@@ -1,5 +1,7 @@
 source "https://rubygems.org"
 
+ruby file: ".ruby-version"
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.2.2"
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
@@ -7,7 +9,6 @@ gem "sprockets-rails"
 gem "sassc-rails"
 
 gem "pg"
-gem "dotenv"
 
 gem "sidekiq", "~> 6.5"
 source "https://gems.contribsys.com/" do
@@ -82,3 +83,6 @@ gem "aasm"
 gem "activerecord-import"
 
 gem "dogstatsd-ruby", "~> 5.3"
+
+gem "ougai", "~> 1.7"
+gem "amazing_print"
