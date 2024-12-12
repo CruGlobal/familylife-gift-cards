@@ -140,7 +140,16 @@ GEM
       tzinfo
       unicode (>= 0.4.4.5)
     csv (3.3.0)
+    datadog-ci (0.8.3)
+      msgpack
     date (3.4.0)
+    ddtrace (1.23.3)
+      datadog-ci (~> 0.8.1)
+      debase-ruby_core_source (= 3.3.1)
+      libdatadog (~> 7.0.0.1.0)
+      libddwaf (~> 1.14.0.0.0)
+      msgpack
+    debase-ruby_core_source (3.3.1)
     debug (1.9.2)
       irb (~> 1.10)
       reline (>= 0.3.8)
@@ -211,6 +220,19 @@ GEM
       kaminari-core (= 1.2.2)
     kaminari-core (1.2.2)
     language_server-protocol (3.17.0.3)
+    libdatadog (7.0.0.1.0)
+    libdatadog (7.0.0.1.0-aarch64-linux)
+    libdatadog (7.0.0.1.0-x86_64-linux)
+    libddwaf (1.14.0.0.0)
+      ffi (~> 1.0)
+    libddwaf (1.14.0.0.0-aarch64-linux)
+      ffi (~> 1.0)
+    libddwaf (1.14.0.0.0-arm64-darwin)
+      ffi (~> 1.0)
+    libddwaf (1.14.0.0.0-x86_64-darwin)
+      ffi (~> 1.0)
+    libddwaf (1.14.0.0.0-x86_64-linux)
+      ffi (~> 1.0)
     lint_roller (1.1.0)
     logger (1.6.2)
     loofah (2.23.1)
@@ -479,6 +501,7 @@ DEPENDENCIES
   bootsnap
   brakeman
   capybara
+  ddtrace (~> 1.4)
   debug
   dogstatsd-ruby (~> 5.3)
   dotenv-rails

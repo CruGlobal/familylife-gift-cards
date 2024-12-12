@@ -79,10 +79,10 @@ gem "activeadmin", "~> 3.2"
 gem "activeadmin_addons"
 
 gem "aasm"
-
 gem "activerecord-import"
-
 gem "dogstatsd-ruby", "~> 5.3"
+gem "ddtrace", "~> 1.4"
 
 gem "ougai", "~> 1.7"
 gem "amazing_print"
+
