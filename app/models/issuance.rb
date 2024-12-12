@@ -22,7 +22,7 @@ class Issuance < ApplicationRecord
     end
 
     event :issue do
-      transitions from: :preview, to: :issued, after: :create_gift_cards
+      transitions from: :previewing, to: :issued, after: :create_gift_cards
       transitions from: :issued, to: :issued
     end
   end
@@ -40,7 +40,7 @@ class Issuance < ApplicationRecord
   end
 
   def to_s
-    if preview?
+    if previewing?
       "Gift Card Issuance (Preview)"
     elsif issued?
       "Issuance by #{issuer.full_name} #{created_at}"
