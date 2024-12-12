@@ -77,7 +77,7 @@ class Issuance < ApplicationRecord
 
     # pulling all allocated certificate ids instead of a regex isn't ideal, but there shouldn't be many, if any, times there
     # are previewed gift cards issuances while another one is being previewed
-    existing_matching_certificates += Issuance.preview.pluck(:allocated_certificates).collect do |allocated_certificates|
+    existing_matching_certificates += Issuance.previewing.pluck(:allocated_certificates).collect do |allocated_certificates|
       allocated_certificates.split(CERTIFICATE_DISPLAY_SEPARATOR).find_all { |certificate| certificate =~ numbering_regex }
     end.flatten
 
