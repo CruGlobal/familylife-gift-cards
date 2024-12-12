@@ -75,7 +75,7 @@ class Issuance < ApplicationRecord
     # look for all numbers that match numbering
     existing_matching_certificates = GiftCard.all.where("certificate ~* ?", numbering_regex_str).pluck(:certificate)
 
-    # pulling all allocated certificate ids instead of a rergex isn't ideal, but there shouldn't be many, if any, times there
+    # pulling all allocated certificate ids instead of a regex isn't ideal, but there shouldn't be many, if any, times there
     # are previewed gift cards issuances while another one is being previewed
     existing_matching_certificates += Issuance.preview.pluck(:allocated_certificates).collect do |allocated_certificates|
       allocated_certificates.split(CERTIFICATE_DISPLAY_SEPARATOR).find_all { |certificate| certificate =~ numbering_regex }
