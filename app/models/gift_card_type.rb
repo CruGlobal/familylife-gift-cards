@@ -1,7 +1,7 @@
 class GiftCardType < ApplicationRecord
   include HasNumbering
 
-  validates :numbering, presence: true, format: { with: /\d*x+\d*/ }
+  validates :numbering, presence: true, format: { with: /^[^x]*x+[^x]*$/ }
 
   def to_s
     label

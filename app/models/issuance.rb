@@ -1,33 +1,6 @@
-=begin
-  create_table "gift_cards", force: :cascade do |t|
-    t.integer "certificate"
-    t.datetime "expiration_date"
-    t.integer "registrations_available"
-    t.string "associated_product"
-    t.decimal "certificate_value"
-    t.string "gl_code"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "issuances", force: :cascade do |t|
-    t.string "status"
-    t.integer "initiator_id"
-    t.decimal "card_amount"
-    t.integer "quantity"
-    t.datetime "begin_use_date"
-    t.datetime "end_use_date"
-    t.datetime "expiration_date"
-    t.integer "gift_card_type_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.text "allocated_certificates"
-    t.string "numbering"
-  end
-
-=end
-
 class Issuance < ApplicationRecord
+  CERTIFICATE_DISPLAY_SEPARATOR = ", "
+
   include AASM
   include HasNumbering
 
@@ -40,12 +13,12 @@ class Issuance < ApplicationRecord
   validates :quantity, numericality: { only_integer: true }
 
   aasm column: :status do
-    state :configure, initial: true
-    state :preview
+    state :configuring, initial: true
+    state :previewing
     state :issued
 
     event :preview do
-      transitions from: :configure, to: :preview
+      transitions from: :configuring, to: :previewing
     end
 
     event :issue do
@@ -75,7 +48,7 @@ class Issuance < ApplicationRecord
   end
 
   def create_gift_cards
-    allocated_certificates.split(", ").each do |certificate|
+    allocated_certificates.split(CERTIFICATE_DISPLAY_SEPARATOR).each do |certificate|
       gift_card = gift_cards.where(certificate: certificate).first_or_initialize 
       gift_card.expiration_date = expiration_date
       gift_card.gift_card_type = gift_card_type
@@ -94,7 +67,7 @@ class Issuance < ApplicationRecord
       next_number += 1
     end
 
-    self.allocated_certificates = allocated_certificates.join(", ")
+    self.allocated_certificates = allocated_certificates.join(CERTIFICATE_DISPLAY_SEPARATOR)
   end
 
   # largest number in certificates represented in x's in format, for all certificates matching format
@@ -105,7 +78,7 @@ class Issuance < ApplicationRecord
     # pulling all allocated certificate ids instead of a rergex isn't ideal, but there shouldn't be many, if any, times there
     # are previewed gift cards issuances while another one is being previewed
     existing_matching_certificates += Issuance.preview.pluck(:allocated_certificates).collect do |allocated_certificates|
-      allocated_certificates.split(", ").find_all { |certificate| certificate =~ numbering_regex }
+      allocated_certificates.split(CERTIFICATE_DISPLAY_SEPARATOR).find_all { |certificate| certificate =~ numbering_regex }
     end.flatten
 
     existing_matching_certificates.collect{ |certificate|

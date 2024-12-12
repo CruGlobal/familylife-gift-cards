@@ -26,10 +26,10 @@ ActiveAdmin.register Issuance do
     number_column :card_amount, as: :currency, unit: "$"
     column :quantity
     column :min_certificate do |issuance|
-      issuance.allocated_certificates.split(", ").first
+      issuance.allocated_certificates.split(Issuance::CERTIFICATE_DISPLAY_SEPARATOR).first
     end
     column :max_certificate do |issuance|
-      issuance.allocated_certificates.split(", ").last
+      issuance.allocated_certificates.split(Issuance::CERTIFICATE_DISPLAY_SEPARATOR).last
     end
     column :begin_use_date
     column :end_use_date
@@ -71,7 +71,7 @@ ActiveAdmin.register Issuance do
   end
 =end
 
-  action_item :issue, only: :show, if: -> { resource.preview? } do
+  action_item :issue, only: :show, if: -> { resource.previewing? } do
     link_to 'Issue Gift Cards', issue_admin_issuance_path(issuance), method: :put, data: { confirm: 'Are you sure?' }
   end
 
