@@ -40,7 +40,7 @@ class Issuance < ApplicationRecord
   end
 
   def to_s
-    if preview?
+    if previewing?
       "Gift Card Issuance (Preview)"
     elsif issued?
       "Issuance by #{issuer.full_name} #{created_at}"

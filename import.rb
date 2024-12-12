@@ -136,3 +136,7 @@ CSV.foreach("FL_EventCertificate_202411261112.csv", headers: true) do |row|
 end
 
 GiftCard.import(batch)
+
+Issuance.where(quantity: [nil, 0]).each do |i|
+  i.update(quantity: i.gift_cards.count)
+end

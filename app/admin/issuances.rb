@@ -16,6 +16,21 @@ ActiveAdmin.register Issuance do
   #   permitted
   # end
   
+  filter :creator
+  filter :issuer
+  filter :gift_card_type
+  filter :status
+  filter :card_amount
+  filter :quantitiy
+  filter :begin_use_date
+  filter :end_use_date
+  filter :expiration_date
+  filter :allocated_certificates
+  filter :numbering
+  filter :issued_at
+  filter :created_at
+  filter :updated_at
+
   index do
     id_column
     tag_column :status
@@ -30,6 +45,11 @@ ActiveAdmin.register Issuance do
     end
     column :max_certificate do |issuance|
       issuance.allocated_certificates.split(Issuance::CERTIFICATE_DISPLAY_SEPARATOR).last
+    end
+    column :used do |issuance|
+      used = issuance.gift_cards.where(registrations_available: 0).count
+      total = issuance.gift_cards.count
+      raw("#{number_with_delimiter(used)}/#{number_with_delimiter(issuance.gift_cards.count)}<br/>(#{(used / total.to_f * 100).round(1)}%)")
     end
     column :begin_use_date
     column :end_use_date
