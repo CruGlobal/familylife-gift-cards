@@ -43,6 +43,7 @@ ARG STORAGE_REDIS_HOST=localhost
 ARG STORAGE_REDIS_PORT=6379
 ARG SECRET_KEY_BASE=asdf
 ARG SITE_URL=asdf
+ARG SITE_HOST=asdf
 
 # Compile assets
 RUN RAILS_ENV=$RAILS_ENV bundle exec rails assets:clobber assets:precompile \
