@@ -134,3 +134,5 @@ CSV.foreach("FL_EventCertificate_202411261112.csv", headers: true) do |row|
     batch = []
   end
 end
+
+GiftCard.import(batch)
