@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_26_111253) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_13_203609) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pgcrypto"
@@ -71,6 +71,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_26_111253) do
     t.string "gl_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "isbn"
   end
 
   create_table "issuances", force: :cascade do |t|
