@@ -99,6 +99,10 @@ initial_issuances = GiftCardType.all.collect do |gct|
   issuance.card_amount = 0
   issuance.quantity = 0
   issuance.save!
+
+  issuance.update_column(:status, "issued")
+  issuance = Issuance.find(issuance.id)
+
   [ gct, issuance ]
 end.to_h
 
@@ -121,11 +125,11 @@ CSV.foreach("FL_EventCertificate_202411261112.csv", headers: true) do |row|
   gc.gift_card_type = gct
   gc.expiration_date = DateTime.parse(row["expirationDate"])
   gc.registrations_available = row["numberRegistrations"].to_i
-  gc.certificate_value = row["certificateValue"].to_d
-  gc.gl_code = row["glCode"].to_d
-  gc.created_at = row["addDate"].to_d
-  gc.updated_at = row["modifiedDate"].to_d
-  gc.associated_product = row["associatedProduct"].to_d
+  gc.certificate_value = row["certificateValue"]
+  gc.gl_code = row["glCode"]
+  gc.created_at = DateTime.parse(row["addDate"]) if row["created_at"]
+  gc.updated_at = DateTime.parse(row["modifiedDate"]) if row["modifiedDate"]
+  gc.associated_product = row["associatedProduct"]
   
   batch << gc
 
@@ -140,5 +144,3 @@ GiftCard.import(batch)
 Issuance.where(quantity: [nil, 0]).each do |i|
   i.update(quantity: i.gift_cards.count)
 end
-
-Issuance.update_column(:status, "issued")
