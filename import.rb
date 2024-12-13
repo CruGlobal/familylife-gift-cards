@@ -125,7 +125,7 @@ CSV.foreach("FL_EventCertificate_202411261112.csv", headers: true) do |row|
   gc.gift_card_type = gct
   gc.expiration_date = DateTime.parse(row["expirationDate"])
   gc.registrations_available = row["numberRegistrations"].to_i
-  gc.certificate_value = row["certificateValue"]
+  gc.certificate_value = row["certificateValue"].to_d
   gc.gl_code = row["glCode"]
   gc.created_at = DateTime.parse(row["addDate"]) if row["created_at"]
   gc.updated_at = DateTime.parse(row["modifiedDate"]) if row["modifiedDate"]
