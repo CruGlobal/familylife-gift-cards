@@ -3,6 +3,7 @@ class Api::V1::ApplicationController < ApplicationController
 
   respond_to :json
 
+  skip_forgery_protection
   #skip_before_action :require_login, raise: false
   #skip_before_action :check_url
 
