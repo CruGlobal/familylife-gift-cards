@@ -5,7 +5,7 @@ ActiveAdmin.register GiftCard do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-  # permit_params :expiration_date, :registrations_available, :associated_product, :certificate_value, :gl_code, :certificate
+  permit_params :issuance_id, :gift_card_type_id, :certificate, :expiration_date, :registrations_available, :associated_product, :certificate_value, :gl_code, :created_at, :updated_at, :isbn
   #
   # or
   #

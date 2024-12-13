@@ -56,8 +56,8 @@ class Issuance < ApplicationRecord
       gift_card.gift_card_type = gift_card_type
       gift_card.issuance = self
       gift_card.isbn = gift_card_type.isbn
-      gift_card.associated_product = gift_card_type.prod
-      gift_card.gl_code = "#{gift_card_type.gl_acct}.#{gift_card_type.department_number.to_s.gsub("-", ".")}"
+      gift_card.associated_product = gift_card_type.prod_id
+      gift_card.gl_code = [gift_card_type.gl_acct, gift_card_type.department_number.to_s.gsub("-", ".")].compact.join(".")
       gift_card.save!
     end
   end
