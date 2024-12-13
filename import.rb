@@ -140,3 +140,5 @@ GiftCard.import(batch)
 Issuance.where(quantity: [nil, 0]).each do |i|
   i.update(quantity: i.gift_cards.count)
 end
+
+Issuance.update_column(:status, "issued")

@@ -10,12 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_26_111253) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_12_235258) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "pg_stat_statements"
-  enable_extension "pgcrypto"
   enable_extension "plpgsql"
-  enable_extension "uuid-ossp"
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -71,6 +68,10 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_26_111253) do
     t.string "gl_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "prod"
+    t.string "isbn"
+    t.string "gl_acct"
+    t.string "department_number"
   end
 
   create_table "issuances", force: :cascade do |t|

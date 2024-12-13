@@ -49,7 +49,7 @@ ActiveAdmin.register Issuance do
     column :used do |issuance|
       used = issuance.gift_cards.where(registrations_available: 0).count
       total = issuance.gift_cards.count
-      raw("#{number_with_delimiter(used)}/#{number_with_delimiter(issuance.gift_cards.count)}<br/>(#{(used / total.to_f * 100).round(1)}%)")
+      raw("#{number_with_delimiter(used)} / #{number_with_delimiter(issuance.gift_cards.count)}<br/>(#{(used / total.to_f * 100).round(1)}%)")
     end
     column :begin_use_date
     column :end_use_date

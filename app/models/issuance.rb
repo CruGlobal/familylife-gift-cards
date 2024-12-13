@@ -22,7 +22,7 @@ class Issuance < ApplicationRecord
     end
 
     event :issue do
-      transitions from: :preview, to: :issued, after: :create_gift_cards
+      transitions from: :previewing, to: :issued, after: :create_gift_cards
       transitions from: :issued, to: :issued
     end
   end
@@ -43,7 +43,7 @@ class Issuance < ApplicationRecord
     if previewing?
       "Gift Card Issuance (Preview)"
     elsif issued?
-      "Issuance by #{issuer.full_name} #{created_at}"
+      "Issuance by #{issuer.full_name} #{created_at} (#{quantity} @ $#{card_amount})"
     end
   end
 
@@ -53,6 +53,10 @@ class Issuance < ApplicationRecord
       gift_card.expiration_date = expiration_date
       gift_card.gift_card_type = gift_card_type
       gift_card.issuance = self
+      gift_card.prod = gift_card_type.prod
+      gift_card.isbn = gift_card_type.isbn
+      gift_card.gl_account = gift_card_type.gl_account
+      gift_card.department_number = gift_card_type.department_number
       gift_card.save!
     end
   end
