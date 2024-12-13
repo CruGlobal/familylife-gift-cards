@@ -50,13 +50,14 @@ class Issuance < ApplicationRecord
   def create_gift_cards
     allocated_certificates.split(CERTIFICATE_DISPLAY_SEPARATOR).each do |certificate|
       gift_card = gift_cards.where(certificate: certificate).first_or_initialize 
+      gift_card.registrations_available = 2
+      gift_card.certificate_value = card_amount
       gift_card.expiration_date = expiration_date
       gift_card.gift_card_type = gift_card_type
       gift_card.issuance = self
-      gift_card.prod = gift_card_type.prod
       gift_card.isbn = gift_card_type.isbn
-      gift_card.gl_account = gift_card_type.gl_account
-      gift_card.department_number = gift_card_type.department_number
+      gift_card.associated_product = gift_card_type.prod
+      gift_card.gl_code = "#{gift_card_type.gl_acct}.#{gift_card_type.department_number.to_s.gsub("-", ".")}"
       gift_card.save!
     end
   end
