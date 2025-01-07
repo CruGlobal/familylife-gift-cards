@@ -34,17 +34,18 @@ ActiveAdmin.register Issuance do
   index do
     id_column
     tag_column :status
+    column :batch
     column :created_at
     column :gift_card_type
     column :creator
     column :issuer
-    number_column :card_amount, as: :currency, unit: "$"
+    number_column :price, as: :currency, unit: "$"
     column :quantity
     column :min_certificate do |issuance|
-      issuance.allocated_certificates.split(Issuance::CERTIFICATE_DISPLAY_SEPARATOR).first
+      issuance.allocated_certificates.to_s.split(Issuance::CERTIFICATE_DISPLAY_SEPARATOR).first
     end
     column :max_certificate do |issuance|
-      issuance.allocated_certificates.split(Issuance::CERTIFICATE_DISPLAY_SEPARATOR).last
+      issuance.allocated_certificates.to_s.split(Issuance::CERTIFICATE_DISPLAY_SEPARATOR).last
     end
     column :used do |issuance|
       used = issuance.gift_cards.where(registrations_available: 0).count

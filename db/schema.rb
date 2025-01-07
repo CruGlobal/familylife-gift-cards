@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_13_203609) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_07_060614) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pgcrypto"
@@ -48,21 +48,30 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_13_203609) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "gift_card_types", force: :cascade do |t|
-    t.string "label"
-    t.string "numbering"
+  create_table "batches", force: :cascade do |t|
+    t.string "description"
     t.string "contact"
-    t.string "prod_id"
+    t.string "gift_card_type"
+    t.decimal "price", precision: 8, scale: 2
+    t.integer "registrations_available"
+    t.datetime "begin_use_date"
+    t.datetime "end_use_date"
+    t.datetime "expiration_date"
+    t.string "associated_product"
     t.string "isbn"
-    t.string "gl_acct"
-    t.string "department_number"
+    t.string "gl_code"
+    t.string "dept"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["price"], name: "index_batches_on_price"
+    t.index ["registrations_available"], name: "index_batches_on_registrations_available"
   end
 
   create_table "gift_cards", force: :cascade do |t|
     t.integer "issuance_id"
-    t.integer "gift_card_type_id"
+    t.integer "batch_id"
+    t.decimal "price", precision: 8, scale: 2
+    t.string "gift_card_type"
     t.string "certificate"
     t.datetime "expiration_date"
     t.integer "registrations_available"
@@ -71,24 +80,24 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_13_203609) do
     t.string "gl_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "isbn"
+    t.index ["batch_id"], name: "index_gift_cards_on_batch_id"
+    t.index ["issuance_id"], name: "index_gift_cards_on_issuance_id"
+    t.index ["price"], name: "index_gift_cards_on_price"
+    t.index ["registrations_available"], name: "index_gift_cards_on_registrations_available"
   end
 
   create_table "issuances", force: :cascade do |t|
     t.string "status"
     t.integer "creator_id"
     t.integer "issuer_id"
-    t.decimal "card_amount"
+    t.integer "batch_id"
     t.integer "quantity"
-    t.datetime "begin_use_date"
-    t.datetime "end_use_date"
-    t.datetime "expiration_date"
-    t.integer "gift_card_type_id"
     t.text "allocated_certificates"
-    t.string "numbering"
     t.datetime "issued_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["batch_id"], name: "index_issuances_on_batch_id"
+    t.index ["quantity"], name: "index_issuances_on_quantity"
   end
 
   create_table "people", force: :cascade do |t|

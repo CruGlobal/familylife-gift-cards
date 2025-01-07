@@ -2,15 +2,15 @@ class Issuance < ApplicationRecord
   CERTIFICATE_DISPLAY_SEPARATOR = ", "
 
   include AASM
-  include HasNumbering
 
   belongs_to :creator, class_name: "Person"
   belongs_to :issuer, class_name: "Person", optional: true
-  belongs_to :gift_card_type
+  belongs_to :batch
   has_many :gift_cards
 
-  validates :card_amount, numericality: true 
   validates :quantity, numericality: { only_integer: true }
+  delegate :price, to: :batch
+  delegate :gift_card_type, to: :batch
 
   aasm column: :status do
     state :configuring, initial: true
@@ -27,14 +27,6 @@ class Issuance < ApplicationRecord
     end
   end
 
-  before_save do
-    unless issued?
-      # keep a copy of numbering for posterity if still previewing
-      self.numbering = gift_card_type.numbering
-      set_allocated_certificates
-    end
-  end
-
   after_create do
     preview!
   end
@@ -43,7 +35,7 @@ class Issuance < ApplicationRecord
     if previewing?
       "Gift Card Issuance (Preview)"
     elsif issued?
-      "Issuance by #{issuer.full_name} #{created_at} (#{quantity} @ $#{card_amount})"
+      "Issuance by #{issuer.full_name} #{created_at} (#{quantity} @ $#{price})"
     end
   end
 
@@ -51,7 +43,7 @@ class Issuance < ApplicationRecord
     allocated_certificates.split(CERTIFICATE_DISPLAY_SEPARATOR).each do |certificate|
       gift_card = gift_cards.where(certificate: certificate).first_or_initialize 
       gift_card.registrations_available = 2
-      gift_card.certificate_value = card_amount
+      gift_card.price = price
       gift_card.expiration_date = expiration_date
       gift_card.gift_card_type = gift_card_type
       gift_card.issuance = self
@@ -67,7 +59,7 @@ class Issuance < ApplicationRecord
 
     allocated_certificates = []
     quantity.times do
-      certificate = numbering.gsub(/x+/) { |xs| next_number.to_s.rjust(xs.length, "0") }
+      certificate = "#{price.to_s.rjust(3, "0")}#{next_number.to_s.rjust(5, "0")}0"
       allocated_certificates << certificate
       next_number += 1
     end
@@ -77,6 +69,8 @@ class Issuance < ApplicationRecord
 
   # largest number in certificates represented in x's in format, for all certificates matching format
   def largest_existing_number_in_certificate
+    numbering_regex_str = /#{batch.price}(.*)0/
+
     # look for all numbers that match numbering
     existing_matching_certificates = GiftCard.all.where("certificate ~* ?", numbering_regex_str).pluck(:certificate)
 
@@ -93,10 +87,10 @@ class Issuance < ApplicationRecord
   end
 
   def self.ransackable_attributes(auth_object = nil)
-    %w(status created_at updated_at creator_id issuer_id gift_card_type_id card_amount quantity allocated_certificates numbering gift_cards_id)
+    %w(status created_at updated_at creator_id issuer_id quantity allocated_certificates numbering gift_cards_id)
   end
 
   def self.ransackable_associations(auth_object = nil)
-    %w(creator issuer gift_card_type gift_cards)
+    %w(creator issuer gift_cards)
   end
 end
