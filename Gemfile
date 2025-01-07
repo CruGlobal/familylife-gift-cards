@@ -10,14 +10,6 @@ gem "sassc-rails"
 
 gem "pg"
 
-gem "sidekiq", "~> 6.5"
-source "https://gems.contribsys.com/" do
-  gem "sidekiq-pro"
-end
-gem "sidekiq-cron"
-gem "sidekiq-failures"
-gem "sidekiq-unique-jobs"
-
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
