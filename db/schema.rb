@@ -80,6 +80,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_07_060614) do
     t.string "gl_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "isbn"
     t.index ["batch_id"], name: "index_gift_cards_on_batch_id"
     t.index ["issuance_id"], name: "index_gift_cards_on_issuance_id"
     t.index ["price"], name: "index_gift_cards_on_price"

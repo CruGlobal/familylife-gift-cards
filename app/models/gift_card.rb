@@ -3,12 +3,13 @@ class GiftCard < ApplicationRecord
   TYPE_PAID_FULL_PRICE = "paid_full_price"
   TYPE_PAID_OTHER = "paid_other"
   TYPE_DEPT = "type_dept"
+  PAID_TYPES = [TYPE_PAID_HALF_PRICE, TYPE_PAID_FULL_PRICE, TYPE_PAID_OTHER]
 
   TYPE_DESCRIPTIONS = {
-    TYPE_PAID_HALF_PRICE => "Paid, Half Type",
-    TYPE_PAID_FULL_PRICE => "Paid, Full Type",
+    TYPE_PAID_HALF_PRICE => "Paid, Half",
+    TYPE_PAID_FULL_PRICE => "Paid, Full",
     TYPE_PAID_OTHER => "Paid, Other",
-    TYPE_DEPT => "Paid, Department"
+    TYPE_DEPT => "Department"
   }
 
   belongs_to :issuance

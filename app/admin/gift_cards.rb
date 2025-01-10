@@ -21,6 +21,7 @@ ActiveAdmin.register GiftCard do
     selectable_column
     id_column
     column :gift_card_type
+    column :batch
     column :issuance
     column :certificate
     number_column "Value", :certificate_value, as: :currency, unit: "$", sortable: :certificate_value
