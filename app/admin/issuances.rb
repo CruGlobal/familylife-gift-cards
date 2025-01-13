@@ -6,12 +6,12 @@ ActiveAdmin.register Issuance do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-  permit_params :status, :gift_card_amount, :card_amount, :quantity, :begin_use_date, :end_use_date, :expiration_date, :gift_card_type_id
+  permit_params :batch_id, :quantity
   #
   # or
   #
   # permit_params do
-  #   permitted = [:status, :initiator_id, :card_amount, :quantity, :begin_use_date, :end_use_date, :expiration_date]
+  #   permitted = [:status, :initiator_id, :price, :quantity]
   #   permitted << :other if params[:action] == 'create' && current_user.admin?
   #   permitted
   # end
@@ -20,11 +20,7 @@ ActiveAdmin.register Issuance do
   filter :issuer
   filter :gift_card_type
   filter :status
-  filter :card_amount
   filter :quantitiy
-  filter :begin_use_date
-  filter :end_use_date
-  filter :expiration_date
   filter :allocated_certificates
   filter :numbering
   filter :issued_at
@@ -52,21 +48,14 @@ ActiveAdmin.register Issuance do
       total = issuance.gift_cards.count
       raw("#{number_with_delimiter(used)} / #{number_with_delimiter(issuance.gift_cards.count)}<br/>(#{(used / total.to_f * 100).round(1)}%)")
     end
-    column :begin_use_date
-    column :end_use_date
-    column :expiration_date
   end
 
-	form do |f|
+  form do |f|
     f.semantic_errors
 
-		inputs do
-      input :gift_card_type
-      input :card_amount
+    inputs do
+      input :batch, collection: Batch.order(created_at: :desc).collect{ |batch| [batch.to_s, batch.id] }
       input :quantity
-      input :begin_use_date, as: :date_time_picker
-      input :end_use_date, as: :date_time_picker
-      input :expiration_date, as: :date_time_picker
 
       actions do
         unless issuance.issued?
