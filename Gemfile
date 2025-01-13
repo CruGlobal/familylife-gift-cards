@@ -22,6 +22,11 @@ gem "jbuilder"
 gem "redis", "~> 4.0"
 gem "redis-actionpack"
 
+# login-related
+gem "devise"
+gem "omniauth-oktaoauth", github: "CruGlobal/omniauth-oktaoauth"
+gem "omniauth-rails_csrf_protection"
+
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
 
@@ -77,4 +82,4 @@ gem "ddtrace", "~> 1.4"
 
 gem "ougai", "~> 1.7"
 gem "amazing_print"
-
+gem "strip_attributes"

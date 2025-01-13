@@ -3,8 +3,8 @@ class Issuance < ApplicationRecord
 
   include AASM
 
-  belongs_to :creator, class_name: "Person"
-  belongs_to :issuer, class_name: "Person", optional: true
+  belongs_to :creator, class_name: "User"
+  belongs_to :issuer, class_name: "User", optional: true
   belongs_to :batch
   has_many :gift_cards
 
