@@ -12,7 +12,10 @@
 
 ActiveRecord::Schema[7.2].define(version: 2025_01_07_060614) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_stat_statements"
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
+  enable_extension "uuid-ossp"
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -31,6 +34,16 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_07_060614) do
   create_table "api_keys", force: :cascade do |t|
     t.string "access_token"
     t.string "user"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "authentications", force: :cascade do |t|
+    t.integer "person_id"
+    t.string "provider"
+    t.string "uid"
+    t.string "token"
+    t.string "username"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -63,7 +76,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_07_060614) do
     t.datetime "expiration_date"
     t.integer "registrations_available"
     t.string "associated_product"
-    t.decimal "certificate_value"
     t.string "gl_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -89,7 +101,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_07_060614) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.uuid "sso_guid", null: false
+    t.string "sso_guid", null: false
     t.string "username"
     t.string "first_name"
     t.string "last_name"
