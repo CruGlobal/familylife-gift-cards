@@ -6,7 +6,7 @@ require "rails/all"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-require_relative '../lib/log/logger'
+require_relative "../lib/log/logger"
 module FamilylifeGiftCards
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
@@ -17,7 +17,7 @@ module FamilylifeGiftCards
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w[assets tasks])
 
-    redis_conf = YAML.safe_load(ERB.new(File.read(Rails.root.join("config", "redis.yml"))).result, permitted_classes: [Symbol], aliases: true)["cache"]
+    redis_conf = YAML.safe_load(ERB.new(File.read(Rails.root.join("config", "redis.yml"))).result, permitted_classes: [ Symbol ], aliases: true)["cache"]
     redis_conf[:url] = "redis://" + redis_conf[:host] + "/" + redis_conf[:db].to_s
     config.cache_store = :redis_cache_store, redis_conf
 

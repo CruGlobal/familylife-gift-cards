@@ -6,8 +6,8 @@ ActiveAdmin.register Batch do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-	permit_params :description, :contact, :gift_card_type, :price, :registrations_available, :begin_use_date, :end_use_date, :expiration_date,
-		:associated_product, :isbn, :gl_code, :dept
+  permit_params :description, :contact, :gift_card_type, :price, :registrations_available, :begin_use_date, :end_use_date, :expiration_date,
+    :associated_product, :isbn, :gl_code, :dept
 
   index do
     column :id
@@ -43,8 +43,8 @@ ActiveAdmin.register Batch do
       input :isbn
 
       if GiftCard::PAID_TYPES.include?(f.object.gift_card_type)
-         input :gl_code
-         input :dept
+        input :gl_code
+        input :dept
       end
     end
 

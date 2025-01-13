@@ -3,7 +3,7 @@ class CreateGiftCards < ActiveRecord::Migration[7.2]
     create_table :gift_cards do |t|
       t.integer :issuance_id
       t.integer :batch_id
-      t.decimal :price, :precision => 8, :scale => 2
+      t.decimal :price, precision: 8, scale: 2
       t.string :gift_card_type
       t.string :certificate
       t.datetime :expiration_date

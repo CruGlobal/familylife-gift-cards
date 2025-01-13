@@ -4,7 +4,7 @@ class CreateBatches < ActiveRecord::Migration[7.2]
       t.string :description
       t.string :contact
       t.string :gift_card_type
-      t.decimal :price, :precision => 8, :scale => 2
+      t.decimal :price, precision: 8, scale: 2
       t.integer :registrations_available
 
       t.datetime :begin_use_date

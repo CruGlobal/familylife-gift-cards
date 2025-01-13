@@ -1,6 +1,6 @@
 class Api::V1::GiftCardsController < Api::V1::ApplicationController
   def show
-    gift_card = GiftCard.find_by(certificate: params[:id]) 
+    gift_card = GiftCard.find_by(certificate: params[:id])
 
     render json: gift_card
   end
@@ -21,4 +21,3 @@ class Api::V1::GiftCardsController < Api::V1::ApplicationController
     render json: gift_card
   end
 end
-

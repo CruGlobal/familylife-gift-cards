@@ -45,7 +45,7 @@ class Issuance < ApplicationRecord
 
   def create_gift_cards
     allocated_certificates.split(CERTIFICATE_DISPLAY_SEPARATOR).each do |certificate|
-      gift_card = gift_cards.where(certificate: certificate).first_or_initialize 
+      gift_card = gift_cards.where(certificate: certificate).first_or_initialize
       gift_card.registrations_available = batch.registrations_available
       gift_card.price = price
       gift_card.expiration_date = batch.expiration_date
@@ -82,21 +82,21 @@ class Issuance < ApplicationRecord
 
     # pulling all allocated certificate ids instead of a regex isn't ideal, but there shouldn't be many, if any, times there
     # are previewed gift cards issuances while another one is being previewed
-    existing_matching_certificates += Issuance.previewing.where.not(id: self.id).pluck(:allocated_certificates).collect do |allocated_certificates|
+    existing_matching_certificates += Issuance.previewing.where.not(id: id).pluck(:allocated_certificates).collect do |allocated_certificates|
       allocated_certificates.to_s.split(CERTIFICATE_DISPLAY_SEPARATOR).find_all { |certificate| certificate =~ numbering_regex }
     end.flatten
 
-    existing_matching_certificates.collect{ |certificate|
+    existing_matching_certificates.collect { |certificate|
       certificate =~ numbering_regex
       $1.to_i
     }.max || 0
   end
 
   def self.ransackable_attributes(auth_object = nil)
-    %w(status created_at updated_at creator_id issuer_id quantity allocated_certificates numbering gift_cards_id)
+    %w[status created_at updated_at creator_id issuer_id quantity allocated_certificates numbering gift_cards_id]
   end
 
   def self.ransackable_associations(auth_object = nil)
-    %w(creator issuer gift_cards)
+    %w[creator issuer gift_cards]
   end
 end

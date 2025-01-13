@@ -4,15 +4,15 @@ class Api::V1::ApplicationController < ApplicationController
   respond_to :json
 
   skip_forgery_protection
-  #skip_before_action :require_login, raise: false
-  #skip_before_action :check_url
+  # skip_before_action :require_login, raise: false
+  # skip_before_action :check_url
 
   protected
 
   def restrict_access
     api_key = ApiKey.find_by(access_token: oauth_access_token)
     unless api_key
-      render json: {error: "You either didn't pass in an access token, or the token you did pass in was wrong."},
+      render json: { error: "You either didn't pass in an access token, or the token you did pass in was wrong." },
         status: :unauthorized,
         callback: params[:callback]
       return false
@@ -26,7 +26,7 @@ class Api::V1::ApplicationController < ApplicationController
   end
 
   def oauth_access_token
-    @oauth_access_token ||= (params[:access_token] || oauth_access_token_from_header)
+    @oauth_access_token ||= params[:access_token] || oauth_access_token_from_header
   end
 
   # grabs access_token from header if one is present

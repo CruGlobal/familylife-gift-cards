@@ -10,4 +10,3 @@ class CustomAuthorization < ActiveAdmin::AuthorizationAdapter
     end
   end
 end
-

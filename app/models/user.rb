@@ -1,10 +1,10 @@
 class User < ApplicationRecord
-  devise :omniauthable, omniauth_providers: [:oktaoauth]
+  devise :omniauthable, omniauth_providers: [ :oktaoauth ]
 
   strip_attributes only: %i[username first_name last_name email]
 
   def self.ransackable_attributes(auth_object = nil)
-    [:first_name, :last_name]
+    [ :first_name, :last_name ]
   end
 
   def self.ransackable_associations(auth_object = nil)
@@ -32,7 +32,7 @@ class User < ApplicationRecord
   end
 
   def name
-    [first_name, last_name].join(" ")
+    [ first_name, last_name ].join(" ")
   end
   alias_method :full_name, :name
 end

@@ -3,7 +3,7 @@ class GiftCard < ApplicationRecord
   TYPE_PAID_FULL_PRICE = "paid_full_price"
   TYPE_PAID_OTHER = "paid_other"
   TYPE_DEPT = "type_dept"
-  PAID_TYPES = [TYPE_PAID_HALF_PRICE, TYPE_PAID_FULL_PRICE, TYPE_PAID_OTHER]
+  PAID_TYPES = [ TYPE_PAID_HALF_PRICE, TYPE_PAID_FULL_PRICE, TYPE_PAID_OTHER ]
 
   TYPE_DESCRIPTIONS = {
     TYPE_PAID_HALF_PRICE => "Paid, Half",
@@ -18,11 +18,11 @@ class GiftCard < ApplicationRecord
   validates :certificate, uniqueness: true
 
   def self.ransackable_attributes(auth_object = nil)
-    %w(certificate expiration_date registrations_available associated_product certificate_value gl_code created_at updated_at 
-        issuance_id gift_card_type_id isbn department_number batch batch_id price gift_card_type)
+    %w[certificate expiration_date registrations_available associated_product certificate_value gl_code created_at updated_at
+      issuance_id gift_card_type_id isbn department_number batch batch_id price gift_card_type]
   end
 
   def self.ransackable_associations(auth_object = nil)
-    %w(batch batch_id issuance issuance_id gift_card_type_id)
+    %w[batch batch_id issuance issuance_id gift_card_type_id]
   end
 end
