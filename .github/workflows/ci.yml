@@ -56,35 +56,46 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    # services:
-    #  redis:
-    #    image: redis
-    #    ports:
-    #      - 6379:6379
-    #    options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
-    steps:
-      - name: Install packages
-        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y google-chrome-stable curl libjemalloc2 libvips sqlite3
+    env:
+      DB_PORT_5432_TCP_ADDR_TEST: localhost
+      DB_ENV_POSTGRESQL_USER_TEST: postgres
+      DB_ENV_POSTGRESQL_PASS_TEST: postgres
+      DB_ENV_POSTGRESQL_DB_TEST: postgres
+      RAILS_ENV: test
 
-      - name: Checkout code
-        uses: actions/checkout@v4
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Check out files
+        uses: actions/checkout@v2
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: .ruby-version
           bundler-cache: true
-
-      - name: Run tests
         env:
-          RAILS_ENV: test
-          # REDIS_URL: redis://localhost:6379/0
-        run: bin/rails db:test:prepare test test:system
+          BUNDLE_GEMS__CONTRIBSYS__COM: ${{ secrets.BUNDLE_GEMS__CONTRIBSYS__COM }}
 
-      - name: Keep screenshots from failed system tests
-        uses: actions/upload-artifact@v4
-        if: failure()
+      - name: Set up DB
+        run: |
+          bundle exec rails db:create
+          bundle exec rails db:structure:load
+
+      - name: Install yarn dependencies
+        run: yarn --ignore-engines
+
+      - name: RSpec tests
+        run: bundle exec rspec --color
+
+      - name: Codecov upload
+        uses: codecov/codecov-action@v2
         with:
-          name: screenshots
-          path: ${{ github.workspace }}/tmp/screenshots
-          if-no-files-found: ignore
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
