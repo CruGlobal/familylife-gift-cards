@@ -69,6 +69,7 @@ end
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "rspec-rails"
+  gem "simplecov-cobertura", require: false
 end
 
 gem "activeadmin", "~> 3.2"
