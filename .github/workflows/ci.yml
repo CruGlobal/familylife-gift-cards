@@ -62,6 +62,7 @@ jobs:
       DB_ENV_POSTGRESQL_PASS_TEST: postgres
       DB_ENV_POSTGRESQL_DB_TEST: postgres
       STORAGE_REDIS_DB_INDEX: 15
+      SESSION_REDIS_DB_INDEX: 15
       SESSION_REDIS_HOST: localhost
       SESSION_REDIS_PORT: 6379
       RAILS_ENV: test
