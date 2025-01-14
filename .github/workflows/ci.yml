@@ -57,9 +57,11 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      DB_PORT_5432_TCP_ADDR_TEST: localhost
-      DB_ENV_POSTGRESQL_USER_TEST: postgres
-      DB_ENV_POSTGRESQL_PASS_TEST: postgres
+      BUNDLE_WITHOUT: production
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      DB_PORT_5432_TCP_ADDR: localhost
+      DB_ENV_POSTGRESQL_USER: postgres
+      DB_ENV_POSTGRESQL_PASS: postgres
       DB_ENV_POSTGRESQL_DB_TEST: postgres
       STORAGE_REDIS_DB_INDEX: 15
       SESSION_REDIS_DB_INDEX: 15
@@ -71,10 +73,15 @@ jobs:
       postgres:
         image: postgres:13
         env:
-          POSTGRES_PASSWORD: postgres
+          POSTGRES_PASSWORD: ${{ env.DB_ENV_POSTGRESQL_PASS }}
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
         ports:
           - 5432:5432
+      redis:
+        image: redis
+        options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
+        ports:
+          - 6379:6379
 
     steps:
       - name: Check out files
