@@ -38,16 +38,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_07_060614) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "authentications", force: :cascade do |t|
-    t.integer "person_id"
-    t.string "provider"
-    t.string "uid"
-    t.string "token"
-    t.string "username"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "batches", force: :cascade do |t|
     t.string "description"
     t.string "contact"
