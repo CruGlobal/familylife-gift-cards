@@ -4,12 +4,12 @@ ActiveAdmin.register GiftCard do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-  permit_params :issuance_id, :gift_card_type_id, :certificate, :expiration_date, :registrations_available, :associated_product, :certificate_value, :gl_code, :created_at, :updated_at, :isbn
+  permit_params :issuance_id, :gift_card_type, :certificate, :expiration_date, :registrations_available, :associated_product, :gl_code, :created_at, :updated_at, :isbn
   #
   # or
   #
   # permit_params do
-  #   permitted = [:expiration_date, :registrations_available, :associated_product, :certificate_value, :gl_code, :certificate]
+  #   permitted = [:expiration_date, :registrations_available, :associated_product, :gl_code, :certificate]
   #   permitted << :other if params[:action] == 'create' && current_user.admin?
   #   permitted
   # end

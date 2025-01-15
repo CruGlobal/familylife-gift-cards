@@ -93,7 +93,7 @@ class Issuance < ApplicationRecord
   end
 
   def self.ransackable_attributes(auth_object = nil)
-    %w[status created_at updated_at creator_id issuer_id quantity allocated_certificates numbering gift_cards_id]
+    %w[status created_at updated_at creator_id issuer_id quantity allocated_certificates gift_cards_id]
   end
 
   def self.ransackable_associations(auth_object = nil)

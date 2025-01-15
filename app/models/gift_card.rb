@@ -18,11 +18,11 @@ class GiftCard < ApplicationRecord
   validates :certificate, uniqueness: true
 
   def self.ransackable_attributes(auth_object = nil)
-    %w[certificate expiration_date registrations_available associated_product certificate_value gl_code created_at updated_at
-      issuance_id gift_card_type_id isbn department_number batch batch_id price gift_card_type]
+    %w[certificate expiration_date registrations_available associated_product gl_code created_at updated_at
+      issuance_id gift_card_type isbn batch batch_id price gift_card_type]
   end
 
   def self.ransackable_associations(auth_object = nil)
-    %w[batch batch_id issuance issuance_id gift_card_type_id]
+    %w[batch batch_id issuance issuance_id gift_card_type]
   end
 end

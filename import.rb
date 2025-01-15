@@ -116,7 +116,7 @@ t.save(validate: false)
 
 #=> Batch(id: integer, description: string, regex: string, contact: string, associated_product: string, isbn: string, gl_code: string, dept: string, created_at: datetime, updated_at: datetime)
 
-#=> GiftCard(id: integer, certificate: integer, expiration_date: datetime, registrations_available: integer, associated_product: string, certificate_value: decimal, gl_code: string, created_at: datetime, updated_at: datetime, issuance_id: integer)
+#=> GiftCard(id: integer, certificate: integer, expiration_date: datetime, registrations_available: integer, associated_product: string, gl_code: string, created_at: datetime, updated_at: datetime, issuance_id: integer)
 
 total = `wc -l "FL_EventCertificate_202411261112.csv"`.split(" ").first.to_i
 unknown_batch = Batch.last
