@@ -3,8 +3,8 @@ class Batch < ApplicationRecord
     :associated_product, :isbn
   validates_presence_of :gl_code, :dept, presence: true, if: -> { GiftCard::PAID_TYPES.include?(gift_card_type) }
 
-  def new
-    self.registrations_available ||= 2
+  after_initialize do |batch|
+    batch.registrations_available ||= 2
   end
 
   def to_s
