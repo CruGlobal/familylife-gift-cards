@@ -54,7 +54,7 @@ ActiveAdmin.register Issuance do
     f.semantic_errors
 
     inputs do
-      input :batch, collection: Batch.order(created_at: :desc).collect { |batch| [ batch.to_s, batch.id ] }
+      input :batch, collection: Batch.order(created_at: :desc).collect { |batch| [batch.to_s, batch.id] }
       input :quantity
 
       actions do
@@ -78,7 +78,7 @@ ActiveAdmin.register Issuance do
   #   end
 
   action_item :issue, only: :show, if: -> { resource.previewing? } do
-    link_to "Issue Gift Cards", issue_admin_issuance_path(issuance), method: :put, data: { confirm: "Are you sure?" }
+    link_to "Issue Gift Cards", issue_admin_issuance_path(issuance), method: :put, data: {confirm: "Are you sure?"}
   end
 
   member_action :issue, method: :put do

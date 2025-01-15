@@ -12,7 +12,7 @@ class Api::V1::ApplicationController < ApplicationController
   def restrict_access
     api_key = ApiKey.find_by(access_token: oauth_access_token)
     unless api_key
-      render json: { error: "You either didn't pass in an access token, or the token you did pass in was wrong." },
+      render json: {error: "You either didn't pass in an access token, or the token you did pass in was wrong."},
         status: :unauthorized,
         callback: params[:callback]
       return false

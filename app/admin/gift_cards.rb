@@ -14,7 +14,7 @@ ActiveAdmin.register GiftCard do
   #   permitted
   # end
 
-  actions :all, except: [ :new ]
+  actions :all, except: [:new]
 
   index do
     selectable_column

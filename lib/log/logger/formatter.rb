@@ -8,7 +8,7 @@ module Log
       def _call(severity, time, progname, data)
         request = data.delete(:request)
         if request
-          data[:network] = { client: { ip: request.ip } }
+          data[:network] = {client: {ip: request.ip}}
           data[:amzn_trace_id] = request.headers["X-Amzn-Trace-Id"]
           data[:request_id] = request.uuid
         end

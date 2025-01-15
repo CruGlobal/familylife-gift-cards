@@ -8,7 +8,7 @@ class Issuance < ApplicationRecord
   belongs_to :batch
   has_many :gift_cards
 
-  validates :quantity, numericality: { only_integer: true }
+  validates :quantity, numericality: {only_integer: true}
   delegate :price, to: :batch, allow_nil: true
   delegate :gift_card_type, to: :batch, allow_nil: true
 
