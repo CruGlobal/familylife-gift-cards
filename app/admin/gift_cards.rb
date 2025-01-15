@@ -4,7 +4,7 @@ ActiveAdmin.register GiftCard do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-  permit_params :issuance_id, :gift_card_type, :certificate, :expiration_date, :registrations_available, :associated_product, :gl_code, :created_at, :updated_at, :isbn
+  permit_params :price, :issuance_id, :gift_card_type, :certificate, :expiration_date, :registrations_available, :associated_product, :gl_code, :created_at, :updated_at, :isbn
   #
   # or
   #
@@ -23,10 +23,7 @@ ActiveAdmin.register GiftCard do
     column :batch
     column :issuance
     column :certificate
-    number_column "Value", :certificate_value, as: :currency, unit: "$", sortable: :certificate_value
-    # column "Value", :certificate_value do |gift_card|
-    #  number_to_currency(gift_card.certificate_value)
-    # end
+    number_column "Value", :price, as: :currency, unit: "$", sortable: :price
     column :expiration_date
     column "Reg'ns Avail" do |gift_card|
       gift_card.registrations_available
