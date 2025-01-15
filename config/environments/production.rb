@@ -56,7 +56,7 @@ Rails.application.configure do
   #  .then { |logger| ActiveSupport::TaggedLogging.new(logger) }
 
   # Prepend all log lines with the following tags.
-  config.log_tags = [ :request_id ]
+  config.log_tags = [:request_id]
 
   # "info" includes generic and useful information about system operation, but avoids logging too much
   # information to avoid inadvertent exposure of personally identifiable information (PII). If you
@@ -82,6 +82,6 @@ Rails.application.configure do
   #   /.*\.example\.com/ # Allow requests from subdomains like `www.example.com`
   # ]
   # Skip DNS rebinding protection for the default health check endpoint.
-  config.host_authorization = { exclude: ->(request) { request.path == "/monitors/lb" } }
+  config.host_authorization = {exclude: ->(request) { request.path == "/monitors/lb" }}
   config.hosts << ENV.fetch("SITE_HOST")
 end

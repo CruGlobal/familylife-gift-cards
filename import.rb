@@ -132,7 +132,7 @@ initial_issuances = Batch.all.collect do |batch|
   issuance.update_column(:status, "issued")
   issuance = Issuance.find(issuance.id)
 
-  [ batch, issuance ]
+  [batch, issuance]
 end.to_h
 
 all_batches = Batch.all
@@ -175,6 +175,6 @@ end
 
 GiftCard.import(gift_cards)
 
-Issuance.where(quantity: [ nil, 0 ]).each do |i|
+Issuance.where(quantity: [nil, 0]).each do |i|
   i.update(quantity: i.gift_cards.count)
 end
