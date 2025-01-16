@@ -1,4 +1,7 @@
 ActiveAdmin.register Batch do
+  RELOAD_JS_BASED_ON_GIFT_CARD_TYPE = %|var params = new URLSearchParams(location.search); params.set('gift_card_type', $('#batch_gift_card_type').val()); window.location.search = params.toString();|
+  RELOAD_JS_HINT = "Changing this value will reload the form to ensure the correct fields are present."
+
   actions :all, except: :destroy
 
   # See permitted parameters documentation:
@@ -29,22 +32,27 @@ ActiveAdmin.register Batch do
 
   form do |f|
     f.semantic_errors
+    f.object.gift_card_type ||= params[:gift_card_type]
 
     inputs do
-      input :description
-      input :contact
-      input :gift_card_type, as: :select, collection: GiftCard::TYPE_DESCRIPTIONS.invert
-      input :price
-      input :registrations_available
-      input :begin_use_date, as: :date_time_picker
-      input :end_use_date, as: :date_time_picker
-      input :expiration_date, as: :date_time_picker
-      input :associated_product
-      input :isbn
+      input :gift_card_type, as: :select, collection: GiftCard::TYPE_DESCRIPTIONS.invert, input_html: { onchange: RELOAD_JS_BASED_ON_GIFT_CARD_TYPE }, hint: RELOAD_JS_HINT
+      if f.object.gift_card_type.present? || params[:gift_card_type].present?
+        input :description
+        input :contact
+        if GiftCard::PAID_TYPES.include?(f.object.gift_card_type)
+          input :price
+        end
+        input :registrations_available
+        input :associated_product
+        input :isbn
+        input :begin_use_date, as: :date_time_picker
+        input :end_use_date, as: :date_time_picker
+        input :expiration_date, as: :date_time_picker
 
-      if GiftCard::PAID_TYPES.include?(f.object.gift_card_type)
-        input :gl_code
-        input :dept
+        if GiftCard::TYPE_DEPT == f.object.gift_card_type
+          input :gl_code
+          input :dept
+        end
       end
     end
 
