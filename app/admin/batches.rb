@@ -1,7 +1,4 @@
 ActiveAdmin.register Batch do
-  RELOAD_JS_BASED_ON_GIFT_CARD_TYPE = %|var params = new URLSearchParams(location.search); params.set('gift_card_type', $('#batch_gift_card_type').val()); window.location.search = params.toString();|
-  RELOAD_JS_HINT = "Changing this value will reload the form to ensure the correct fields are present."
-
   actions :all, except: :destroy
 
   # See permitted parameters documentation:
@@ -35,7 +32,7 @@ ActiveAdmin.register Batch do
     f.object.gift_card_type ||= params[:gift_card_type]
 
     inputs do
-      input :gift_card_type, as: :select, collection: GiftCard::TYPE_DESCRIPTIONS.invert, input_html: { onchange: RELOAD_JS_BASED_ON_GIFT_CARD_TYPE }, hint: RELOAD_JS_HINT
+      input :gift_card_type, as: :select, collection: GiftCard::TYPE_DESCRIPTIONS.invert, input_html: {onchange: reload_js_based_on_gift_card_type}, hint: reload_js_hint
       if f.object.gift_card_type.present? || params[:gift_card_type].present?
         input :description
         input :contact
@@ -49,7 +46,7 @@ ActiveAdmin.register Batch do
         input :end_use_date, as: :date_time_picker
         input :expiration_date, as: :date_time_picker
 
-        if GiftCard::TYPE_DEPT == f.object.gift_card_type
+        if f.object.gift_card_type == GiftCard::TYPE_DEPT
           input :gl_code
           input :dept
         end
@@ -57,5 +54,13 @@ ActiveAdmin.register Batch do
     end
 
     f.actions
+  end
+
+  def reload_js_based_on_gift_card_type
+    %|var params = new URLSearchParams(location.search); params.set('gift_card_type', $('#batch_gift_card_type').val()); window.location.search = params.toString();|
+  end
+
+  def reload_js_hint
+    "Changing this value will reload the form to ensure the correct fields are present."
   end
 end

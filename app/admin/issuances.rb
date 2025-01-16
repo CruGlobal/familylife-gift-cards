@@ -54,7 +54,7 @@ ActiveAdmin.register Issuance do
     f.semantic_errors
 
     inputs do
-      input :batch, collection: Batch.order(created_at: :desc).collect { |batch| [batch.to_s, batch.id] }
+      input :batch, collection: Batch.where("expiration_date > ?", Date.today).order(created_at: :desc).collect { |batch| [batch.to_s, batch.id] }
       input :quantity
 
       actions do
@@ -83,11 +83,11 @@ ActiveAdmin.register Issuance do
 
   member_action :issue, method: :put do
     resource.issue!
-    resource.update(issuer_id: current_admin_user.id, issued_at: Time.now)
+    resource.update(issuer_id: current_user.id, issued_at: Time.now)
     redirect_to admin_issuance_path(resource), notice: "Gift cards issued!"
   end
 
   before_create do |issuance|
-    issuance.creator = current_admin_user
+    issuance.creator = current_user
   end
 end
