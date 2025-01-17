@@ -76,7 +76,7 @@ class Issuance < ApplicationRecord
   # Department cards should lead with dept id
   # Paid cards should lead with price then add a 0 if it's 3 digits to make it 4
   def leading_certificate_4_digit_number
-    number = batch.gift_card_type == GiftCard::TYPE_DEPT ? batch.dept.to_s : batch.price.to_i.to_s
+    number = (batch.gift_card_type == GiftCard::TYPE_DEPT) ? batch.dept.to_s : batch.price.to_i.to_s
     number.first(4).ljust(4, "0")
   end
 
