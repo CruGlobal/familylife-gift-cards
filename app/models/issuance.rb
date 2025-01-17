@@ -39,7 +39,7 @@ class Issuance < ApplicationRecord
     if previewing?
       "Gift Card Issuance (Preview)"
     elsif issued?
-      "Issuance by #{issuer.full_name} #{created_at} (#{quantity} @ $#{price})"
+      "Issuance by #{issuer.full_name} #{created_at} (#{quantity}#{" @ $#{price}" if price})"
     end
   end
 
@@ -64,7 +64,7 @@ class Issuance < ApplicationRecord
 
     allocated_certificates = []
     quantity.times do
-      certificate = "#{price}#{next_number.to_s.rjust(5, "0")}0"
+      certificate = "#{leading_certificate_4_digit_number}#{next_number.to_s.rjust(5, "0")}0"
       allocated_certificates << certificate
       next_number += 1
     end
@@ -72,10 +72,18 @@ class Issuance < ApplicationRecord
     self.allocated_certificates = allocated_certificates.join(CERTIFICATE_DISPLAY_SEPARATOR)
   end
 
+  # The first 4 digits of the card depends on the card type
+  # Department cards should lead with dept id
+  # Paid cards should lead with price then add a 0 if it's 3 digits to make it 4
+  def leading_certificate_4_digit_number
+    number = batch.gift_card_type == GiftCard::TYPE_DEPT ? batch.dept.to_s : batch.price.to_i.to_s
+    number.first(4).ljust(4, "0")
+  end
+
   # largest number in certificates represented in x's in format, for all certificates matching format
   def largest_existing_number_in_certificate
-    numbering_regex = /^#{batch.price}(\d\d\d\d\d)0$/
-    numbering_regex_str = "^#{batch.price}(\\d\\d\\d\\d\\d)0"
+    numbering_regex = /^#{leading_certificate_4_digit_number}(\d\d\d\d\d)0$/
+    numbering_regex_str = "^#{leading_certificate_4_digit_number}(\\d\\d\\d\\d\\d)0"
 
     # look for all numbers that match numbering
     existing_matching_certificates = GiftCard.all.where("certificate ~* ?", numbering_regex_str).pluck(:certificate)
