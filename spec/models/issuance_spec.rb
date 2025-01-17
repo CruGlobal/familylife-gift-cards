@@ -6,16 +6,16 @@ RSpec.describe Issuance, type: :model do
 
   context "#ransackable_attributes" do
     it "returns a list of attributes" do
-      Batch.ransackable_attributes.each do |attribute|
-        expect(Batch.column_names).to include(attribute)
+      Issuance.ransackable_attributes.each do |attribute|
+        expect(Issuance.column_names).to include(attribute)
       end
     end
   end
 
   context "#ransackable_associations" do
     it "returns a list of associations" do
-      batch = Batch.new
-      Batch.ransackable_attributes.each do |attribute|
+      batch = Issuance.new
+      Issuance.ransackable_attributes.each do |attribute|
         expect(batch.respond_to?(attribute)).to be true
       end
     end
