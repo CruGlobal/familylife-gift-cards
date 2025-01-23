@@ -67,4 +67,20 @@ RSpec.describe User, type: :model do
       expect(user.name).to eq("#{first_name} #{last_name}")
     end
   end
+  context "#ransackable_attributes" do
+    it "returns a list of attributes" do
+      User.ransackable_attributes.each do |attribute|
+        expect(User.column_names).to include(attribute)
+      end
+    end
+  end
+
+  context "#ransackable_associations" do
+    it "returns a list of associations" do
+      batch = User.new
+      User.ransackable_associations.each do |attribute|
+        expect(batch.respond_to?(attribute)).to be true
+      end
+    end
+  end
 end
