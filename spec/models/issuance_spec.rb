@@ -3,6 +3,7 @@ require "rails_helper"
 RSpec.describe Issuance, type: :model do
   let(:batch) { create(:batch_dept) }
   let(:issuance) { create(:issuance, batch: batch) }
+  let!(:gift_card_1) { create(:gift_card, batch: batch, issuance: issuance) }
 
   context "#ransackable_attributes" do
     it "returns a list of attributes" do
@@ -64,6 +65,44 @@ RSpec.describe Issuance, type: :model do
       expect do
         issuance.create_gift_cards
       end.to change(GiftCard, :count).by(issuance.quantity)
+
+      gift_card = GiftCard.last
+      batch = gift_card.batch
+      expect(gift_card.registrations_available).to eq(batch.registrations_available)
+      expect(gift_card.price).to eq(batch.price)
+      expect(gift_card.expiration_date).to eq(batch.expiration_date)
+      expect(gift_card.issuance).to eq(issuance)
+      expect(gift_card.batch).to eq(batch)
+      expect(gift_card.isbn).to eq(batch.isbn)
+      expect(gift_card.associated_product).to eq(batch.associated_product)
+      expect(gift_card.gl_code).to eq(batch.gl_code)
     end
+  end
+
+  context "#set_allocated_certificates" do
+    it "sets allocated_certificates text field" do
+      issuance.update(quantity: 5)
+      allow(issuance).to receive(:largest_existing_number_in_certificate).and_return(5)
+      issuance.set_allocated_certificates
+      expect(issuance.allocated_certificates).to eq("DEP0000060, DEP0000070, DEP0000080, DEP0000090, DEP0000100")
+    end
+  end
+
+  context "#leading_certificate_4_digit_number" do
+    let(:dept_batch) { create(:batch_dept) }
+    let(:dept_issuance) { create(:issuance, batch: dept_batch) }
+    let(:paid_batch) { create(:batch_paid) }
+    let(:paid_issuance) { create(:issuance, batch: paid_batch, quantity: 5) }
+
+    it "uses batch for dept cards" do
+      expect(dept_issuance.leading_certificate_4_digit_number).to eq("DEP0")
+    end
+
+    it "uses price for paid cards" do
+      expect(paid_issuance.leading_certificate_4_digit_number).to eq("3000")
+    end
+  end
+
+  context "#largest_existing_number_in_certificate" do
   end
 end

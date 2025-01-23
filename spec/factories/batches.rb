@@ -6,11 +6,16 @@ FactoryBot.define do
     expiration_date { 3.months.from_now }
     associated_product { "prod123" }
 
+    factory :batch_paid do
+      gift_card_type { GiftCard::TYPE_PAID_FULL_PRICE }
+      price { 300.00 }
+    end
+
     factory :batch_dept do
       description { "Description Batch Dept" }
       gift_card_type { GiftCard::TYPE_DEPT }
       gl_code { "gl_code" }
-      dept { "gl_code" }
+      dept { "DEP" }
     end
   end
 end
