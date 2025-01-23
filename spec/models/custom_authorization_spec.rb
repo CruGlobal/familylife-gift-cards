@@ -23,7 +23,7 @@ RSpec.describe CustomAuthorization, type: :model do
     end
 
     it "allows writing other objects" do
-      expect(batch_auth.authorized?(:read, batch)).to be true
+      expect(batch_auth.authorized?(:write, batch)).to be true
     end
   end
 end
