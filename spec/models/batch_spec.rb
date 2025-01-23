@@ -24,7 +24,7 @@ RSpec.describe Batch, type: :model do
   context "#ransackable_associations" do
     it "returns a list of associations" do
       batch = Batch.new
-      Batch.ransackable_attributes.each do |attribute|
+      Batch.ransackable_associations.each do |attribute|
         expect(batch.respond_to?(attribute)).to be true
       end
     end

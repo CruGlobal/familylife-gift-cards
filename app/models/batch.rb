@@ -4,6 +4,8 @@ class Batch < ApplicationRecord
   validates_presence_of :gl_code, :dept, presence: true, if: -> { gift_card_type == GiftCard::TYPE_DEPT }
   validates :gift_card_type, inclusion: {in: GiftCard::TYPE_DESCRIPTIONS.keys}
 
+  has_many :issuances
+
   after_initialize do |batch|
     batch.registrations_available ||= 2
   end
