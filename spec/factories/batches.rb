@@ -7,6 +7,7 @@ FactoryBot.define do
     associated_product { "prod123" }
 
     factory :batch_paid do
+      description { "Description Batch Paid Full Price" }
       gift_card_type { GiftCard::TYPE_PAID_FULL_PRICE }
       price { 300.00 }
     end

@@ -16,7 +16,7 @@ RSpec.describe Batch, type: :model do
   context "#ransackable_attributes" do
     it "returns a list of attributes" do
       Batch.ransackable_attributes.each do |attribute|
-        expect(Batch.column_names).to include(attribute)
+        expect(Batch.column_names + ["issuances_id_eq"]).to include(attribute)
       end
     end
   end

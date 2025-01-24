@@ -15,7 +15,7 @@ class Batch < ApplicationRecord
   end
 
   def self.ransackable_attributes(auth_object = nil)
-    %w[description gift_card_type price registrations_available begin_use_date end_use_date expiration_date associated_product isbn gl_code dept contact]
+    %w[description gift_card_type price registrations_available begin_use_date end_use_date expiration_date associated_product isbn gl_code dept contact issuances_id_eq]
   end
 
   def self.ransackable_associations(auth_object = nil)

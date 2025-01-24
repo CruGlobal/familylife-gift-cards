@@ -61,21 +61,10 @@ ActiveAdmin.register Issuance do
         unless issuance.issued?
           f.action :submit, as: :button, label: "Save and Preview Issuance"
         end
-        # f.action :cancel, as: :link, label: 'Cancel', class: 'cancel-link'
         cancel_link
-        #         if %w(new create).include?(params[:action])
-        #           submit_tag(:create, "Preview Issuance")
-        #         elsif params[:action] == "edit" && issuance.preview?
-        #           submit_tag(:update, "Preview Issuance")
-        #         end
-        #         cancel_link
       end
     end
   end
-
-  #   action_item :destroy, only: :show, if: -> { resource.preview? } do
-  #     link_to 'Delete Issuance', issue_admin_issuance_path(issuance), method: :destroy, data: { confirm: 'Are you sure?' }
-  #   end
 
   action_item :issue, only: :show, if: -> { resource.previewing? } do
     link_to "Issue Gift Cards", issue_admin_issuance_path(issuance), method: :put, data: {confirm: "Are you sure?"}
