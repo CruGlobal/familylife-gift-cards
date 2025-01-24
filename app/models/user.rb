@@ -4,7 +4,7 @@ class User < ApplicationRecord
   strip_attributes only: %i[username first_name last_name email]
 
   def self.ransackable_attributes(auth_object = nil)
-    [:first_name, :last_name]
+    ["first_name", "last_name"]
   end
 
   def self.ransackable_associations(auth_object = nil)

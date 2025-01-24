@@ -1,0 +1,86 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: true
+
+      - name: Bundle audit
+        run: bundle exec bundle audit check --update ${{ vars.CVE_IGNORES && format('--ignore {0}', vars.CVE_IGNORES) }}
+
+      - name: Brakeman
+        run: bundle exec brakeman -A -q --ensure-latest --no-pager
+
+      - name: StandardRB
+        run: bundle exec standardrb --format simple
+
+  test:
+    runs-on: ubuntu-latest
+
+    env:
+      BUNDLE_WITHOUT: production
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      DB_PORT_5432_TCP_ADDR: localhost
+      DB_ENV_POSTGRESQL_USER: postgres
+      DB_ENV_POSTGRESQL_PASS: postgres
+      DB_ENV_POSTGRESQL_DB_TEST: postgres
+      STORAGE_REDIS_DB_INDEX: 15
+      SESSION_REDIS_DB_INDEX: 15
+      SESSION_REDIS_HOST: localhost
+      SESSION_REDIS_PORT: 6379
+      RAILS_ENV: test
+
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_PASSWORD: ${{ env.DB_ENV_POSTGRESQL_PASS }}
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+        ports:
+          - 5432:5432
+      redis:
+        image: redis
+        options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
+        ports:
+          - 6379:6379
+
+    steps:
+      - name: Check out files
+        uses: actions/checkout@v2
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+        env:
+          BUNDLE_GEMS__CONTRIBSYS__COM: ${{ secrets.BUNDLE_GEMS__CONTRIBSYS__COM }}
+
+      - name: Set up DB
+        run: |
+          bundle exec rails db:create
+          bundle exec rails db:schema:load
+
+      - name: Install yarn dependencies
+        run: yarn --ignore-engines
+
+      - name: RSpec tests
+        run: bundle exec rspec --color
+
+      - name: Codecov upload
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true

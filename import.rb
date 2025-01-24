@@ -116,7 +116,7 @@ t.save(validate: false)
 
 #=> Batch(id: integer, description: string, regex: string, contact: string, associated_product: string, isbn: string, gl_code: string, dept: string, created_at: datetime, updated_at: datetime)
 
-#=> GiftCard(id: integer, certificate: integer, expiration_date: datetime, registrations_available: integer, associated_product: string, certificate_value: decimal, gl_code: string, created_at: datetime, updated_at: datetime, issuance_id: integer)
+#=> GiftCard(id: integer, certificate: integer, expiration_date: datetime, registrations_available: integer, associated_product: string, gl_code: string, created_at: datetime, updated_at: datetime, issuance_id: integer)
 
 total = `wc -l "FL_EventCertificate_202411261112.csv"`.split(" ").first.to_i
 unknown_batch = Batch.last
@@ -132,7 +132,7 @@ initial_issuances = Batch.all.collect do |batch|
   issuance.update_column(:status, "issued")
   issuance = Issuance.find(issuance.id)
 
-  [ batch, issuance ]
+  [batch, issuance]
 end.to_h
 
 all_batches = Batch.all
@@ -144,16 +144,15 @@ end
 
 i = 0
 CSV.foreach("FL_EventCertificate_202411261112.csv", headers: true) do |row|
-
   puts("[#{i += 1}/#{total}, #{(i / total.to_f * 100).round(2)}%]")
 
   # ex: #<CSV::Row "certificateId":"1200033120" "expirationDate":"2014-12-31 00:00:00.000" "motivationCode":"EW8000CERT" "kinteraPriceCode":"850179" "familyLifePriceCode":"FLRATE    " "numberRegistrations":"2" "associatedProduct":"PAS16653" "certificateValue":"0.0000" "priceToGuest":"0.0000" "payeeAmount":"150.0000" "glCode":"63301.4210.25000" "accountNumber":"8257008.0" "addDate":"2012-06-15 16:38:54.180" "modifiedDate":nil "payType":"GL">
   #
-  #byebug
-  batch = all_batches.detect{ |batch| /#{regexes[batch.description]}/.match(row["certificateId"]) } || unknown_batch
+  # byebug
+  batch = all_batches.detect { |batch| /#{regexes[batch.description]}/.match(row["certificateId"]) } || unknown_batch
   issuance = initial_issuances[batch]
 
-  #gc = GiftCard.where(certificate_id: row["certificateId"]).first_or_initialize
+  # gc = GiftCard.where(certificate_id: row["certificateId"]).first_or_initialize
   gc = GiftCard.new
   gc.certificate = row["certificateId"]
   gc.issuance = issuance
@@ -162,10 +161,10 @@ CSV.foreach("FL_EventCertificate_202411261112.csv", headers: true) do |row|
   gc.registrations_available = row["numberRegistrations"].to_i
   gc.price = row["certificateValue"].to_d
   gc.gl_code = row["glCode"]
-  gc.created_at = DateTime.parse(row["addDate"]) if row["created_at"]
+  gc.created_at = DateTime.parse(row["addDate"]) if row["addDate"]
   gc.updated_at = DateTime.parse(row["modifiedDate"]) if row["modifiedDate"]
   gc.associated_product = row["associatedProduct"]
-  
+
   gift_cards << gc
 
   if gift_cards.length >= 10000

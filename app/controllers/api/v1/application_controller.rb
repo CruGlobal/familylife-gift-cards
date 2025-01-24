@@ -4,8 +4,8 @@ class Api::V1::ApplicationController < ApplicationController
   respond_to :json
 
   skip_forgery_protection
-  #skip_before_action :require_login, raise: false
-  #skip_before_action :check_url
+  # skip_before_action :require_login, raise: false
+  # skip_before_action :check_url
 
   protected
 
@@ -26,7 +26,7 @@ class Api::V1::ApplicationController < ApplicationController
   end
 
   def oauth_access_token
-    @oauth_access_token ||= (params[:access_token] || oauth_access_token_from_header)
+    @oauth_access_token ||= params[:access_token] || oauth_access_token_from_header
   end
 
   # grabs access_token from header if one is present

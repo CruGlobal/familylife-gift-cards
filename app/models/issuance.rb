@@ -8,7 +8,7 @@ class Issuance < ApplicationRecord
   belongs_to :batch
   has_many :gift_cards
 
-  validates :quantity, numericality: { only_integer: true }
+  validates :quantity, numericality: {only_integer: true}
   delegate :price, to: :batch, allow_nil: true
   delegate :gift_card_type, to: :batch, allow_nil: true
 
@@ -39,13 +39,13 @@ class Issuance < ApplicationRecord
     if previewing?
       "Gift Card Issuance (Preview)"
     elsif issued?
-      "Issuance by #{issuer.full_name} #{created_at} (#{quantity} @ $#{price})"
+      "Issuance by #{issuer.full_name} #{created_at} (#{quantity}#{" @ $#{price}" if price})"
     end
   end
 
   def create_gift_cards
     allocated_certificates.split(CERTIFICATE_DISPLAY_SEPARATOR).each do |certificate|
-      gift_card = gift_cards.where(certificate: certificate).first_or_initialize 
+      gift_card = gift_cards.where(certificate: certificate).first_or_initialize
       gift_card.registrations_available = batch.registrations_available
       gift_card.price = price
       gift_card.expiration_date = batch.expiration_date
@@ -64,7 +64,7 @@ class Issuance < ApplicationRecord
 
     allocated_certificates = []
     quantity.times do
-      certificate = "#{price}#{next_number.to_s.rjust(5, "0")}0"
+      certificate = "#{leading_certificate_4_digit_number}#{next_number.to_s.rjust(5, "0")}0"
       allocated_certificates << certificate
       next_number += 1
     end
@@ -72,31 +72,39 @@ class Issuance < ApplicationRecord
     self.allocated_certificates = allocated_certificates.join(CERTIFICATE_DISPLAY_SEPARATOR)
   end
 
+  # The first 4 digits of the card depends on the card type
+  # Department cards should lead with dept id
+  # Paid cards should lead with price then add a 0 if it's 3 digits to make it 4
+  def leading_certificate_4_digit_number
+    number = (batch.gift_card_type == GiftCard::TYPE_DEPT) ? batch.dept.to_s : batch.price.to_i.to_s
+    number.first(4).ljust(4, "0")
+  end
+
   # largest number in certificates represented in x's in format, for all certificates matching format
   def largest_existing_number_in_certificate
-    numbering_regex = /^#{batch.price}(\d\d\d\d\d)0$/
-    numbering_regex_str = "^#{batch.price}(\\d\\d\\d\\d\\d)0"
+    numbering_regex = /^#{leading_certificate_4_digit_number}(\d\d\d\d\d)0$/
+    numbering_regex_str = "^#{leading_certificate_4_digit_number}(\\d\\d\\d\\d\\d)0"
 
     # look for all numbers that match numbering
     existing_matching_certificates = GiftCard.all.where("certificate ~* ?", numbering_regex_str).pluck(:certificate)
 
     # pulling all allocated certificate ids instead of a regex isn't ideal, but there shouldn't be many, if any, times there
     # are previewed gift cards issuances while another one is being previewed
-    existing_matching_certificates += Issuance.previewing.where.not(id: self.id).pluck(:allocated_certificates).collect do |allocated_certificates|
+    existing_matching_certificates += Issuance.previewing.where.not(id: id).pluck(:allocated_certificates).collect do |allocated_certificates|
       allocated_certificates.to_s.split(CERTIFICATE_DISPLAY_SEPARATOR).find_all { |certificate| certificate =~ numbering_regex }
     end.flatten
 
-    existing_matching_certificates.collect{ |certificate|
+    existing_matching_certificates.collect { |certificate|
       certificate =~ numbering_regex
       $1.to_i
     }.max || 0
   end
 
   def self.ransackable_attributes(auth_object = nil)
-    %w(status created_at updated_at creator_id issuer_id quantity allocated_certificates numbering gift_cards_id)
+    %w[status created_at updated_at creator_id issuer_id quantity allocated_certificates]
   end
 
   def self.ransackable_associations(auth_object = nil)
-    %w(creator issuer gift_cards)
+    %w[creator issuer gift_cards]
   end
 end

@@ -6,8 +6,8 @@ ActiveAdmin.register Batch do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-	permit_params :description, :contact, :gift_card_type, :price, :registrations_available, :begin_use_date, :end_use_date, :expiration_date,
-		:associated_product, :isbn, :gl_code, :dept
+  permit_params :description, :contact, :gift_card_type, :price, :registrations_available, :begin_use_date, :end_use_date, :expiration_date,
+    :associated_product, :isbn, :gl_code, :dept
 
   index do
     column :id
@@ -29,22 +29,27 @@ ActiveAdmin.register Batch do
 
   form do |f|
     f.semantic_errors
+    f.object.gift_card_type ||= params[:gift_card_type]
 
     inputs do
-      input :description
-      input :contact
-      input :gift_card_type, as: :select, collection: GiftCard::TYPE_DESCRIPTIONS.invert
-      input :price
-      input :registrations_available
-      input :begin_use_date, as: :date_time_picker
-      input :end_use_date, as: :date_time_picker
-      input :expiration_date, as: :date_time_picker
-      input :associated_product
-      input :isbn
+      input :gift_card_type, as: :select, collection: GiftCard::TYPE_DESCRIPTIONS.invert, input_html: {onchange: reload_js_based_on_gift_card_type}, hint: reload_js_hint
+      if f.object.gift_card_type.present? || params[:gift_card_type].present?
+        input :description
+        input :contact
+        if GiftCard::PAID_TYPES.include?(f.object.gift_card_type)
+          input :price
+        end
+        input :registrations_available
+        input :associated_product
+        input :isbn
+        input :begin_use_date, as: :date_time_picker
+        input :end_use_date, as: :date_time_picker
+        input :expiration_date, as: :date_time_picker
 
-      if GiftCard::PAID_TYPES.include?(f.object.gift_card_type)
-         input :gl_code
-         input :dept
+        if f.object.gift_card_type == GiftCard::TYPE_DEPT
+          input :gl_code, hint: "(63301-dept-project)"
+          input :dept, hint: "(4-digit dept, ex 4240)"
+        end
       end
     end
 
