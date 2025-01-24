@@ -7,9 +7,9 @@ class CreateBatches < ActiveRecord::Migration[7.2]
       t.decimal :price, precision: 8, scale: 2
       t.integer :registrations_available
 
-      t.datetime :begin_use_date
-      t.datetime :end_use_date
-      t.datetime :expiration_date
+      t.date :begin_use_date
+      t.date :end_use_date
+      t.date :expiration_date
 
       t.string :associated_product
       t.string :isbn # optional

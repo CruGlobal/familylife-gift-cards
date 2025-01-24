@@ -47,8 +47,8 @@ ActiveAdmin.register Batch do
         input :expiration_date, as: :date_time_picker
 
         if f.object.gift_card_type == GiftCard::TYPE_DEPT
-          input :gl_code
-          input :dept
+          input :gl_code, hint: "(63301-dept-project)"
+          input :dept, hint: "(4-digit dept, ex 4240)"
         end
       end
     end
