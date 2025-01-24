@@ -11,9 +11,9 @@ RSpec.describe GiftCard, type: :model do
 
   context "#ransackable_associations" do
     it "returns a list of associations" do
-      batch = GiftCard.new
+      gift_card = GiftCard.new
       GiftCard.ransackable_associations.each do |attribute|
-        expect(batch.respond_to?(attribute)).to be true
+        expect(gift_card.respond_to?(attribute)).to be true
       end
     end
   end

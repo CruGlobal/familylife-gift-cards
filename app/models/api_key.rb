@@ -3,7 +3,11 @@ class ApiKey < ApplicationRecord
   after_initialize :generate_access_token
 
   def self.ransackable_attributes(auth_object = nil)
-    ["access_token", "created_at", "id", "id_value", "updated_at", "user"]
+    ["access_token", "created_at", "id", "updated_at", "user"]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    []
   end
 
   private

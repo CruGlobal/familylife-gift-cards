@@ -19,7 +19,7 @@ class GiftCard < ApplicationRecord
 
   def self.ransackable_attributes(auth_object = nil)
     %w[certificate expiration_date registrations_available associated_product gl_code created_at updated_at
-      issuance_id gift_card_type isbn batch batch_id price gift_card_type]
+      issuance_id gift_card_type isbn batch_id price gift_card_type]
   end
 
   def self.ransackable_associations(auth_object = nil)

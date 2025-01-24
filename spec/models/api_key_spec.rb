@@ -11,17 +11,17 @@ RSpec.describe ApiKey, type: :model do
 
   context "#ransackable_attributes" do
     it "returns a list of attributes" do
-      Batch.ransackable_attributes.each do |attribute|
-        expect(Batch.column_names).to include(attribute)
+      ApiKey.ransackable_attributes.each do |attribute|
+        expect(ApiKey.column_names).to include(attribute)
       end
     end
   end
 
   context "#ransackable_associations" do
     it "returns a list of associations" do
-      batch = Batch.new
-      Batch.ransackable_associations.each do |attribute|
-        expect(batch.respond_to?(attribute)).to be true
+      api_key = ApiKey.new
+      ApiKey.ransackable_associations.each do |attribute|
+        expect(api_key.respond_to?(attribute)).to be true
       end
     end
   end
