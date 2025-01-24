@@ -10,6 +10,8 @@ class CreateGiftCards < ActiveRecord::Migration[7.2]
       t.integer :registrations_available
       t.string :associated_product
       t.string :gl_code
+      t.string :isbn
+
 
       t.timestamps
     end
