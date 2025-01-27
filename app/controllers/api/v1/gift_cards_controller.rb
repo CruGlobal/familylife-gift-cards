@@ -17,7 +17,7 @@ class Api::V1::GiftCardsController < Api::V1::ApplicationController
       return
     end
 
-    gift_card.update(registrations_available: gift_card.registrations_available - 1)
+    gift_card.update(registrations_available: gift_card.registrations_available - 2)
     render json: gift_card
   end
 end
