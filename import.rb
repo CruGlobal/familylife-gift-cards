@@ -1,3 +1,6 @@
+#fn = "FL_EventCertificate_202411261112.csv"
+fn = "FL_EventCertificate_202501241219.csv"
+
 #=> Batch(id: integer, description: string, regex: string, contact: string, associated_product: string, isbn: string, gl_code: string, dept: string, created_at: datetime, updated_at: datetime)
 
 # User(id: integer, sso_guid: uuid, username: string, first_name: string, last_name: string, email: string, has_access: boolean, created_at: datetime, updated_at: datetime)
@@ -118,7 +121,7 @@ t.save(validate: false)
 
 #=> GiftCard(id: integer, certificate: integer, expiration_date: datetime, registrations_available: integer, associated_product: string, gl_code: string, created_at: datetime, updated_at: datetime, issuance_id: integer)
 
-total = `wc -l "FL_EventCertificate_202411261112.csv"`.split(" ").first.to_i
+total = `wc -l "#{fn}"`.split(" ").first.to_i
 unknown_batch = Batch.last
 
 GiftCard.delete_all
@@ -143,7 +146,7 @@ regexes.each_pair do |k, v|
 end
 
 i = 0
-CSV.foreach("FL_EventCertificate_202411261112.csv", headers: true) do |row|
+CSV.foreach(fn, headers: true) do |row|
   puts("[#{i += 1}/#{total}, #{(i / total.to_f * 100).round(2)}%]")
 
   # ex: #<CSV::Row "certificateId":"1200033120" "expirationDate":"2014-12-31 00:00:00.000" "motivationCode":"EW8000CERT" "kinteraPriceCode":"850179" "familyLifePriceCode":"FLRATE    " "numberRegistrations":"2" "associatedProduct":"PAS16653" "certificateValue":"0.0000" "priceToGuest":"0.0000" "payeeAmount":"150.0000" "glCode":"63301.4210.25000" "accountNumber":"8257008.0" "addDate":"2012-06-15 16:38:54.180" "modifiedDate":nil "payType":"GL">
