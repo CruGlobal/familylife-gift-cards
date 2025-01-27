@@ -1,4 +1,4 @@
-#fn = "FL_EventCertificate_202411261112.csv"
+# fn = "FL_EventCertificate_202411261112.csv"
 fn = "FL_EventCertificate_202501241219.csv"
 
 #=> Batch(id: integer, description: string, regex: string, contact: string, associated_product: string, isbn: string, gl_code: string, dept: string, created_at: datetime, updated_at: datetime)
