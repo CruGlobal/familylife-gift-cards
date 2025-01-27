@@ -72,9 +72,9 @@ RSpec.describe Admin::BatchesController, type: :controller do
         description: Faker::Lorem.word,
         registrations_available: 2,
         associated_product: "prod",
-        begin_use_date: "2125-01-24 04:00",
-        end_use_date: "2125-01-24 04:00",
-        expiration_date: "2125-01-24 04:00",
+        begin_use_date: "2125-01-24",
+        end_use_date: "2125-01-24",
+        expiration_date: "2125-01-24",
         gl_code: "gl code",
         dept: "dept"
       }
@@ -91,8 +91,9 @@ RSpec.describe Admin::BatchesController, type: :controller do
       expect(new_batch.description).to eq(batch_attributes[:description])
       expect(new_batch.registrations_available).to eq(batch_attributes[:registrations_available])
       expect(new_batch.associated_product).to eq(batch_attributes[:associated_product])
-      expect(new_batch.begin_use_date).to eq(batch_attributes[:begin_use_date])
-      expect(new_batch.expiration_date).to eq(batch_attributes[:expiration_date])
+      expect(new_batch.begin_use_date.strftime("%Y-%m-%d")).to eq(batch_attributes[:begin_use_date])
+      expect(new_batch.end_use_date.strftime("%Y-%m-%d")).to eq(batch_attributes[:end_use_date])
+      expect(new_batch.expiration_date.strftime("%Y-%m-%d")).to eq(batch_attributes[:expiration_date])
       expect(new_batch.gl_code).to eq(batch_attributes[:gl_code])
       expect(new_batch.dept).to eq(batch_attributes[:dept])
       expect(response).to redirect_to(admin_batch_path(new_batch))

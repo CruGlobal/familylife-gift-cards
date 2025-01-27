@@ -42,9 +42,9 @@ ActiveAdmin.register Batch do
         input :registrations_available
         input :associated_product
         input :isbn
-        input :begin_use_date, as: :date_picker, input_html: { style: "width: 120px" }
-        input :end_use_date, as: :date_picker, input_html: { style: "width: 120px" }
-        input :expiration_date, as: :date_picker, input_html: { style: "width: 120px" }
+        input :begin_use_date, as: :date_picker, input_html: {style: "width: 120px"}
+        input :end_use_date, as: :date_picker, input_html: {style: "width: 120px"}
+        input :expiration_date, as: :date_picker, input_html: {style: "width: 120px"}
 
         if f.object.gift_card_type == GiftCard::TYPE_DEPT
           input :gl_code, hint: "(63301-dept-project)"
