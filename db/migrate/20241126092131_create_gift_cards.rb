@@ -12,7 +12,6 @@ class CreateGiftCards < ActiveRecord::Migration[7.2]
       t.string :gl_code
       t.string :isbn
 
-
       t.timestamps
     end
   end
