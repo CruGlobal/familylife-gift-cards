@@ -65,17 +65,24 @@ RSpec.describe SessionsController, type: :controller do
 
   context "logger" do
     # print something to logger to get code coverage on lib/logger
+    # this is a bit contrived, but I want to get full coverage, so I call _call directly on the formatter
     it "prints" do
       Rails.logger.info("Test")
+
+      Rails.logger = Log::Logger.new($stdout)
+      Rails.logger.formatter = Log::Logger::FormatterReadable.new
+      Rails.logger.info("Test")
+      RequestStruct = Struct.new(:ip, :headers, :uuid)
+      request = RequestStruct.new("1.2.3.4", {}, "12345")
+      Rails.logger.formatter._call(1, Time.now, "familylife-gift-cards", {request: request })
 
       # with aws info
       ENV["PROJECT_NAME"] = "familylife-gift-cards"
       ENV["AWS_EXECUTION_ENV"] = "test"
-      Rails.logger.info("Test")
-
-      # with different formatter
+      Rails.logger = Log::Logger.new($stdout)
       Rails.logger.formatter = Log::Logger::Formatter.new
       Rails.logger.info("Test")
+      Rails.logger.formatter._call(1, Time.now, "familylife-gift-cards", {request: request })
     end
   end
 end
