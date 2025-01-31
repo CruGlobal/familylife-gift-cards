@@ -4,8 +4,6 @@ class Api::V1::ApplicationController < ApplicationController
   respond_to :json
 
   skip_forgery_protection
-  # skip_before_action :require_login, raise: false
-  # skip_before_action :check_url
 
   protected
 
@@ -19,10 +17,6 @@ class Api::V1::ApplicationController < ApplicationController
     end
     @current_user = api_key.user
     true
-  end
-
-  def current_user
-    @current_user || "API"
   end
 
   def oauth_access_token

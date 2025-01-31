@@ -26,6 +26,16 @@ describe Api::V1::GiftCardsController do
       get :show, params: {id: "not existing", format: :json}
       expect(response).to have_http_status(404)
     end
+
+    it "rejects an invalid HTTP_AUTHORIZATIO" do
+      get :show, params: {access_token: "invalid", id: api_key.access_token, format: :json}
+      expect(response).to have_http_status(401)
+    end
+
+    it "rejects an invalid HTTP_AUTHORIZATIO" do
+      get :show, params: {id: api_key.access_token, format: :json}
+      expect(response).to have_http_status(401)
+    end
   end
 
   context "#update" do
