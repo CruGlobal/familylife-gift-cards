@@ -20,6 +20,12 @@ describe Api::V1::GiftCardsController do
       get :show, params: {access_token: api_key.access_token, id: "not existing", format: :json}
       expect(response).to have_http_status(404)
     end
+
+    it "finds token from HTTP_AUTHORIZATION" do
+      request.env["HTTP_AUTHORIZATION"] = "token #{api_key.access_token}"
+      get :show, params: {id: "not existing", format: :json}
+      expect(response).to have_http_status(404)
+    end
   end
 
   context "#update" do
