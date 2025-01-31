@@ -22,7 +22,6 @@ ActiveAdmin.register Issuance do
   filter :status
   filter :quantitiy
   filter :allocated_certificates
-  filter :numbering
   filter :issued_at
   filter :created_at
   filter :updated_at
