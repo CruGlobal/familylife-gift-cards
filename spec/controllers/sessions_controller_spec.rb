@@ -2,6 +2,8 @@
 
 require "rails_helper"
 
+RequestStruct = Struct.new(:ip, :headers, :uuid)
+
 RSpec.describe SessionsController, type: :controller do
   before do
     @sso_guid = SecureRandom.uuid
@@ -72,9 +74,8 @@ RSpec.describe SessionsController, type: :controller do
       Rails.logger = Log::Logger.new($stdout)
       Rails.logger.formatter = Log::Logger::FormatterReadable.new
       Rails.logger.info("Test")
-      RequestStruct = Struct.new(:ip, :headers, :uuid)
       request = RequestStruct.new("1.2.3.4", {}, "12345")
-      Rails.logger.formatter._call(1, Time.now, "familylife-gift-cards", {request: request })
+      Rails.logger.formatter._call(1, Time.now, "familylife-gift-cards", {request: request})
 
       # with aws info
       ENV["PROJECT_NAME"] = "familylife-gift-cards"
@@ -82,7 +83,7 @@ RSpec.describe SessionsController, type: :controller do
       Rails.logger = Log::Logger.new($stdout)
       Rails.logger.formatter = Log::Logger::Formatter.new
       Rails.logger.info("Test")
-      Rails.logger.formatter._call(1, Time.now, "familylife-gift-cards", {request: request })
+      Rails.logger.formatter._call(1, Time.now, "familylife-gift-cards", {request: request})
     end
   end
 end
