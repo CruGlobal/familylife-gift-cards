@@ -15,7 +15,7 @@ describe Api::V1::GiftCardsController do
       get :show, params: {access_token: api_key.access_token, id: gift_card.certificate, format: :json}
       expect(JSON.parse(response.body)).to eq(JSON.parse(gift_card.to_json))
     end
-    
+
     it "handles gift card not found" do
       get :show, params: {access_token: api_key.access_token, id: "not existing", format: :json}
       expect(response).to have_http_status(404)
