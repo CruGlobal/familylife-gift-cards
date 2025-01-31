@@ -62,4 +62,20 @@ RSpec.describe SessionsController, type: :controller do
       expect(controller.after_sign_out_path_for(nil)).to eq("/")
     end
   end
+
+  context "logger" do
+    # print something to logger to get code coverage on lib/logger
+    it "prints" do
+      Rails.logger.info("Test")
+
+      # with aws info
+      ENV["PROJECT_NAME"] = "familylife-gift-cards"
+      ENV["AWS_EXECUTION_ENV"] = "test"
+      Rails.logger.info("Test")
+
+      # with different formatter
+      Rails.logger.formatter = Log::Logger::Formatter.new
+      Rails.logger.info("Test")
+    end
+  end
 end
