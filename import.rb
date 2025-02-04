@@ -3,7 +3,7 @@ fn = "FL_EventCertificate_202501241219.csv"
 
 #=> Batch(id: integer, description: string, regex: string, contact: string, associated_product: string, isbn: string, gl_code: string, dept: string, created_at: datetime, updated_at: datetime)
 
-# User(id: integer, sso_guid: uuid, username: string, first_name: string, last_name: string, email: string, has_access: boolean, created_at: datetime, updated_at: datetime)
+# User(id: integer, sso_guid: uuid, username: string, first_name: string, last_name: string, email: string, created_at: datetime, updated_at: datetime)
 system = User.where(sso_guid: "initial", first_name: "Initial", last_name: "Import").first_or_create
 
 Batch.class_eval do
