@@ -19,4 +19,4 @@ production:
 
 test:
   <<: *default
-  database: <%= ENV['DB_ENV_POSTGRESQL_DB_TEST'] || 'cap_test' %>
+  database: <%= ENV['DB_ENV_POSTGRESQL_DB_TEST'] || 'familylife-gift-cards_test' %>

@@ -1,69 +1,59 @@
-# syntax = docker/dockerfile:1
+# RUBY_VERSION set by build.sh based on .ruby-version file
+ARG RUBY_VERSION
+FROM public.ecr.aws/docker/library/ruby:${RUBY_VERSION}-alpine
 
-# This Dockerfile is designed for production, not development. Use with Kamal or build'n'run by hand:
-# docker build -t my-app .
-# docker run -d -p 80:80 -p 443:443 --name my-app -e RAILS_MASTER_KEY=<value from config/master.key> my-app
+# DataDog logs source
+LABEL com.datadoghq.ad.logs='[{"source": "ruby"}]'
 
-# Make sure RUBY_VERSION matches the Ruby version in .ruby-version
-ARG RUBY_VERSION=3.3.6
-FROM docker.io/library/ruby:$RUBY_VERSION-slim AS base
+# Create web application user to run as non-root
+RUN addgroup -g 1000 webapp \
+    && adduser -u 1000 -G webapp -s /bin/sh -D webapp \
+    && mkdir -p /home/webapp/app
+WORKDIR /home/webapp/app
 
-# Rails app lives here
-WORKDIR /rails
+# Upgrade alpine packages (useful for security fixes)
+RUN apk upgrade --no-cache
 
-# Install base packages
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl libjemalloc2 libvips sqlite3 && \
-    rm -rf /var/lib/apt/lists /var/cache/apt/archives
+# Install rails/app dependencies
+RUN apk --no-cache add libc6-compat git postgresql-libs tzdata
 
-# Set production environment
-ENV RAILS_ENV="production" \
-    BUNDLE_DEPLOYMENT="1" \
-    BUNDLE_PATH="/usr/local/bundle" \
-    BUNDLE_WITHOUT="development"
+# Copy dependency definitions and lock files
+COPY Gemfile Gemfile.lock .ruby-version ./
 
-# Throw-away build stage to reduce size of final image
-FROM base AS build
+# Install bundler version which created the lock file and configure it
+RUN gem install bundler -v $(awk '/^BUNDLED WITH/ { getline; print $1; exit }' Gemfile.lock) \
+    && bundle config --global gems.contribsys.com
 
-# Install packages needed to build gems
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential git pkg-config && \
-    rm -rf /var/lib/apt/lists /var/cache/apt/archives
+# Install build-dependencies, then install gems, subsequently removing build-dependencies
+RUN apk --no-cache add --virtual build-deps build-base postgresql-dev \
+    && bundle install --jobs 20 --retry 2 \
+    && apk del build-deps
 
-# Install application gems
-COPY Gemfile Gemfile.lock ./
-RUN bundle install && \
-    rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
-    bundle exec bootsnap precompile --gemfile
-
-# Copy application code
+# Copy the application
 COPY . .
 
-# Precompile bootsnap code for faster boot times
-RUN bundle exec bootsnap precompile app/ lib/
+# Environment required to build the application
+ARG RAILS_ENV=production
+ARG SESSION_REDIS_DB_INDEX=1
+ARG SESSION_REDIS_HOST=localhost
+ARG SESSION_REDIS_PORT=6379
+ARG STORAGE_REDIS_DB_INDEX=1
+ARG STORAGE_REDIS_HOST=localhost
+ARG STORAGE_REDIS_PORT=6379
+ARG SECRET_KEY_BASE=asdf
+ARG SITE_URL=asdf
+ARG SITE_HOST=asdf
 
-# Precompiling assets for production without requiring secret RAILS_MASTER_KEY
-RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
+# Compile assets
+RUN RAILS_ENV=$RAILS_ENV bundle exec rails assets:clobber assets:precompile \
+    && chown -R webapp:webapp /home/webapp/
 
+# Define volumes used by ECS to share public html and extra nginx config with nginx container
+VOLUME /home/webapp/app/public
+VOLUME /home/webapp/app/nginx-conf
 
+# Run container process as non-root user
+USER webapp
 
-
-# Final stage for app image
-FROM base
-
-# Copy built artifacts: gems, application
-COPY --from=build "${BUNDLE_PATH}" "${BUNDLE_PATH}"
-COPY --from=build /rails /rails
-
-# Run and own only the runtime files as a non-root user for security
-RUN groupadd --system --gid 1000 rails && \
-    useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash && \
-    chown -R rails:rails db log storage tmp
-USER 1000:1000
-
-# Entrypoint prepares the database.
-ENTRYPOINT ["/rails/bin/docker-entrypoint"]
-
-# Start the server by default, this can be overwritten at runtime
-EXPOSE 3000
-CMD ["./bin/rails", "server"]
+# Command to start rails
+CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]

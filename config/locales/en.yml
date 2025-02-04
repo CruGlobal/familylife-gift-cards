@@ -28,4 +28,15 @@
 #       enabled: "ON"
 
 en:
-  hello: "Hello world"
+  flash:
+    admin:
+      issuances:
+        create:
+          notice: "Please review the allocated gift card ids and click \"Issue Gift Cards\" on the right to create the gift cards. Please be patient as creating the gift cards can take a moment."
+  date:
+    formats:
+      long: "%m-%d-%Y"
+  time:
+    formats:
+      long: "%m-%d-%Y %H:%M:%S"
+
