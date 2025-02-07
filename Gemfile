@@ -87,7 +87,7 @@ gem "activerecord-import"
 gem "dogstatsd-ruby", "~> 5.3"
 gem "ddtrace", "~> 1.4"
 
-gem "ougai", "~> 1.7"
+gem "ougai", "~> 2.0"
 gem "amazing_print"
 gem "strip_attributes"
 gem "bundler-audit"
