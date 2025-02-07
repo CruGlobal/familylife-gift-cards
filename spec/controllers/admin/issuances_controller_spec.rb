@@ -39,6 +39,19 @@ RSpec.describe Admin::IssuancesController, type: :controller do
     end
   end
 
+  describe "GET show" do
+    it "renders form for new" do
+      issuance = create(:issuance, batch: batch_paid)
+      issuance.update_column(:status, "previewing")
+
+      # Test
+      get :show, params: {id: issuance.id}
+
+      # Verify
+      expect(response.status).to eq(200)
+    end
+  end
+
   describe "POST create" do
     it "creates issuance" do
       # Prepare
