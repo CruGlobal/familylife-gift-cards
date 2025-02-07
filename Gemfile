@@ -84,7 +84,7 @@ gem "activeadmin_addons"
 
 gem "aasm"
 gem "activerecord-import"
-gem "dogstatsd-ruby", "~> 5.3"
+gem "dogstatsd-ruby", "~> 5.6"
 gem "ddtrace", "~> 1.4"
 
 gem "ougai", "~> 1.7"
