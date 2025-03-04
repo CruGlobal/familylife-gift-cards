@@ -1,5 +1,7 @@
 source "https://rubygems.org"
 
+ruby file: ".ruby-version"
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.2.2"
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
@@ -7,7 +9,6 @@ gem "sprockets-rails"
 gem "sassc-rails"
 
 gem "pg"
-gem "dotenv"
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
@@ -18,7 +19,13 @@ gem "stimulus-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 # Use Redis adapter to run Action Cable in production
-# gem "redis", ">= 4.0.1"
+gem "redis", "~> 4.0"
+gem "redis-actionpack"
+
+# login-related
+gem "devise"
+gem "omniauth-oktaoauth", github: "CruGlobal/omniauth-oktaoauth"
+gem "omniauth-rails_csrf_protection"
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
@@ -27,7 +34,7 @@ gem "jbuilder"
 # gem "bcrypt", "~> 3.1.7"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem "tzinfo-data", platforms: %i[ windows jruby ]
+gem "tzinfo-data", platforms: %i[windows jruby]
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
@@ -37,26 +44,22 @@ gem "bootsnap", require: false
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
+  gem "debug", platforms: %i[mri windows], require: "debug/prelude"
 
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem "brakeman", require: false
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
-end
 
-group :development do
-  # Use console on exceptions pages [https://github.com/rails/web-console]
-  gem "web-console"
-
-  gem "standard"
-
+  # More test-related gems
+  gem "database_cleaner-active_record"
   gem "dotenv-rails"
-
-  gem "pry-byebug"
-  gem "pry-remote"
-  gem "pry-stack_explorer"
+  gem "factory_bot_rails"
+  gem "faker"
+  gem "rspec-rails"
+  gem "simplecov-cobertura", require: false
+  gem "webmock"
 end
 
 group :test do
@@ -65,4 +68,28 @@ group :test do
   gem "selenium-webdriver"
 end
 
+group :development do
+  # Use console on exceptions pages [https://github.com/rails/web-console]
+  gem "web-console"
+
+  gem "standard"
+
+  gem "pry-byebug"
+  gem "pry-remote"
+  gem "pry-stack_explorer"
+end
+
 gem "activeadmin", "~> 3.2"
+gem "activeadmin_addons"
+
+gem "aasm"
+gem "activerecord-import"
+gem "dogstatsd-ruby", "~> 5.3"
+gem "ddtrace", "~> 1.4"
+
+gem "ougai", "~> 1.7"
+gem "amazing_print"
+gem "strip_attributes"
+gem "bundler-audit"
+gem "rails-html-sanitizer", "~> 1.6"
+gem "lograge"
