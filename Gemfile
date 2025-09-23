@@ -6,7 +6,6 @@ ruby file: ".ruby-version"
 gem "rails", "~> 7.2.2"
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
-gem "sassc-rails"
 
 gem "pg"
 
@@ -84,8 +83,8 @@ gem "activeadmin_addons"
 
 gem "aasm"
 gem "activerecord-import"
-gem "dogstatsd-ruby", "~> 5.3"
-gem "ddtrace", "~> 1.4"
+gem "dogstatsd-ruby"
+gem "datadog"
 
 gem "ougai", "~> 1.7"
 gem "amazing_print"
@@ -93,3 +92,6 @@ gem "strip_attributes"
 gem "bundler-audit"
 gem "rails-html-sanitizer", "~> 1.6"
 gem "lograge"
+gem "sassc-embedded"
+# https://github.com/sass-contrib/sass-embedded-host-ruby/issues/210
+gem "google-protobuf", force_ruby_platform: true if RUBY_PLATFORM.include?("linux-musl")
