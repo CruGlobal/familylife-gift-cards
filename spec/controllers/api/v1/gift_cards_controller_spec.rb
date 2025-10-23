@@ -39,26 +39,30 @@ describe Api::V1::GiftCardsController do
   end
 
   context "#validate" do
+    let(:gift_card_with_registrations) { create(:gift_card, certificate: "cert_valid", registrations_available: 10) }
+    let(:gift_card_no_registrations) { create(:gift_card, certificate: "cert_no_reg", registrations_available: 1) }
+    let(:gift_card_expired) { create(:gift_card, certificate: "cert_expired", registrations_available: 10, expiration_date: Date.yesterday) }
+    let(:gift_card_expires_today) { create(:gift_card, certificate: "cert_today", registrations_available: 10, expiration_date: Date.today) }
+    let(:gift_card_expires_future) { create(:gift_card, certificate: "cert_future", registrations_available: 10, expiration_date: Date.tomorrow) }
+    let(:gift_card_no_expiration) { create(:gift_card, certificate: "cert_no_exp", registrations_available: 10, expiration_date: nil) }
+
     it "returns valid: true when gift card has registrations available" do
-      gift_card.update(registrations_available: 10)
-      get :validate, params: {access_token: api_key.access_token, id: gift_card.certificate, format: :json}
+      get :validate, params: {access_token: api_key.access_token, id: gift_card_with_registrations.certificate, format: :json}
       expect(response).to have_http_status(200)
       parsed_response = JSON.parse(response.body)
       expect(parsed_response["valid"]).to eq(true)
-      expect(parsed_response["gift_card"]["certificate"]).to eq(gift_card.certificate)
+      expect(parsed_response["gift_card"]["certificate"]).to eq(gift_card_with_registrations.certificate)
       expect(parsed_response["gift_card"]["registrations_available"]).to eq(10)
     end
 
     it "does not modify registrations_available" do
-      gift_card.update(registrations_available: 10)
-      get :validate, params: {access_token: api_key.access_token, id: gift_card.certificate, format: :json}
-      gift_card.reload
-      expect(gift_card.registrations_available).to eq(10)
+      get :validate, params: {access_token: api_key.access_token, id: gift_card_with_registrations.certificate, format: :json}
+      gift_card_with_registrations.reload
+      expect(gift_card_with_registrations.registrations_available).to eq(10)
     end
 
     it "returns valid: false when no registrations available" do
-      gift_card.update(registrations_available: 1)
-      get :validate, params: {access_token: api_key.access_token, id: gift_card.certificate, format: :json}
+      get :validate, params: {access_token: api_key.access_token, id: gift_card_no_registrations.certificate, format: :json}
       expect(response).to have_http_status(403)
       parsed_response = JSON.parse(response.body)
       expect(parsed_response["valid"]).to eq(false)
@@ -71,13 +75,12 @@ describe Api::V1::GiftCardsController do
     end
 
     it "rejects an invalid access token" do
-      get :validate, params: {access_token: "invalid", id: gift_card.certificate, format: :json}
+      get :validate, params: {access_token: "invalid", id: gift_card_with_registrations.certificate, format: :json}
       expect(response).to have_http_status(401)
     end
 
     it "returns valid: false when gift card has expired" do
-      gift_card.update(registrations_available: 10, expiration_date: Date.yesterday)
-      get :validate, params: {access_token: api_key.access_token, id: gift_card.certificate, format: :json}
+      get :validate, params: {access_token: api_key.access_token, id: gift_card_expired.certificate, format: :json}
       expect(response).to have_http_status(403)
       parsed_response = JSON.parse(response.body)
       expect(parsed_response["valid"]).to eq(false)
@@ -85,24 +88,21 @@ describe Api::V1::GiftCardsController do
     end
 
     it "returns valid: true when gift card expires today" do
-      gift_card.update(registrations_available: 10, expiration_date: Date.today)
-      get :validate, params: {access_token: api_key.access_token, id: gift_card.certificate, format: :json}
+      get :validate, params: {access_token: api_key.access_token, id: gift_card_expires_today.certificate, format: :json}
       expect(response).to have_http_status(200)
       parsed_response = JSON.parse(response.body)
       expect(parsed_response["valid"]).to eq(true)
     end
 
     it "returns valid: true when gift card expires in the future" do
-      gift_card.update(registrations_available: 10, expiration_date: Date.tomorrow)
-      get :validate, params: {access_token: api_key.access_token, id: gift_card.certificate, format: :json}
+      get :validate, params: {access_token: api_key.access_token, id: gift_card_expires_future.certificate, format: :json}
       expect(response).to have_http_status(200)
       parsed_response = JSON.parse(response.body)
       expect(parsed_response["valid"]).to eq(true)
     end
 
     it "returns valid: true when expiration_date is nil" do
-      gift_card.update(registrations_available: 10, expiration_date: nil)
-      get :validate, params: {access_token: api_key.access_token, id: gift_card.certificate, format: :json}
+      get :validate, params: {access_token: api_key.access_token, id: gift_card_no_expiration.certificate, format: :json}
       expect(response).to have_http_status(200)
       parsed_response = JSON.parse(response.body)
       expect(parsed_response["valid"]).to eq(true)
