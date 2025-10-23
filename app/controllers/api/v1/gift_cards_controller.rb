@@ -18,6 +18,15 @@ class Api::V1::GiftCardsController < Api::V1::ApplicationController
       return
     end
 
+    if @gift_card.expiration_date && @gift_card.expiration_date < Date.today
+      render json: {
+        valid: false,
+        error: "Gift card has expired",
+        status: 403
+      }, status: 403
+      return
+    end
+
     render json: {
       valid: true,
       gift_card: @gift_card
