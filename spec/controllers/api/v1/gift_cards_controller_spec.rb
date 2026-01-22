@@ -119,6 +119,14 @@ describe Api::V1::GiftCardsController do
       gift_card.update(registrations_available: 1)
       put :update, params: {access_token: api_key.access_token, id: gift_card.certificate, format: :json}
       expect(response).to have_http_status(403)
+      expect(JSON.parse(response.body)["error"]).to eq("No registrations available")
+    end
+
+    it "handles an expired gift card" do
+      gift_card.update(registrations_available: 10, expiration_date: 1.day.ago)
+      put :update, params: {access_token: api_key.access_token, id: gift_card.certificate, format: :json}
+      expect(response).to have_http_status(403)
+      expect(JSON.parse(response.body)["error"]).to eq("Gift card has expired")
     end
 
     it "subtracts 2 from registrations_available" do
