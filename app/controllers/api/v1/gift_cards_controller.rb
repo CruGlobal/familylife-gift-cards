@@ -39,7 +39,7 @@ class Api::V1::GiftCardsController < Api::V1::ApplicationController
       render json: {
         error: "No registrations available",
         status: 403
-      }, status: 403
+      }, status: :forbidden
       return
     end
 
@@ -47,7 +47,7 @@ class Api::V1::GiftCardsController < Api::V1::ApplicationController
       render json: {
         error: "Gift card has expired",
         status: 403
-      }, status: 403
+      }, status: :forbidden
       return
     end
 
@@ -64,7 +64,7 @@ class Api::V1::GiftCardsController < Api::V1::ApplicationController
       render json: {
         error: "No gift card found by that certificate",
         status: 404
-      }, status: 404
+      }, status: :not_found
     end
   end
 end
