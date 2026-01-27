@@ -62,7 +62,7 @@ class Api::V1::GiftCardsController < Api::V1::ApplicationController
 
     unless @gift_card
       render json: {
-        error: "No gift card found by that certificate",
+        error: "No gift card found by that number",
         status: 404
       }, status: :not_found
     end
