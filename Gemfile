@@ -83,6 +83,7 @@ gem "activeadmin_addons"
 
 gem "aasm"
 gem "activerecord-import"
+gem "connection_pool", "< 3" # Until Rails 8.1
 gem "dogstatsd-ruby"
 gem "datadog"
 
