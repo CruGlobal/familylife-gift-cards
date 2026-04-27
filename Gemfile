@@ -4,7 +4,6 @@ ruby file: ".ruby-version"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.2.3", ">= 7.2.3.1"
-gem "connection_pool", "~> 2.5"
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 
@@ -84,6 +83,7 @@ gem "activeadmin_addons"
 
 gem "aasm"
 gem "activerecord-import"
+gem "connection_pool", "< 3" # Until Rails 8.1
 gem "dogstatsd-ruby"
 gem "datadog"
 
