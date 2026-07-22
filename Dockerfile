@@ -55,5 +55,12 @@ VOLUME /home/webapp/app/nginx-conf
 # Run container process as non-root user
 USER webapp
 
-# Command to start rails
-CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
+# Thruster listens on port 80 in front of Puma.
+EXPOSE 80
+
+# Silence Thruster's per-request slog JSON: it would double-log into the same
+# stdout as the app's Ougai/Datadog stream (foreign schema, doubled volume).
+ENV LOG_REQUESTS="false"
+
+# Command to start rails behind Thruster (HTTP caching/compression + X-Sendfile).
+CMD ["./bin/thrust", "bundle", "exec", "puma", "-C", "config/puma.rb"]
