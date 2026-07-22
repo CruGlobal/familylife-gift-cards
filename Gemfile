@@ -4,8 +4,8 @@ ruby file: ".ruby-version"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 8.0.0", ">= 8.0.5"
-# The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
-gem "sprockets-rails"
+# The modern asset pipeline for Rails [https://github.com/rails/propshaft]
+# gem "propshaft" # Not adopted: ActiveAdmin 3.x requires sprockets (revisit at the post-wave AA 4.0 migration); sprockets-rails (below) stays
 
 gem "pg"
 
@@ -35,8 +35,19 @@ gem "omniauth-rails_csrf_protection"
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[windows jruby]
 
+# Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
+# gem "solid_cache" # Not adopted: Rails.cache is :redis_cache_store
+# gem "solid_queue" # Not adopted: no dedicated job backend (Rails default :async adapter)
+# gem "solid_cable" # Not adopted: Action Cable uses the redis adapter
+
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
+
+# Deploy this application anywhere as a Docker container [https://kamal-deploy.org]
+# gem "kamal", require: false # Not adopted: deploys via Docker on AWS ECS
+
+# Add HTTP asset caching/compression and X-Sendfile acceleration to Puma [https://github.com/basecamp/thruster/]
+# gem "thruster", require: false # Adopted in the stacked thruster PR
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
@@ -83,7 +94,7 @@ gem "activeadmin_addons"
 
 gem "aasm"
 gem "activerecord-import"
-gem "connection_pool", "< 3" # Until Rails 8.1
+gem "connection_pool", "< 3" # Conflict with redis_cache_store in Rails < 8.1.2
 gem "dogstatsd-ruby"
 gem "datadog"
 
@@ -93,6 +104,8 @@ gem "strip_attributes"
 gem "bundler-audit"
 gem "rails-html-sanitizer", "~> 1.6"
 gem "lograge"
+# Asset pipeline: staying on sprockets (propshaft declined above — ActiveAdmin 3.x requires sprockets)
+gem "sprockets-rails"
 gem "sassc-embedded"
 # https://github.com/sass-contrib/sass-embedded-host-ruby/issues/210
 gem "google-protobuf", force_ruby_platform: true if RUBY_PLATFORM.include?("linux-musl")
