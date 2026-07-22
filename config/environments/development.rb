@@ -55,6 +55,10 @@ Rails.application.configure do
   # Highlight code that enqueued background job in logs.
   config.active_job.verbose_enqueue_logs = true
 
+  # Suppress logger output for asset requests.
+  # Staying on sprockets (ActiveAdmin 3.x); the 8.0 propshaft skeleton drops this line — restore while on sprockets.
+  config.assets.quiet = true
+
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
 

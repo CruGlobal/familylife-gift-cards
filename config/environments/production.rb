@@ -21,32 +21,46 @@ Rails.application.configure do
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.asset_host = "http://assets.example.com"
 
+  # Do not fall back to assets pipeline if a precompiled asset is missed.
+  # Staying on sprockets (ActiveAdmin 3.x); the 8.0 propshaft skeleton drops this line — restore while on sprockets.
+  config.assets.compile = false
+
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
   # Assume all access to the app is happening through a SSL-terminating reverse proxy.
-  config.assume_ssl = true
+  # Can be used together with config.force_ssl for Strict-Transport-Security and secure cookies.
+  # config.assume_ssl = true
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  config.force_ssl = true
-
-  # Skip http-to-https redirect for the default health check endpoint.
-  # config.ssl_options = { redirect: { exclude: ->(request) { request.path == "/up" } } }
+  # Gated on AWS_EXECUTION_ENV (ECS) so non-ECS boots (e.g. local production) are not forced to HTTPS.
+  if ENV["AWS_EXECUTION_ENV"].present?
+    config.force_ssl = true
+    config.ssl_options = {
+      redirect: {
+        exclude: ->(request) { request.fullpath == "/monitors/lb" }
+      }
+    }
+  end
 
   # Log to STDOUT with the current request id as a default log tag.
-  config.log_tags = [ :request_id ]
-  config.logger   = ActiveSupport::TaggedLogging.logger(STDOUT)
+  # Commented out: the app installs a custom Log::Logger (Ougai-family) in config/application.rb.
+  # TaggedLogging here would override it in production, and config.log_tags is a silent no-op on Log::Logger.
+  # config.log_tags = [ :request_id ]
+  # config.logger   = ActiveSupport::TaggedLogging.logger(STDOUT)
 
   # Change to "debug" to log everything (including potentially personally-identifiable information!)
   config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
 
   # Prevent health checks from clogging up the logs.
-  config.silence_healthcheck_path = "/up"
+  config.silence_healthcheck_path = "/monitors/lb"
 
   # Don't log any deprecations.
   config.active_support.report_deprecations = false
 
   # Replace the default in-process memory cache store with a durable alternative.
+  # NOTE: the cache store is set in config/application.rb (:redis_cache_store); leave this commented
+  # so production.rb (loaded later) does not override it.
   # config.cache_store = :mem_cache_store
 
   # Replace the default in-process and non-durable queuing backend for Active Job.
@@ -57,7 +71,8 @@ Rails.application.configure do
   # config.action_mailer.raise_delivery_errors = false
 
   # Set host to be used by links generated in mailer templates.
-  config.action_mailer.default_url_options = { host: "example.com" }
+  # Commented out: placeholder host; the app configures no production mailer host.
+  # config.action_mailer.default_url_options = { host: "example.com" }
 
   # Specify outgoing SMTP server. Remember to add smtp/* credentials via rails credentials:edit.
   # config.action_mailer.smtp_settings = {
@@ -85,5 +100,6 @@ Rails.application.configure do
   # ]
   #
   # Skip DNS rebinding protection for the default health check endpoint.
-  # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+  config.host_authorization = {exclude: ->(request) { request.path == "/monitors/lb" }}
+  config.hosts << ENV.fetch("SITE_HOST")
 end
