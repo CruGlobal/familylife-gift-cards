@@ -209,33 +209,33 @@ GEM
     formtastic_i18n (0.7.0)
     globalid (1.3.0)
       activesupport (>= 6.1)
-    google-protobuf (4.32.1)
+    google-protobuf (4.35.1)
       bigdecimal
-      rake (>= 13)
-    google-protobuf (4.32.1-aarch64-linux-gnu)
+      rake (~> 13.3)
+    google-protobuf (4.35.1-aarch64-linux-gnu)
       bigdecimal
-      rake (>= 13)
-    google-protobuf (4.32.1-aarch64-linux-musl)
+      rake (~> 13.3)
+    google-protobuf (4.35.1-aarch64-linux-musl)
       bigdecimal
-      rake (>= 13)
-    google-protobuf (4.32.1-arm64-darwin)
+      rake (~> 13.3)
+    google-protobuf (4.35.1-arm64-darwin)
       bigdecimal
-      rake (>= 13)
-    google-protobuf (4.32.1-x86-linux-gnu)
+      rake (~> 13.3)
+    google-protobuf (4.35.1-x86-linux-gnu)
       bigdecimal
-      rake (>= 13)
-    google-protobuf (4.32.1-x86-linux-musl)
+      rake (~> 13.3)
+    google-protobuf (4.35.1-x86-linux-musl)
       bigdecimal
-      rake (>= 13)
-    google-protobuf (4.32.1-x86_64-darwin)
+      rake (~> 13.3)
+    google-protobuf (4.35.1-x86_64-darwin)
       bigdecimal
-      rake (>= 13)
-    google-protobuf (4.32.1-x86_64-linux-gnu)
+      rake (~> 13.3)
+    google-protobuf (4.35.1-x86_64-linux-gnu)
       bigdecimal
-      rake (>= 13)
-    google-protobuf (4.32.1-x86_64-linux-musl)
+      rake (~> 13.3)
+    google-protobuf (4.35.1-x86_64-linux-musl)
       bigdecimal
-      rake (>= 13)
+      rake (~> 13.3)
     has_scope (0.8.2)
       actionpack (>= 5.2)
       activesupport (>= 5.2)
@@ -530,28 +530,28 @@ GEM
     ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
     rubyzip (2.4.1)
-    sass-embedded (1.92.1)
+    sass-embedded (1.102.0)
       google-protobuf (~> 4.31)
       rake (>= 13)
-    sass-embedded (1.92.1-aarch64-linux-gnu)
+    sass-embedded (1.102.0-aarch64-linux-gnu)
       google-protobuf (~> 4.31)
-    sass-embedded (1.92.1-aarch64-linux-musl)
+    sass-embedded (1.102.0-aarch64-linux-musl)
       google-protobuf (~> 4.31)
-    sass-embedded (1.92.1-arm-linux-gnueabihf)
+    sass-embedded (1.102.0-arm-linux-gnueabihf)
       google-protobuf (~> 4.31)
-    sass-embedded (1.92.1-arm-linux-musleabihf)
+    sass-embedded (1.102.0-arm-linux-musleabihf)
       google-protobuf (~> 4.31)
-    sass-embedded (1.92.1-arm64-darwin)
+    sass-embedded (1.102.0-arm64-darwin)
       google-protobuf (~> 4.31)
-    sass-embedded (1.92.1-x86_64-darwin)
+    sass-embedded (1.102.0-x86_64-darwin)
       google-protobuf (~> 4.31)
-    sass-embedded (1.92.1-x86_64-linux-gnu)
+    sass-embedded (1.102.0-x86_64-linux-gnu)
       google-protobuf (~> 4.31)
-    sass-embedded (1.92.1-x86_64-linux-musl)
+    sass-embedded (1.102.0-x86_64-linux-musl)
       google-protobuf (~> 4.31)
     sassc (2.4.0)
       ffi (~> 1.9)
-    sassc-embedded (1.80.5)
+    sassc-embedded (1.80.9)
       sass-embedded (~> 1.80)
     sassc-rails (2.1.2)
       railties (>= 4.0.0)
@@ -783,15 +783,15 @@ CHECKSUMS
   formtastic (5.0.0) sha256=71cc99c8227208f64da8d2b0926d97cef1e5f77e0105047cd57fddeccd3a6416
   formtastic_i18n (0.7.0) sha256=ecef51c9e9030c00f19e69d2483b77f4515c9587d74268b76cf4b6e7988c8e78
   globalid (1.3.0) sha256=05c639ad6eb4594522a0b07983022f04aa7254626ab69445a0e493aa3786ff11
-  google-protobuf (4.32.1) sha256=d9ec3f52a283802055647af5d824dcdfe0a791c6ecbad6a514442f40759015e7
-  google-protobuf (4.32.1-aarch64-linux-gnu) sha256=b2254c50085b86a0395b2adea11d9742fe703a135b67689991dcc03a1c9bc179
-  google-protobuf (4.32.1-aarch64-linux-musl) sha256=a9cdae8e14ccb781b40efb996ec7ca151fe8521c46cfd40e2b05d62867ab555c
-  google-protobuf (4.32.1-arm64-darwin) sha256=ef2b6c138847f03af94eeed58ee8aaf00263dd66490ec659202c06dc3b2f0c29
-  google-protobuf (4.32.1-x86-linux-gnu) sha256=f8509ecd53e2e494222105a2ebf451ab5ac9f4d014ccd7c8c81699984f3295c2
-  google-protobuf (4.32.1-x86-linux-musl) sha256=3214d6025b4e4a995233c6500e38f954dfddffc985bb59d3cfe144d0b965fc00
-  google-protobuf (4.32.1-x86_64-darwin) sha256=2e1fe608d8bbd09514258d84e2a281178214473f95f248ab82e0553c5ab6a8a3
-  google-protobuf (4.32.1-x86_64-linux-gnu) sha256=2d209c1980dbdeb4114c7d839a3305fb78dc90bde42fb9a22974c8a4841e0263
-  google-protobuf (4.32.1-x86_64-linux-musl) sha256=d5314aea8817bd372177205667b4f4442a5884212bcaccb1ba569ec8a1a06ec4
+  google-protobuf (4.35.1) sha256=a3a6471331d918f58dfa4d014a8f6286f0af2cf4840216bde52fcf2ea3fe3726
+  google-protobuf (4.35.1-aarch64-linux-gnu) sha256=50ca44d0eeff3f8475e630a1accdd974256f3510694d574e2c9d6119ea8bc9e1
+  google-protobuf (4.35.1-aarch64-linux-musl) sha256=d5c65cef6bd6498a9e5ed5f88cf6cf7e341c10b0a005e32137d5d1a2b6e8c18a
+  google-protobuf (4.35.1-arm64-darwin) sha256=d9c957df04fa89c749fa9a72a7b383eb4296efc9b2303dc6fd6fbe39c698ad6b
+  google-protobuf (4.35.1-x86-linux-gnu) sha256=cc7492566b27ad8b5dfa3a7b6f9b11e905050cc53c2fa8ff22de375a9e7a70fb
+  google-protobuf (4.35.1-x86-linux-musl) sha256=ab403790b59e4dc588ffbed1eaacf05d4ca2f0d12ac9c13d6c64e69380d8c99e
+  google-protobuf (4.35.1-x86_64-darwin) sha256=66b62b4df00931018a692806df66393efa960d6d2b7da69735187249f950d3ee
+  google-protobuf (4.35.1-x86_64-linux-gnu) sha256=c786439087512a3fbd199e9897d265b855f951d4027e218ea55e858d45969edd
+  google-protobuf (4.35.1-x86_64-linux-musl) sha256=91890eb0002934a339fdb7d77a147c46b7474b6799db27872b747b905837f744
   has_scope (0.8.2) sha256=48cd53d684aecd55d3ede060b3c1da37bbbcab58e273d99936e271fe6d125a54
   hashdiff (1.1.2) sha256=2c30eeded6ed3dce8401d2b5b99e6963fe5f14ed85e60dd9e33c545a44b71a77
   hashie (5.0.0) sha256=9d6c4e51f2a36d4616cbc8a322d619a162d8f42815a792596039fc95595603da
@@ -907,17 +907,17 @@ CHECKSUMS
   ruby-progressbar (1.13.0) sha256=80fc9c47a9b640d6834e0dc7b3c94c9df37f08cb072b7761e4a71e22cff29b33
   ruby2_keywords (0.0.5) sha256=ffd13740c573b7301cf7a2e61fc857b2a8e3d3aff32545d6f8300d8bae10e3ef
   rubyzip (2.4.1) sha256=8577c88edc1fde8935eb91064c5cb1aef9ad5494b940cf19c775ee833e075615
-  sass-embedded (1.92.1) sha256=7f08d17cb8c8289da0a41ae58678d0d61335a9c6d6c42faffe4205c644b98f42
-  sass-embedded (1.92.1-aarch64-linux-gnu) sha256=5b7d2d5ac4fb241778ddfcaa387d39394853c2aaf04308e81a1608170bc3d590
-  sass-embedded (1.92.1-aarch64-linux-musl) sha256=05df3c15ea8ea3db67cf853e51776dbb933603f3a2ec9efd1bf25e684c660dbb
-  sass-embedded (1.92.1-arm-linux-gnueabihf) sha256=af10860b20c5de873482d4af81ec45bd0ff26d4c8ca3202e7a5a96a86940c7ad
-  sass-embedded (1.92.1-arm-linux-musleabihf) sha256=3b8feda0410602534750d63c07263c589703655dfddc391300000853b7f66a83
-  sass-embedded (1.92.1-arm64-darwin) sha256=c77073cfe0238ef9f5f9877bcb1903a62632d5f3f800ab8f4b59c423b9bb6b00
-  sass-embedded (1.92.1-x86_64-darwin) sha256=cc834b9e239c26ad96d38f56ddc8bf560bf9aea8871215bc07f9fb608336bb56
-  sass-embedded (1.92.1-x86_64-linux-gnu) sha256=9fbe90512c2be0aa3064ffa2f34c6753562871b7075492418a5d1ba4f1d4f048
-  sass-embedded (1.92.1-x86_64-linux-musl) sha256=ca7d87ae23bcf91421066ab445b6599a6c682e4686f68a66b3d77a0036b5a308
+  sass-embedded (1.102.0) sha256=a73388d442b4409cc99e8ac02037069a9cc4419c895360f5ad17ad291fe43059
+  sass-embedded (1.102.0-aarch64-linux-gnu) sha256=087f377fa4135a8f67f5f422781b59815e99b8fd3aec335935c50a47c2a205fd
+  sass-embedded (1.102.0-aarch64-linux-musl) sha256=12bb4091972499241c35304ca11ca2c314764badf1b9933a8d437ba62432b538
+  sass-embedded (1.102.0-arm-linux-gnueabihf) sha256=566b1188e4f923366f494a5d95e4e5e03864ae55bae5ea52beb2c30b1b9e2915
+  sass-embedded (1.102.0-arm-linux-musleabihf) sha256=1ca396610bf4f4aa8f849b67a9f2720f67d9f3b42651072eafee786aece314cf
+  sass-embedded (1.102.0-arm64-darwin) sha256=8e18b2dd94b232c2dd73984c579f77bbc1a066028f4675c8989ac34fa40d14dc
+  sass-embedded (1.102.0-x86_64-darwin) sha256=3e78c6ac5be0ba4236d075bd044a49d0f515d54799f7d6f253c71d325ffedac0
+  sass-embedded (1.102.0-x86_64-linux-gnu) sha256=9815b7604123a9a44a65d44d5e58e7af1c7005174b745cda83bad4c9e3760ab3
+  sass-embedded (1.102.0-x86_64-linux-musl) sha256=9e3c15eb5d83784adf3b946d4fc5d8a32aed25566a2fee939f25dd1e1d217ddf
   sassc (2.4.0) sha256=4c60a2b0a3b36685c83b80d5789401c2f678c1652e3288315a1551d811d9f83e
-  sassc-embedded (1.80.5) sha256=b2720c938de54e9798bea17bc044ea0df05f552acec30b8e9a79060cceb9cb3e
+  sassc-embedded (1.80.9) sha256=bf90ad875181548646c1dcc317f985471980a7f5a71a87103536a6d3810dfeaa
   sassc-rails (2.1.2) sha256=5f4fdf3881fc9bdc8e856ffbd9850d70a2878866feae8114aa45996179952db5
   securerandom (0.4.1) sha256=cc5193d414a4341b6e225f0cb4446aceca8e50d5e1888743fac16987638ea0b1
   selenium-webdriver (4.28.0) sha256=4cf7722062c3691f9c616890d68d3715d4f2e2e4fb0bc0ee5441a4dc1f5a89d3
