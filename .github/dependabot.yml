@@ -5,8 +5,57 @@ updates:
   schedule:
     interval: daily
   open-pull-requests-limit: 10
+  groups:
+    bundler-security:
+      applies-to: security-updates
+      patterns:
+      - "*"
+    bundler-patch:
+      applies-to: version-updates
+      patterns:
+      - "*"
+      update-types:
+      - patch
+    bundler-minor:
+      applies-to: version-updates
+      patterns:
+      - "*"
+      update-types:
+      - minor
+  ignore:
+  # Rails minors/majors are deliberate, hand-run upgrades; security patches
+  # within the current minor still flow.
+  - dependency-name: rails
+    update-types:
+    - version-update:semver-minor
+    - version-update:semver-major
+  # minitest 6 drops minitest/mock (ararat #210 landmine); direct-major
+  # guard only — transitive lock-floats stay a review item.
+  - dependency-name: minitest
+    update-types:
+    - version-update:semver-major
+  # Gemfile pins connection_pool < 3 (redis_cache_store conflict on
+  # Rails < 8.1.2). Drop this ignore with the pin at Rails >= 8.1.2.
+  - dependency-name: connection_pool
+    update-types:
+    - version-update:semver-major
 - package-ecosystem: github-actions
   directory: "/"
   schedule:
     interval: daily
   open-pull-requests-limit: 10
+  groups:
+    actions-patch:
+      patterns:
+      - "*"
+      update-types:
+      - patch
+    actions-minor:
+      patterns:
+      - "*"
+      update-types:
+      - minor
+  ignore:
+  # CruGlobal/.github reusable-workflow majors are org-coordinated rollouts
+  # (kills the 1->2 pairs like #76/#78).
+  - dependency-name: "CruGlobal/.github*"
