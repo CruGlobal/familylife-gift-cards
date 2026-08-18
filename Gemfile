@@ -89,7 +89,7 @@ group :development do
   gem "pry-stack_explorer"
 end
 
-gem "activeadmin", "~> 3.2"
+gem "activeadmin", "~> 3.5"
 gem "activeadmin_addons"
 
 gem "aasm"
