@@ -98,7 +98,7 @@ gem "connection_pool", "< 3" # Conflict with redis_cache_store in Rails < 8.1.2
 gem "dogstatsd-ruby"
 gem "datadog"
 
-gem "ougai", "~> 1.7"
+gem "ougai", "~> 2.1"
 gem "amazing_print"
 gem "strip_attributes"
 gem "bundler-audit"
