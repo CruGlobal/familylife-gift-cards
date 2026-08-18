@@ -529,7 +529,7 @@ GEM
       rubocop-rails
     ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
-    rubyzip (2.4.1)
+    rubyzip (3.5.0)
     sass-embedded (1.92.1)
       google-protobuf (~> 4.31)
       rake (>= 13)
@@ -560,11 +560,11 @@ GEM
       sprockets-rails
       tilt
     securerandom (0.4.1)
-    selenium-webdriver (4.28.0)
+    selenium-webdriver (4.47.0)
       base64 (~> 0.2)
       logger (~> 1.4)
       rexml (~> 3.2, >= 3.2.5)
-      rubyzip (>= 1.2.2, < 3.0)
+      rubyzip (>= 1.2.2, < 4.0)
       websocket (~> 1.0)
     simplecov (0.22.0)
       docile (~> 1.1)
@@ -906,7 +906,7 @@ CHECKSUMS
   rubocop-rails-omakase (1.0.0) sha256=26635821283d6a03dc8b68172123716a62db96123eb035f736ebb91283f96418
   ruby-progressbar (1.13.0) sha256=80fc9c47a9b640d6834e0dc7b3c94c9df37f08cb072b7761e4a71e22cff29b33
   ruby2_keywords (0.0.5) sha256=ffd13740c573b7301cf7a2e61fc857b2a8e3d3aff32545d6f8300d8bae10e3ef
-  rubyzip (2.4.1) sha256=8577c88edc1fde8935eb91064c5cb1aef9ad5494b940cf19c775ee833e075615
+  rubyzip (3.5.0) sha256=f77c49d737a849b662f6ca4de473f31b4ecd8288f1c9f901a5c820641f0f8d7c
   sass-embedded (1.92.1) sha256=7f08d17cb8c8289da0a41ae58678d0d61335a9c6d6c42faffe4205c644b98f42
   sass-embedded (1.92.1-aarch64-linux-gnu) sha256=5b7d2d5ac4fb241778ddfcaa387d39394853c2aaf04308e81a1608170bc3d590
   sass-embedded (1.92.1-aarch64-linux-musl) sha256=05df3c15ea8ea3db67cf853e51776dbb933603f3a2ec9efd1bf25e684c660dbb
@@ -920,7 +920,7 @@ CHECKSUMS
   sassc-embedded (1.80.5) sha256=b2720c938de54e9798bea17bc044ea0df05f552acec30b8e9a79060cceb9cb3e
   sassc-rails (2.1.2) sha256=5f4fdf3881fc9bdc8e856ffbd9850d70a2878866feae8114aa45996179952db5
   securerandom (0.4.1) sha256=cc5193d414a4341b6e225f0cb4446aceca8e50d5e1888743fac16987638ea0b1
-  selenium-webdriver (4.28.0) sha256=4cf7722062c3691f9c616890d68d3715d4f2e2e4fb0bc0ee5441a4dc1f5a89d3
+  selenium-webdriver (4.47.0) sha256=67f915b8223d2133bbaa13e92fd98854175394f086e2036a9eff4f5561fd69e4
   simplecov (0.22.0) sha256=fe2622c7834ff23b98066bb0a854284b2729a569ac659f82621fc22ef36213a5
   simplecov-cobertura (3.1.0) sha256=6d7f38aa32c965ca2174b2e5bd88cb17138eaf629518854976ac50e628925dc5
   simplecov-html (0.13.2) sha256=bd0b8e54e7c2d7685927e8d6286466359b6f16b18cb0df47b508e8d73c777246
