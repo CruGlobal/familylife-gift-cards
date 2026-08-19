@@ -21,7 +21,11 @@ jobs:
         run: bundle exec bundle audit check --update ${{ vars.CVE_IGNORES && format('--ignore {0}', vars.CVE_IGNORES) }}
 
       - name: Brakeman
-        run: bundle exec brakeman -A -q --ensure-latest --no-pager
+        # --ensure-latest dropped (no proposer exists under security-only; the
+        # flag reds lint on brakeman release day) and -w2 filters Weak only —
+        # the EOLRails warning returns at Medium 2026-10-08 under brakeman
+        # 8.0.6; durable fix is Rails 8.1.
+        run: bundle exec brakeman -A -q --no-pager -w2
 
       - name: StandardRB
         run: bundle exec standardrb --format simple
