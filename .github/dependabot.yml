@@ -4,25 +4,22 @@ updates:
   directory: "/"
   schedule:
     interval: daily
-  open-pull-requests-limit: 10
+  # Gems are security-only fleet-wide (ratified 2026-08-19; the original
+  # ADL-32 intent): individual majors refill the PR ceiling daily and
+  # grouped minors rewrite Gemfile pins (infobase#519). Security PRs are
+  # exempt from the limit and still open at every semver level. Tool
+  # currency (brakeman, bundler-audit) is watched by the nightly digest.
+  open-pull-requests-limit: 0
   groups:
     bundler-security:
       applies-to: security-updates
       patterns:
       - "*"
-    bundler-patch:
-      applies-to: version-updates
-      patterns:
-      - "*"
-      update-types:
-      - patch
-    bundler-minor:
-      applies-to: version-updates
-      patterns:
-      - "*"
-      update-types:
-      - minor
   ignore:
+  # NOTE: with limit 0 these are inert forward guards — the version-update
+  # lane never runs, and update-types-scoped ignores never gate security
+  # updates (dependabot-core IgnoreCondition). Kept so a future limit > 0
+  # flip inherits the pin guards.
   # Rails minors/majors are deliberate, hand-run upgrades; security patches
   # within the current minor still flow.
   - dependency-name: rails
