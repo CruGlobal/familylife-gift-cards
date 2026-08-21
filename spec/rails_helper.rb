@@ -7,6 +7,10 @@ require File.expand_path("../../config/environment", __FILE__)
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require "rspec/rails"
+# ActiveAdmin defines Admin::*Controller only when routes load, and Rails defers
+# that while eager_load is off. Without this, every spec naming one of those
+# constants fails to load and the whole run reports zero examples.
+Rails.application.reload_routes_unless_loaded
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
