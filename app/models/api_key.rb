@@ -16,7 +16,7 @@ class ApiKey < ApplicationRecord
     return if !new_record? || access_token.present?
 
     loop do
-      self.access_token ||= SecureRandom.hex
+      self.access_token = SecureRandom.hex
       break unless self.class.exists?(access_token: access_token)
     end
   end

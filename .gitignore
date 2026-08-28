@@ -61,3 +61,6 @@ bin/deploy/erd-service-account.json
 .byebug_history
 *.zip
 *.csv
+
+# RSpec example status persistence (--only-failures / --next-failure)
+spec/examples.txt

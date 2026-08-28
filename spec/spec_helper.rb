@@ -56,19 +56,17 @@ RSpec.configure do |config|
   # triggering implicit auto-inclusion in groups with matching metadata.
   config.shared_context_metadata_behavior = :apply_to_host_groups
 
+  # Per-example isolation comes from rails_helper's use_transactional_fixtures;
+  # this truncation only clears leftovers from aborted prior runs.
   config.before(:suite) do
-    DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with :truncation
   end
 
-  config.before(:each) do
-    Rails.cache.clear
-    DatabaseCleaner.start
-  end
-
-  config.after(:each) do
-    DatabaseCleaner.clean
-  end
+  # Random order surfaces order dependencies; srand makes Faker/random data
+  # reproducible with --seed, and examples.txt enables --only-failures.
+  config.order = :random
+  Kernel.srand config.seed
+  config.example_status_persistence_file_path = "spec/examples.txt"
 
   # The settings below are suggested to provide a good initial experience
   # with RSpec, but feel free to customize to your heart's content.
@@ -110,11 +108,11 @@ RSpec.configure do |config|
   #   # order dependency and want to debug it, you can fix the order by providing
   #   # the seed, which is printed after each run.
   #   #     --seed 1234
-  config.order = :random
+  #   config.order = :random
   #
   #   # Seed global randomization in this process using the `--seed` CLI option.
   #   # Setting this allows you to use `--seed` to deterministically reproduce
   #   # test failures related to randomization by passing the same `--seed` value
   #   # as the one that triggered the failure.
-  Kernel.srand config.seed
+  #   Kernel.srand config.seed
 end
