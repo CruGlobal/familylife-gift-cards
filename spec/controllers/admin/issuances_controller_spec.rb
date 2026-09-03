@@ -63,7 +63,6 @@ RSpec.describe Admin::IssuancesController, type: :controller do
       # Test and verify
       expect {
         post :create, params: {issuance: issuance_attributes}
-        puts response.body
       }.to change(Issuance, :count).by(1)
 
       new_issuance = Issuance.last
@@ -81,7 +80,6 @@ RSpec.describe Admin::IssuancesController, type: :controller do
     it "creates gift cards when issue action called" do
       expect {
         post :issue, params: {id: issuance.id}
-        puts response.body
       }.to change(GiftCard, :count).by(issuance.quantity)
 
       gift_card = GiftCard.last
