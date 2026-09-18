@@ -59,7 +59,7 @@ Rails.application.configure do
   config.action_dispatch.verbose_redirect_logs = true
 
   # Suppress logger output for asset requests.
-  # Staying on sprockets (ActiveAdmin 3.x); the 8.0 propshaft skeleton drops this line — restore while on sprockets.
+  # Staying on sprockets (ActiveAdmin 3.x); app:update drops this line because it detects no propshaft — restore.
   config.assets.quiet = true
 
   # Raises error for missing translations.
