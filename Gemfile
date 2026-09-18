@@ -94,7 +94,6 @@ gem "activeadmin_addons"
 
 gem "aasm"
 gem "activerecord-import"
-gem "connection_pool", "< 3" # Conflict with redis_cache_store in Rails < 8.1.2
 gem "dogstatsd-ruby"
 gem "datadog"
 
