@@ -17,9 +17,6 @@ jobs:
         with:
           bundler-cache: true
 
-      - name: Bundle audit
-        run: bundle exec bundle audit check --update ${{ vars.CVE_IGNORES && format('--ignore {0}', vars.CVE_IGNORES) }}
-
       - name: Brakeman
         # --ensure-latest dropped (no proposer exists under security-only; the
         # flag reds lint on brakeman release day) and -w2 filters Weak only —
@@ -87,3 +84,20 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true
+
+  # Known-vulnerability status. NOT a required check, so a backlog never deadlocks
+  # merges. Dependabot security-only opens the fixes it can; this is the visible
+  # backstop, and groundcru's nightly rubysec sweep reports what Dependabot misses.
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out files
+        uses: actions/checkout@v7
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Bundle audit
+        run: bin/bundler-audit check --update ${{ vars.CVE_IGNORES && format('--ignore {0}', vars.CVE_IGNORES) }}
