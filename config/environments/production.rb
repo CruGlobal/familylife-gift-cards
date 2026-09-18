@@ -56,7 +56,7 @@ Rails.application.configure do
   config.silence_healthcheck_path = FamilylifeGiftCards::HEALTHCHECK_PATH
 
   # Don't log any deprecations.
-  config.active_support.report_deprecations = false
+  # config.active_support.report_deprecations = false
 
   # Replace the default in-process memory cache store with a durable alternative.
   # NOTE: the cache store is set in config/application.rb (:redis_cache_store); leave this commented
@@ -102,4 +102,8 @@ Rails.application.configure do
   # Skip DNS rebinding protection for the load balancer health check endpoint.
   config.host_authorization = {exclude: ->(request) { request.path == FamilylifeGiftCards::HEALTHCHECK_PATH }}
   config.hosts << ENV.fetch("SITE_HOST")
+
+  # --- Custom configuration ---
+
+  config.active_support.deprecation = :notify
 end
