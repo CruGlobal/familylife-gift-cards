@@ -38,7 +38,7 @@ Rails.application.configure do
     config.force_ssl = true
     config.ssl_options = {
       redirect: {
-        exclude: ->(request) { request.fullpath == "/monitors/lb" }
+        exclude: ->(request) { request.fullpath == FamilylifeGiftCards::HEALTHCHECK_PATH }
       }
     }
   end
@@ -53,7 +53,7 @@ Rails.application.configure do
   config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
 
   # Prevent health checks from clogging up the logs.
-  config.silence_healthcheck_path = "/monitors/lb"
+  config.silence_healthcheck_path = FamilylifeGiftCards::HEALTHCHECK_PATH
 
   # Don't log any deprecations.
   config.active_support.report_deprecations = false
@@ -99,7 +99,7 @@ Rails.application.configure do
   #   /.*\.example\.com/ # Allow requests from subdomains like `www.example.com`
   # ]
   #
-  # Skip DNS rebinding protection for the default health check endpoint.
-  config.host_authorization = {exclude: ->(request) { request.path == "/monitors/lb" }}
+  # Skip DNS rebinding protection for the load balancer health check endpoint.
+  config.host_authorization = {exclude: ->(request) { request.path == FamilylifeGiftCards::HEALTHCHECK_PATH }}
   config.hosts << ENV.fetch("SITE_HOST")
 end
