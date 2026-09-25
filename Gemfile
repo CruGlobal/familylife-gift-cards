@@ -3,7 +3,7 @@ source "https://rubygems.org"
 ruby file: ".ruby-version"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 8.0.0", ">= 8.0.5"
+gem "rails", "~> 8.1.4"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 # gem "propshaft" # Not adopted: ActiveAdmin 3.x requires sprockets (revisit at the post-wave AA 4.0 migration); sprockets-rails (below) stays
 
@@ -56,11 +56,14 @@ group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[mri windows], require: "debug/prelude"
 
+  # Audits gems for known security defects (use config/bundler-audit.yml to ignore issues)
+  gem "bundler-audit", require: false
+
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem "brakeman", require: false
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
-  gem "rubocop-rails-omakase", require: false
+  # gem "rubocop-rails-omakase", require: false # Not adopted: standardrb is the linter
 
   # More test-related gems
   gem "database_cleaner-active_record"
@@ -94,14 +97,12 @@ gem "activeadmin_addons"
 
 gem "aasm"
 gem "activerecord-import"
-gem "connection_pool", "< 3" # Conflict with redis_cache_store in Rails < 8.1.2
 gem "dogstatsd-ruby"
 gem "datadog"
 
 gem "ougai", "~> 1.7"
 gem "amazing_print"
 gem "strip_attributes"
-gem "bundler-audit"
 gem "rails-html-sanitizer", "~> 1.6"
 gem "lograge"
 # Asset pipeline: staying on sprockets (propshaft declined above — ActiveAdmin 3.x requires sprockets)

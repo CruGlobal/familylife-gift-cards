@@ -55,8 +55,11 @@ Rails.application.configure do
   # Highlight code that enqueued background job in logs.
   config.active_job.verbose_enqueue_logs = true
 
+  # Highlight code that triggered redirect in logs.
+  config.action_dispatch.verbose_redirect_logs = true
+
   # Suppress logger output for asset requests.
-  # Staying on sprockets (ActiveAdmin 3.x); the 8.0 propshaft skeleton drops this line — restore while on sprockets.
+  # Staying on sprockets (ActiveAdmin 3.x); app:update drops this line because it detects no propshaft — restore.
   config.assets.quiet = true
 
   # Raises error for missing translations.
