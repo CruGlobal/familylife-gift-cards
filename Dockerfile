@@ -29,14 +29,8 @@ RUN apk --no-cache add --virtual build-deps build-base postgresql-dev yaml-dev \
     && bundle install --jobs 20 --retry 2 \
     && apk del build-deps
 
-# Precompile bootsnap code for faster boot times
-RUN bundle exec bootsnap precompile --gemfile
-
 # Copy the application
 COPY . .
-
-# Precompile bootsnap code for faster boot times
-RUN bundle exec bootsnap precompile app/ lib/
 
 # Environment required to build the application
 ARG RAILS_ENV=production
@@ -51,7 +45,10 @@ ARG SITE_URL=asdf
 ARG SITE_HOST=asdf
 
 # Compile assets
-RUN RAILS_ENV=$RAILS_ENV bundle exec rails assets:clobber assets:precompile \
+# Precompile bootsnap code in the same RUN as the chown; in an earlier layer
+# the chown would store a second copy of the cache.
+RUN bundle exec bootsnap precompile --gemfile app/ lib/ \
+    && RAILS_ENV=$RAILS_ENV bundle exec rails assets:clobber assets:precompile \
     && chown -R webapp:webapp /home/webapp/
 
 # Define volumes used by ECS to share public html and extra nginx config with nginx container
