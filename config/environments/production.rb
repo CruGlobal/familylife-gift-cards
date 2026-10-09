@@ -38,7 +38,7 @@ Rails.application.configure do
     config.force_ssl = true
     config.ssl_options = {
       redirect: {
-        exclude: ->(request) { request.fullpath == "/monitors/lb" }
+        exclude: ->(request) { request.fullpath == FamilylifeGiftCards::HEALTHCHECK_PATH }
       }
     }
   end
@@ -49,14 +49,14 @@ Rails.application.configure do
   # config.log_tags = [ :request_id ]
   # config.logger   = ActiveSupport::TaggedLogging.logger(STDOUT)
 
-  # Change to "debug" to log everything (including potentially personally-identifiable information!)
+  # Change to "debug" to log everything (including potentially personally-identifiable information!).
   config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
 
   # Prevent health checks from clogging up the logs.
-  config.silence_healthcheck_path = "/monitors/lb"
+  config.silence_healthcheck_path = FamilylifeGiftCards::HEALTHCHECK_PATH
 
   # Don't log any deprecations.
-  config.active_support.report_deprecations = false
+  # config.active_support.report_deprecations = false
 
   # Replace the default in-process memory cache store with a durable alternative.
   # NOTE: the cache store is set in config/application.rb (:redis_cache_store); leave this commented
@@ -74,7 +74,7 @@ Rails.application.configure do
   # Commented out: placeholder host; the app configures no production mailer host.
   # config.action_mailer.default_url_options = { host: "example.com" }
 
-  # Specify outgoing SMTP server. Remember to add smtp/* credentials via rails credentials:edit.
+  # Specify outgoing SMTP server. Remember to add smtp/* credentials via bin/rails credentials:edit.
   # config.action_mailer.smtp_settings = {
   #   user_name: Rails.application.credentials.dig(:smtp, :user_name),
   #   password: Rails.application.credentials.dig(:smtp, :password),
@@ -99,7 +99,11 @@ Rails.application.configure do
   #   /.*\.example\.com/ # Allow requests from subdomains like `www.example.com`
   # ]
   #
-  # Skip DNS rebinding protection for the default health check endpoint.
-  config.host_authorization = {exclude: ->(request) { request.path == "/monitors/lb" }}
+  # Skip DNS rebinding protection for the load balancer health check endpoint.
+  config.host_authorization = {exclude: ->(request) { request.path == FamilylifeGiftCards::HEALTHCHECK_PATH }}
   config.hosts << ENV.fetch("SITE_HOST")
+
+  # --- Custom configuration ---
+
+  config.active_support.deprecation = :notify
 end

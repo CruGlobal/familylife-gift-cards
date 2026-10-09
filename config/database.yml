@@ -6,7 +6,7 @@ default: &default
   username: <%= ENV['DB_ENV_POSTGRESQL_USER'] %>
   password: <%= ENV['DB_ENV_POSTGRESQL_PASS'] %>
   reconnect: true
-  pool: <%= ENV['DB_ENV_POSTGRESQL_POOL'] || 25 %>
+  max_connections: <%= ENV['DB_ENV_POSTGRESQL_POOL'] || 25 %>
 
 staging:
   <<: *default
