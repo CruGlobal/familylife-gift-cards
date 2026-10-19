@@ -23,9 +23,9 @@ jobs:
           bundler-cache: true
 
       - name: Brakeman
-        # --ensure-latest dropped (no proposer exists under security-only; the
-        # flag reds lint on brakeman release day) and -w2 filters Weak only.
-        run: bundle exec brakeman -A -q --no-pager -w2
+        # --ensure-latest dropped (no proposer exists under security-only;
+        # the flag reds lint on brakeman release day).
+        run: bundle exec brakeman -A -q --no-pager
 
       - name: StandardRB
         run: bundle exec standardrb --format simple
