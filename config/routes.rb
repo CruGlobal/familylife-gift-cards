@@ -7,7 +7,11 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :gift_cards, only: [:show, :update]
+      resources :gift_cards, only: [:show, :update] do
+        member do
+          get :validate
+        end
+      end
     end
   end
 

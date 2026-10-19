@@ -7,6 +7,32 @@ class Api::V1::GiftCardsController < Api::V1::ApplicationController
     render json: @gift_card
   end
 
+  # validates if a gift card can be used without actually using it
+  def validate
+    if @gift_card.registrations_available.to_i <= 1
+      render json: {
+        valid: false,
+        error: "No registrations available",
+        status: 403
+      }, status: 403
+      return
+    end
+
+    if @gift_card.expiration_date && @gift_card.expiration_date < Date.today
+      render json: {
+        valid: false,
+        error: "Gift card has expired",
+        status: 403
+      }, status: 403
+      return
+    end
+
+    render json: {
+      valid: true,
+      gift_card: @gift_card
+    }
+  end
+
   # an update automatically means to use up one registration
   def update
     if @gift_card.registrations_available.to_i <= 1
