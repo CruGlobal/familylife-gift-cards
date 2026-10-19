@@ -23,6 +23,10 @@ RSpec.describe SessionsController, type: :controller do
     request.env["omniauth.auth"] = @auth_hash
   end
 
+  after do
+    OmniAuth.config.test_mode = false
+  end
+
   describe "#create" do
     it "should successfully login an existing user" do
       # Prepare
@@ -51,6 +55,12 @@ RSpec.describe SessionsController, type: :controller do
   end
 
   context "#after_sign_out_path_for" do
+    around do |example|
+      old_issuer = ENV["OKTA_ISSUER"]
+      example.run
+      ENV["OKTA_ISSUER"] = old_issuer
+    end
+
     it "returns a valid url when id token present" do
       ENV["OKTA_ISSUER"] = "okta_issuer"
       session = double("session")
@@ -66,6 +76,16 @@ RSpec.describe SessionsController, type: :controller do
   end
 
   context "logger" do
+    around do |example|
+      old_logger = Rails.logger
+      old_project_name = ENV["PROJECT_NAME"]
+      old_aws_execution_env = ENV["AWS_EXECUTION_ENV"]
+      example.run
+      Rails.logger = old_logger
+      ENV["PROJECT_NAME"] = old_project_name
+      ENV["AWS_EXECUTION_ENV"] = old_aws_execution_env
+    end
+
     # print something to logger to get code coverage on lib/logger
     # this is a bit contrived, but I want to get full coverage, so I call _call directly on the formatter
     it "prints" do

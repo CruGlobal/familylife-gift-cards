@@ -15,9 +15,9 @@ RSpec.describe Issuance, type: :model do
 
   context "#ransackable_associations" do
     it "returns a list of associations" do
-      batch = Issuance.new
-      Issuance.ransackable_attributes.each do |attribute|
-        expect(batch.respond_to?(attribute)).to be true
+      issuance = Issuance.new
+      Issuance.ransackable_associations.each do |association|
+        expect(issuance.respond_to?(association)).to be true
       end
     end
   end
@@ -101,8 +101,5 @@ RSpec.describe Issuance, type: :model do
     it "uses price for paid cards" do
       expect(paid_issuance.leading_certificate_4_digit_number).to eq("3000")
     end
-  end
-
-  context "#largest_existing_number_in_certificate" do
   end
 end

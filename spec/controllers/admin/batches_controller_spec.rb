@@ -82,7 +82,6 @@ RSpec.describe Admin::BatchesController, type: :controller do
       # Test and verify
       expect {
         post :create, params: {batch: batch_attributes}
-        puts response.body
       }.to change(Batch, :count).by(1)
 
       new_batch = Batch.last

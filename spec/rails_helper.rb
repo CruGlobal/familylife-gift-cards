@@ -32,6 +32,10 @@ rescue ActiveRecord::PendingMigrationError => e
   puts e.to_s.strip
   exit 1
 end
+# ActiveAdmin defines Admin::*Controller only when routes load, and Rails defers
+# that while eager_load is off; without this, admin controller specs fail to load.
+# Must stay below the schema guard: loading routes constantizes admin models.
+Rails.application.reload_routes_unless_loaded
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_paths = ["#{::Rails.root}/spec/fixtures"]

@@ -1,11 +1,22 @@
 require "rails_helper"
 
 RSpec.describe ApiKey, type: :model do
-  context "#generate_access_record" do
-    it "checks if access token is taken and generates a new one" do
-      expect(ApiKey).to receive(:exists?)
+  context "#generate_access_token" do
+    it "generates an access token" do
       api_key = ApiKey.create!
       expect(api_key.access_token).to_not be_nil
+    end
+
+    it "regenerates the access token when the generated one is taken" do
+      tried = []
+      allow(ApiKey).to receive(:exists?) { |conditions|
+        tried << conditions[:access_token]
+        tried.size == 1
+      }
+      api_key = ApiKey.new
+      expect(tried.size).to eq(2)
+      expect(tried.last).to_not eq(tried.first)
+      expect(api_key.access_token).to eq(tried.last)
     end
   end
 

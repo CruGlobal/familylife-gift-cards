@@ -27,12 +27,12 @@ describe Api::V1::GiftCardsController do
       expect(response).to have_http_status(404)
     end
 
-    it "rejects an invalid HTTP_AUTHORIZATIO" do
+    it "rejects an invalid access_token param" do
       get :show, params: {access_token: "invalid", id: api_key.access_token, format: :json}
       expect(response).to have_http_status(401)
     end
 
-    it "rejects an invalid HTTP_AUTHORIZATIO" do
+    it "rejects a request with no access token" do
       get :show, params: {id: api_key.access_token, format: :json}
       expect(response).to have_http_status(401)
     end
