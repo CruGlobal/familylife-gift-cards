@@ -101,3 +101,6 @@ jobs:
 
       - name: Bundle audit
         run: bin/bundler-audit check --update ${{ vars.CVE_IGNORES && format('--ignore {0}', vars.CVE_IGNORES) }}
+
+      - name: JavaScript Audit
+        run: bin/importmap audit
