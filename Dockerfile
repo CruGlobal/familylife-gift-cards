@@ -45,7 +45,10 @@ ARG SITE_URL=asdf
 ARG SITE_HOST=asdf
 
 # Compile assets
-RUN RAILS_ENV=$RAILS_ENV bundle exec rails assets:clobber assets:precompile \
+# Precompile bootsnap code in the same RUN as the chown; in an earlier layer
+# the chown would store a second copy of the cache.
+RUN bundle exec bootsnap precompile --gemfile app/ lib/ \
+    && RAILS_ENV=$RAILS_ENV bundle exec rails assets:clobber assets:precompile \
     && chown -R webapp:webapp /home/webapp/
 
 # Define volumes used by ECS to share public html and extra nginx config with nginx container
