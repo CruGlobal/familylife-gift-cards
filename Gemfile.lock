@@ -106,7 +106,7 @@ GEM
       securerandom (>= 0.3)
       tzinfo (~> 2.0, >= 2.0.5)
       uri (>= 0.13.1)
-    addressable (2.9.0)
+    addressable (2.9.2)
       public_suffix (>= 2.0.2, < 8.0)
     amazing_print (1.6.0)
     anonymous_loader (0.1.3)
@@ -154,14 +154,14 @@ GEM
       activerecord (>= 5.a)
       database_cleaner-core (~> 2.0.0)
     database_cleaner-core (2.0.1)
-    datadog (2.39.0)
+    datadog (2.47.0)
       cgi
-      datadog-ruby_core_source (~> 3.5, >= 3.5.3)
-      libdatadog (~> 36.0.0.1.0)
-      libddwaf (~> 1.30.0.0.0)
+      datadog-ruby_core_source (~> 3.5, >= 3.5.6)
+      libdatadog (~> 46.1.0.1.1)
+      libddwaf (~> 1.30.0.1.0)
       logger
       msgpack
-    datadog-ruby_core_source (3.5.3)
+    datadog-ruby_core_source (3.5.6)
     date (3.5.1)
     debug (1.9.2)
       irb (~> 1.10)
@@ -283,19 +283,19 @@ GEM
       kaminari-core (= 1.2.2)
     kaminari-core (1.2.2)
     language_server-protocol (3.17.0.5)
-    libdatadog (36.0.0.1.0)
-    libdatadog (36.0.0.1.0-aarch64-linux)
-    libdatadog (36.0.0.1.0-arm64-darwin)
-    libdatadog (36.0.0.1.0-x86_64-linux)
-    libddwaf (1.30.0.0.2)
+    libdatadog (46.1.0.1.1)
+    libdatadog (46.1.0.1.1-aarch64-linux)
+    libdatadog (46.1.0.1.1-arm64-darwin)
+    libdatadog (46.1.0.1.1-x86_64-linux)
+    libddwaf (1.30.0.1.0)
       ffi (~> 1.0)
-    libddwaf (1.30.0.0.2-aarch64-linux)
+    libddwaf (1.30.0.1.0-aarch64-linux)
       ffi (~> 1.0)
-    libddwaf (1.30.0.0.2-arm64-darwin)
+    libddwaf (1.30.0.1.0-arm64-darwin)
       ffi (~> 1.0)
-    libddwaf (1.30.0.0.2-x86_64-darwin)
+    libddwaf (1.30.0.1.0-x86_64-darwin)
       ffi (~> 1.0)
-    libddwaf (1.30.0.0.2-x86_64-linux)
+    libddwaf (1.30.0.1.0-x86_64-linux)
       ffi (~> 1.0)
     lint_roller (1.1.0)
     logger (1.7.0)
@@ -304,9 +304,9 @@ GEM
       activesupport (>= 4)
       railties (>= 4)
       request_store (~> 1.0)
-    loofah (2.25.2)
+    loofah (2.25.3)
       crass (~> 1.0.2)
-      nokogiri (>= 1.12.0)
+      nokogiri (>= 1.19.5)
     mail (2.9.1)
       logger
       mini_mime (>= 0.1.1)
@@ -334,24 +334,24 @@ GEM
     net-smtp (0.5.1)
       net-protocol
     nio4r (2.7.5)
-    nokogiri (1.19.4)
+    nokogiri (1.19.7)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
-    nokogiri (1.19.4-aarch64-linux-gnu)
+    nokogiri (1.19.7-aarch64-linux-gnu)
       racc (~> 1.4)
-    nokogiri (1.19.4-aarch64-linux-musl)
+    nokogiri (1.19.7-aarch64-linux-musl)
       racc (~> 1.4)
-    nokogiri (1.19.4-arm-linux-gnu)
+    nokogiri (1.19.7-arm-linux-gnu)
       racc (~> 1.4)
-    nokogiri (1.19.4-arm-linux-musl)
+    nokogiri (1.19.7-arm-linux-musl)
       racc (~> 1.4)
-    nokogiri (1.19.4-arm64-darwin)
+    nokogiri (1.19.7-arm64-darwin)
       racc (~> 1.4)
-    nokogiri (1.19.4-x86_64-darwin)
+    nokogiri (1.19.7-x86_64-darwin)
       racc (~> 1.4)
-    nokogiri (1.19.4-x86_64-linux-gnu)
+    nokogiri (1.19.7-x86_64-linux-gnu)
       racc (~> 1.4)
-    nokogiri (1.19.4-x86_64-linux-musl)
+    nokogiri (1.19.7-x86_64-linux-musl)
       racc (~> 1.4)
     oauth2 (2.0.25)
       anonymous_loader (~> 0.1, >= 0.1.3)
@@ -408,7 +408,7 @@ GEM
     puma (8.0.2)
       nio4r (~> 2.0)
     racc (1.8.1)
-    rack (3.2.6)
+    rack (3.2.8)
     rack-protection (4.1.1)
       base64 (>= 0.1.0)
       logger (>= 1.6.0)
@@ -438,8 +438,8 @@ GEM
       activesupport (>= 5.0.0)
       minitest
       nokogiri (>= 1.6)
-    rails-html-sanitizer (1.7.1)
-      loofah (~> 2.25, >= 2.25.2)
+    rails-html-sanitizer (1.7.2)
+      loofah (~> 2.25, >= 2.25.3)
       nokogiri (>= 1.15.7, != 1.16.7, != 1.16.6, != 1.16.5, != 1.16.4, != 1.16.3, != 1.16.2, != 1.16.1, != 1.16.0.rc1, != 1.16.0)
     railties (8.1.4)
       actionpack (= 8.1.4)
@@ -711,7 +711,7 @@ CHECKSUMS
   activerecord-import (1.8.1) sha256=c60c53e93b9ae05b9bc96b2a6e14c93e87e3d3ed0b3b9f4e6a3dba1e83f526bc
   activestorage (8.1.4) sha256=f4956f3ec9ee63e5e0b332b57c877cb627f82b56f4cc902279310d2aa285c7a8
   activesupport (8.1.4) sha256=891dd3fe43c4fc8391934b237b1189bb1f661c932a84a840043db9d46a4e80df
-  addressable (2.9.0) sha256=7fdf6ac3660f7f4e867a0838be3f6cf722ace541dd97767fa42bc6cfa980c7af
+  addressable (2.9.2) sha256=9117c7e7d6ee07230e75ce41fb9401ae55354dc654fcd0e862ba41d539e9a610
   amazing_print (1.6.0) sha256=9903e93daadc15411c854239f8ca1ca6ce78be279ed99d43fec2bd3b0aa37397
   anonymous_loader (0.1.3) sha256=084a18e2439144d955447dc11dfc982f41fcd1583ad32d4d55151325dc44cb55
   arbre (1.7.0) sha256=20c76c26390924422407aa8eb849ae859b903a95bb9c19eb2f8e05fe1e40c83d
@@ -737,8 +737,8 @@ CHECKSUMS
   csv (3.3.0) sha256=0bbd1defdc31134abefed027a639b3723c2753862150f4c3ee61cab71b20d67d
   database_cleaner-active_record (2.2.0) sha256=3228d6d8ec1f2103fd6ab468dae923424318bcfabcf5dd5b02e5fcb0c486e1c7
   database_cleaner-core (2.0.1) sha256=8646574c32162e59ed7b5258a97a208d3c44551b854e510994f24683865d846c
-  datadog (2.39.0) sha256=79156affff61abe93d731dbeefda1cfff28d0851c3b4afced23ae8892cdcfb38
-  datadog-ruby_core_source (3.5.3) sha256=5636592e73664c6c1efedf6645f2a882c4d04902088f847f6a5ddb765340cc9b
+  datadog (2.47.0) sha256=a550dd1378beae6a105f36bd20c9036641762bdcbe9eac9156d5d7949801b0f5
+  datadog-ruby_core_source (3.5.6) sha256=07d8909b9314af709da80966cf7e160da19ca1c396a8f45d175615f675a89569
   date (3.5.1) sha256=750d06384d7b9c15d562c76291407d89e368dda4d4fff957eb94962d325a0dc0
   debug (1.9.2) sha256=48e026c0852c7a10c60263e2e527968308958e266231e36d64e3efcabec7e7fc
   debug_inspector (1.2.0) sha256=9bdfa02eebc3da163833e6a89b154084232f5766087e59573b70521c77ea68a2
@@ -795,19 +795,19 @@ CHECKSUMS
   kaminari-activerecord (1.2.2) sha256=0dd3a67bab356a356f36b3b7236bcb81cef313095365befe8e98057dd2472430
   kaminari-core (1.2.2) sha256=3bd26fec7370645af40ca73b9426a448d09b8a8ba7afa9ba3c3e0d39cdbb83ff
   language_server-protocol (3.17.0.5) sha256=fd1e39a51a28bf3eec959379985a72e296e9f9acfce46f6a79d31ca8760803cc
-  libdatadog (36.0.0.1.0) sha256=664f53cff1d1362d46d0043e8cb610dc0bbf65e51e0358344733ac12e851126c
-  libdatadog (36.0.0.1.0-aarch64-linux) sha256=104cb5264f1b7b592d03d84e09da4615506b8e7567eb7edf52cdbb8ec8a17778
-  libdatadog (36.0.0.1.0-arm64-darwin) sha256=8fec056fc39674da51946776c7f59fafe32db2fc2939843a09d79b199494d655
-  libdatadog (36.0.0.1.0-x86_64-linux) sha256=08bdbd2dd66195f9f208984434e51871b26075b9d1ca75eac8e8eb22f9c6ccc6
-  libddwaf (1.30.0.0.2) sha256=f6dd8d70f1925acce795ad0e974b12cb532c958056ac14e497f13d8c1af143d2
-  libddwaf (1.30.0.0.2-aarch64-linux) sha256=f4d8498cce66cb30d81f46bb046b11c3a2202e21ca73c9edb80c3a37939a3dc2
-  libddwaf (1.30.0.0.2-arm64-darwin) sha256=cbbec7eee8fe7dbdc6c11bf1429fcfc217fad84e822fc6f252cb1c45daf663cc
-  libddwaf (1.30.0.0.2-x86_64-darwin) sha256=3fb97292a9e6eb4b50d48ed0805c48278a261744ce6944e0ded73144a0395060
-  libddwaf (1.30.0.0.2-x86_64-linux) sha256=d6f628bfb91a7f89a4ef702c3fce3991ec0678c50031128b70799fde8362111d
+  libdatadog (46.1.0.1.1) sha256=0129262ca0595292716140e330f9e68d9aa3a047804918ab15a209273adee03e
+  libdatadog (46.1.0.1.1-aarch64-linux) sha256=0fded57652e5a7edeb95ca7ce9679c1e47cf97afa2ffce09b80ec5b09663731c
+  libdatadog (46.1.0.1.1-arm64-darwin) sha256=8696975b4397932011b033b082b6daa20fba6bec94d7cad6b8b9336e0c3b9bd0
+  libdatadog (46.1.0.1.1-x86_64-linux) sha256=a57573ebc623fcdd5ee991da293257d6e342378000e33d327c395304c98249ca
+  libddwaf (1.30.0.1.0) sha256=331632114ef21cc2538d93335ad0b1a6f37de448b5ce9d091a690eec321308d3
+  libddwaf (1.30.0.1.0-aarch64-linux) sha256=c36650249bbbcaf81f0a0715e021d3db37fb1df989390f2744f445d1032d4314
+  libddwaf (1.30.0.1.0-arm64-darwin) sha256=68a67d0daf6bcd8f621fb4a5390c1c2c241433fd3b8aa1516b4ef7518d316c2c
+  libddwaf (1.30.0.1.0-x86_64-darwin) sha256=722b93006eeeaee42a3a5149bd0ab14bca1246524b87a1f40fb7bdbdfc42a624
+  libddwaf (1.30.0.1.0-x86_64-linux) sha256=5cd88c67ed8703cdc9878e089e4eea679d3825cec18de2a9b6093e489fa900eb
   lint_roller (1.1.0) sha256=2c0c845b632a7d172cb849cc90c1bce937a28c5c8ccccb50dfd46a485003cc87
   logger (1.7.0) sha256=196edec7cc44b66cfb40f9755ce11b392f21f7967696af15d274dde7edff0203
   lograge (0.14.0) sha256=42371a75823775f166f727639f5ddce73dd149452a55fc94b90c303213dc9ae1
-  loofah (2.25.2) sha256=2007f746959ac65552456e04b433e83deb22759ab38c838b4445c70e43425918
+  loofah (2.25.3) sha256=545f14eef0cc2a7de80df560530d593232b7c07e515c5c4e37532d9cb5b0185c
   mail (2.9.1) sha256=06574eca475253d6c18145dd70af80d0eb970182d55053497c5f4d797ea160e8
   marcel (1.1.0) sha256=fdcfcfa33cc52e93c4308d40e4090a5d4ea279e160a7f6af988260fa970e0bee
   matrix (0.4.2) sha256=71083ccbd67a14a43bfa78d3e4dc0f4b503b9cc18e5b4b1d686dc0f9ef7c4cc0
@@ -823,15 +823,15 @@ CHECKSUMS
   net-protocol (0.2.2) sha256=aa73e0cba6a125369de9837b8d8ef82a61849360eba0521900e2c3713aa162a8
   net-smtp (0.5.1) sha256=ed96a0af63c524fceb4b29b0d352195c30d82dd916a42f03c62a3a70e5b70736
   nio4r (2.7.5) sha256=6c90168e48fb5f8e768419c93abb94ba2b892a1d0602cb06eef16d8b7df1dca1
-  nokogiri (1.19.4) sha256=50c951611c92bca05c51411aef45f1cbc50f2821c4802758c5c6d34696533ab5
-  nokogiri (1.19.4-aarch64-linux-gnu) sha256=1269fb644a6de405057a53dd5c762b1209b43ca7424f839454d3dbc677c31a8f
-  nokogiri (1.19.4-aarch64-linux-musl) sha256=35c65b9ce72b3bb03207bdbe7067915019dc18c1b9b59139684bd6690fdd01af
-  nokogiri (1.19.4-arm-linux-gnu) sha256=a301313e38bb065d68239e79734bcd6f56fb6efaacebde29e9abf2a4735340ca
-  nokogiri (1.19.4-arm-linux-musl) sha256=588923c101bcfa78869734d247d25b598674323e7f22474fc468f6e5647311eb
-  nokogiri (1.19.4-arm64-darwin) sha256=a46db9853286e6597b36ebc6953817d15acf3a299583eb3f89fdc6f91dd63527
-  nokogiri (1.19.4-x86_64-darwin) sha256=7fd17057d3e1f00e9954a74b3cd76595d3d4a5ef233b7ed9599047c204f70551
-  nokogiri (1.19.4-x86_64-linux-gnu) sha256=379fae440b28915e3f19d752ce2dcf8465ed2b2fbefd2a7ca0dd497bc981a06a
-  nokogiri (1.19.4-x86_64-linux-musl) sha256=17dfb7c1fa194ae02fbf7c51a7afc8d278045ab3fdacfd86f91d02d7b274470b
+  nokogiri (1.19.7) sha256=abe94507c54cb18f872777b16bdca4aad32b1abdc4c52fe843f1c80fbdf992b8
+  nokogiri (1.19.7-aarch64-linux-gnu) sha256=8f5e15d299602456406e1f03a9f3456cceb33a0722811e818d2ee2214eb4c84a
+  nokogiri (1.19.7-aarch64-linux-musl) sha256=efe0c3602e6e54521bc21c681930ce5568e2d11203de17400710b2b3ca2e4cb4
+  nokogiri (1.19.7-arm-linux-gnu) sha256=7fd1907125691aa89e838cc91161761c758b4e17bb32f0dd9b5515a82cc759af
+  nokogiri (1.19.7-arm-linux-musl) sha256=28d0ff0c87b6bb2e56580323a6fb049d5d4a02b94f0958fdd47e9ac146991c77
+  nokogiri (1.19.7-arm64-darwin) sha256=f27d7f25f4873fbc3aa35a2cc2fb680c98555fec1925348da439d0869d541142
+  nokogiri (1.19.7-x86_64-darwin) sha256=508e81e8c5f84aaa240dce981bf1c43faae60808726f0ce7024ee92effc5cafe
+  nokogiri (1.19.7-x86_64-linux-gnu) sha256=25865ccb462f714e712fdf8906fde07849cb6704a808e3d629d75baa5af5dd3b
+  nokogiri (1.19.7-x86_64-linux-musl) sha256=464d1f3dfb0d53cf54c0c6a7e23e8e91cf68ec3cafc2b27dc4a7682f2d9bf546
   oauth2 (2.0.25) sha256=2f736a2f93c2caa67c1b08dc3c9889bb907d62643f3183fefaa1723cba6a82ac
   oj (3.17.4) sha256=733fe3bcb7a5d985bd2e943620b7bea1bffb2809318af7021c841b833a6858e1
   omniauth (2.1.3) sha256=8d24e2e55c41926c96e4a93fd566bc026dfd6f2c850408748e89945a565956c2
@@ -855,14 +855,14 @@ CHECKSUMS
   public_suffix (7.0.5) sha256=1a8bb08f1bbea19228d3bed6e5ed908d1cb4f7c2726d18bd9cadf60bc676f623
   puma (8.0.2) sha256=c8ed871dfbbe66448ea9ffd46692342d9804d4071522b52b5331b7b6e7b686fb
   racc (1.8.1) sha256=4a7f6929691dbec8b5209a0b373bc2614882b55fc5d2e447a21aaa691303d62f
-  rack (3.2.6) sha256=5ed78e1f73b2e25679bec7d45ee2d4483cc4146eb1be0264fc4d94cb5ef212c2
+  rack (3.2.8) sha256=1fecc85e463ebc7a2a945fff829ffcd549babeb1556384796fad946c28dc4ec7
   rack-protection (4.1.1) sha256=51a254a5d574a7f0ca4f0672025ce2a5ef7c8c3bd09c431349d683e825d7d16a
   rack-session (2.1.2) sha256=595434f8c0c3473ae7d7ac56ecda6cc6dfd9d37c0b2b5255330aa1576967ffe8
   rack-test (2.2.0) sha256=005a36692c306ac0b4a9350355ee080fd09ddef1148a5f8b2ac636c720f5c463
   rackup (2.3.1) sha256=6c79c26753778e90983761d677a48937ee3192b3ffef6bc963c0950f94688868
   rails (8.1.4) sha256=5f3ecdf9a2a3b79b2e31b8fee3b64a00f7284d76e5631f87d0e58e665911a33b
   rails-dom-testing (2.3.0) sha256=8acc7953a7b911ca44588bf08737bc16719f431a1cc3091a292bca7317925c1d
-  rails-html-sanitizer (1.7.1) sha256=e797a7c9b01e567307e317c576b49ab4168017e63eea4dba9ce3cb587e2f22c2
+  rails-html-sanitizer (1.7.2) sha256=a21ef45b7a6639fc8e2282473c547514cb86ae271616162a946bf89148fa2424
   railties (8.1.4) sha256=b5e7a8e8984e33114d68af62227971960aae1e6c02bd7c9d826ffad97fff583c
   rainbow (3.1.1) sha256=039491aa3a89f42efa1d6dec2fc4e62ede96eb6acd95e52f1ad581182b79bc6a
   rake (13.4.2) sha256=cb825b2bd5f1f8e91ca37bddb4b9aaf345551b4731da62949be002fa89283701
