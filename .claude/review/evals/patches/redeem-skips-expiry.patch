@@ -1,0 +1,19 @@
+diff --git a/app/controllers/api/v1/gift_cards_controller.rb b/app/controllers/api/v1/gift_cards_controller.rb
+index ac7786c..6ddf783 100644
+--- a/app/controllers/api/v1/gift_cards_controller.rb
++++ b/app/controllers/api/v1/gift_cards_controller.rb
+@@ -17,14 +17,6 @@ class Api::V1::GiftCardsController < Api::V1::ApplicationController
+       return
+     end
+ 
+-    if @gift_card.expired?
+-      render json: {
+-        error: "Gift card has expired",
+-        status: 403
+-      }, status: :forbidden
+-      return
+-    end
+-
+     @gift_card.update(registrations_available: @gift_card.registrations_available - 2)
+     render json: @gift_card
+   end

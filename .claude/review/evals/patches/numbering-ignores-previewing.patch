@@ -1,0 +1,17 @@
+diff --git a/app/models/issuance.rb b/app/models/issuance.rb
+index f88dfef..218ba6e 100644
+--- a/app/models/issuance.rb
++++ b/app/models/issuance.rb
+@@ -88,12 +88,6 @@ class Issuance < ApplicationRecord
+     # look for all numbers that match numbering
+     existing_matching_certificates = GiftCard.all.where("certificate ~* ?", numbering_regex_str).pluck(:certificate)
+ 
+-    # pulling all allocated certificate ids instead of a regex isn't ideal, but there shouldn't be many, if any, times there
+-    # are previewed gift cards issuances while another one is being previewed
+-    existing_matching_certificates += Issuance.previewing.where.not(id: id).pluck(:allocated_certificates).collect do |allocated_certificates|
+-      allocated_certificates.to_s.split(CERTIFICATE_DISPLAY_SEPARATOR).find_all { |certificate| certificate =~ numbering_regex }
+-    end.flatten
+-
+     existing_matching_certificates.collect { |certificate|
+       certificate =~ numbering_regex
+       $1.to_i

@@ -1,0 +1,13 @@
+diff --git a/app/controllers/monitors_controller.rb b/app/controllers/monitors_controller.rb
+index 8f05991..477370d 100644
+--- a/app/controllers/monitors_controller.rb
++++ b/app/controllers/monitors_controller.rb
+@@ -2,7 +2,7 @@ class MonitorsController < ApplicationController
+   # skip_before_action :require_login, raise: false
+ 
+   def lb
+-    User.first unless Rails.env.staging?
++    User.first
+     render plain: "OK"
+   end
+ end
