@@ -1,0 +1,13 @@
+diff --git a/app/controllers/api/v1/gift_cards_controller.rb b/app/controllers/api/v1/gift_cards_controller.rb
+index ac7786c..5296f7d 100644
+--- a/app/controllers/api/v1/gift_cards_controller.rb
++++ b/app/controllers/api/v1/gift_cards_controller.rb
+@@ -26,7 +26,7 @@ class Api::V1::GiftCardsController < Api::V1::ApplicationController
+     end
+ 
+     @gift_card.update(registrations_available: @gift_card.registrations_available - 2)
+-    render json: @gift_card
++    render json: @gift_card.as_json(except: [:gl_code, :batch_id, :issuance_id])
+   end
+ 
+   private
