@@ -1,0 +1,13 @@
+diff --git a/app/controllers/api/v1/gift_cards_controller.rb b/app/controllers/api/v1/gift_cards_controller.rb
+index ac7786c..42ce500 100644
+--- a/app/controllers/api/v1/gift_cards_controller.rb
++++ b/app/controllers/api/v1/gift_cards_controller.rb
+@@ -2,8 +2,6 @@ class Api::V1::GiftCardsController < Api::V1::ApplicationController
+   before_action :load_gift_card_from_certificate
+ 
+   def show
+-    @gift_card = GiftCard.find_by(certificate: params[:id])
+-
+     render json: @gift_card
+   end
+ 
