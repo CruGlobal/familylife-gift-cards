@@ -1,0 +1,17 @@
+diff --git a/app/models/custom_authorization.rb b/app/models/custom_authorization.rb
+index 9adfdc4..63634f7 100644
+--- a/app/models/custom_authorization.rb
++++ b/app/models/custom_authorization.rb
+@@ -2,11 +2,6 @@ class CustomAuthorization < ActiveAdmin::AuthorizationAdapter
+   def authorized?(action, subject = nil)
+     return true if action == :read
+ 
+-    case subject
+-    when Issuance
+-      !subject.issued? # can't do anything on issuances that already happened
+-    else
+-      true
+-    end
++    true
+   end
+ end

@@ -1,0 +1,13 @@
+diff --git a/.github/workflows/ruby.yml b/.github/workflows/ruby.yml
+index 9aa28b9..ef8d290 100644
+--- a/.github/workflows/ruby.yml
++++ b/.github/workflows/ruby.yml
+@@ -25,7 +25,7 @@ jobs:
+       - name: Brakeman
+         # --ensure-latest dropped (no proposer exists under security-only;
+         # the flag reds lint on brakeman release day).
+-        run: bundle exec brakeman -A -q --no-pager
++        run: bundle exec brakeman -A -q --no-pager -w2
+ 
+       - name: StandardRB
+         run: bundle exec standardrb --format simple

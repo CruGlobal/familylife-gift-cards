@@ -1,0 +1,134 @@
+# Development evaluation set for familylife-gift-cards (VISIBLE to anyone who reads this repo).
+# Reviewers and rule edits can overfit to these answers, so keep a separate private holdout
+# suite (another branch or a private repo) for the real quality gate. See the plugin's
+# templates/evals/README.md for prepare/score usage.
+version: 1
+name: familylife-gift-cards-dev
+blocker_threshold: 7
+thresholds:
+  blocker_recall: 0.85
+  blocker_precision: 0.80
+  clean_false_blocker_rate: 0.05
+  false_positive_dismissal_rate: 0.20
+  category_recall: 0.70
+  minimum_runs: 50
+cases:
+  # financial (mined: PR #59): an expired card can be redeemed through the API again.
+  - id: redeem-skips-expiry
+    kind: seeded_bug
+    category: financial
+    patch: patches/redeem-skips-expiry.patch
+    expected:
+      - id: expired-card-redeemable
+        must_block: true
+        min_severity: 7
+        category: financial
+        match:
+          paths: ['app/controllers/api/v1/gift_cards_controller.rb']
+          categories: [financial, correctness, business, security, data]
+          message_any: [expire, expiry, expiration, expired?]
+
+  # api-contracts (mined: PR #60, plus ERT's FlGiftCardResponse): the redemption response stops
+  # carrying gl_code, which ERT books for every gift card payment.
+  - id: update-response-drops-gl-code
+    kind: seeded_bug
+    category: api-contracts
+    patch: patches/update-response-drops-gl-code.patch
+    expected:
+      - id: response-key-removed
+        must_block: true
+        min_severity: 7
+        category: api-contracts
+        match:
+          paths: ['app/controllers/api/v1/gift_cards_controller.rb']
+          categories: [api, contract, compat, breaking, correctness]
+          message_any: [gl_code, ERT, caller, consumer, contract, breaking, response]
+
+  # security: anyone without an API key can look up any certificate.
+  - id: show-skips-token-auth
+    kind: seeded_bug
+    category: security
+    patch: patches/show-skips-token-auth.patch
+    expected:
+      - id: unauthenticated-lookup
+        must_block: true
+        min_severity: 7
+        category: security
+        match:
+          paths: ['app/controllers/api/v1/gift_cards_controller.rb']
+          categories: [security, auth, access]
+          message_any: [restrict_access, token, authenticat, unauthenticated, skip_before_action]
+
+  # security (authorization): issued issuances can be edited, destroyed and re-issued in ActiveAdmin.
+  - id: issued-issuance-editable
+    kind: seeded_bug
+    category: security
+    patch: patches/issued-issuance-editable.patch
+    expected:
+      - id: issued-issuance-not-frozen
+        must_block: true
+        min_severity: 7
+        category: security
+        match:
+          paths: ['app/models/custom_authorization.rb']
+          categories: [security, authoriz, access, financial, correctness]
+          message_any: [issued, Issuance, authoriz, frozen, edit]
+
+  # financial / data-integrity: two issuances previewed at once get the same certificate range.
+  - id: numbering-ignores-previewing
+    kind: seeded_bug
+    category: data-integrity
+    patch: patches/numbering-ignores-previewing.patch
+    expected:
+      - id: duplicate-certificate-range
+        must_block: true
+        min_severity: 7
+        category: data-integrity
+        match:
+          paths: ['app/models/issuance.rb']
+          categories: [data, financial, correctness, concurrency]
+          message_any: [previewing, duplicate, collide, collision, overlap, same certificate, uniqueness]
+
+  # security CI gate (mined: PR #99, #103): brakeman stops reporting Weak-confidence warnings.
+  # Advisory: a reviewer should flag it, but it need not block.
+  - id: brakeman-confidence-filter
+    kind: seeded_bug
+    category: security
+    patch: patches/brakeman-confidence-filter.patch
+    expected:
+      - id: weakened-brakeman-gate
+        must_block: false
+        min_severity: 4
+        category: security
+        match:
+          paths: ['.github/workflows/ruby.yml']
+          categories: [security, ci, standards, supply]
+          message_any: [-w2, confidence, brakeman, weak]
+
+  # architecture (mined: PR #40): the health check hits the DB on staging, so Neon never scales to 0.
+  # Advisory: a cost and environment regression, not a correctness blocker.
+  - id: healthcheck-queries-db-on-staging
+    kind: seeded_bug
+    category: architecture
+    patch: patches/healthcheck-queries-db-on-staging.patch
+    expected:
+      - id: staging-db-wakeup
+        must_block: false
+        min_severity: 4
+        category: architecture
+        match:
+          paths: ['app/controllers/monitors_controller.rb']
+          categories: [architecture, performance, standards, ops, correctness]
+          message_any: [staging, Neon, scale, health, database]
+
+  # Behavior-preserving: show uses the card the before_action already loaded.
+  - id: clean-show-reuses-loaded-card
+    kind: clean_control
+    patch: patches/clean-show-reuses-loaded-card.patch
+    expected: []
+
+  # Behavior-preserving: spec descriptions only.
+  - id: clean-spec-description-typos
+    kind: clean_control
+    patch: patches/clean-spec-description-typos.patch
+    expected: []
